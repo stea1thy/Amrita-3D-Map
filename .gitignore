@@ -3,6 +3,11 @@ node_modules/
 web/.next/
 web/out/
 web/next-env.d.ts
+web/AGENTS.md
+*.tsbuildinfo
+.vercel
+coverage/
+*.pem
 .env*.local
 *.log
 
