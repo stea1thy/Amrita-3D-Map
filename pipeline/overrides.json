@@ -1,0 +1,140 @@
+{
+  "$schema_version": "1.1",
+  "$schema_version": "1.2",
+  "_documentation": {
+    "description": "Manual overrides for OSM campus features, exclusions, skybridges, and missing structures.",
+    "description": "Manual overrides for OSM campus features, exclusions, skybridges, custom roads, and missing structures.",
+    "categories": [
+      "academic",
+      "hostel",
+      "food",
+      "sports",
+      "admin",
+      "landmark"
+    ],
+    "osm_id_format": "<way|relation>/<numeric_id>, matching properties.osm_id in data/raw_osm.json",
+    "exclude_ids": "List of OSM IDs to skip completely during extrusion (for junk/stray polygons)",
+    "bridges": "List of elevated skybridges ({ id, name, from: [lat, lon], to: [lat, lon], width, bottomY, height, color, roofColor } or { id, osm_id, bottomY / min_height, height, color, roofColor }) rendered floating above ground clearance",
+    "rename_or_retag": "Map OSM ID -> { name, subtitle (optional), category, floors (optional), height_m (optional), min_height (optional), bottomY (optional), tags (optional list), departments (optional list) }",
+    "shift_footprints": "Map OSM ID -> [dx_meters, dz_meters] in local 3D world space (+X East, +Z South / -Z North)",
+    "custom_buildings": "List of manual buildings missing from OSM, each with footprint as [[lat, lon], ...] polygon ring",
+    "custom_roads": "List of custom campus road/footpath polylines missing from OSM ({ id, name, subtype, points: [[lat, lon], ...] }) rendered & routed alongside OSM roads",
+    "category_colors": "Optional map of category -> hex color string (e.g. '#E6DDD0') overriding default palette colors"
+  },
+  "_examples": {
+    "exclude_ids": ["way/999999999"],
+    "bridges": [
+      {
+        "id": "bridge/example-skywalk",
+        "name": "Example Skybridge",
+        "from": [10.90415, 76.89872],
+        "to": [10.90418, 76.89885],
+        "width": 3.5,
+        "bottomY": 4.2,
+        "height": 3.2,
+        "color": "#f4efe6",
+        "roofColor": "#a84b36"
+      }
+    ],
+    "rename_or_retag": {
+      "way/123456789": {
+        "name": "Academic Block I (AB1)",
+        "subtitle": "School of Engineering",
+        "category": "academic",
+        "floors": 4,
+        "height_m": 14.4,
+        "tags": ["cse", "ece", "classrooms", "auditorium"],
+        "departments": ["Computer Science and Engineering", "Electronics and Communication"]
+      }
+    },
+    "shift_footprints": {
+      "way/123456789": [2.5, -1.5]
+    },
+    "custom_buildings": [
+      {
+        "id": "custom/example-pavilion",
+        "name": "Example Campus Pavilion",
+        "category": "landmark",
+        "floors": 1,
+        "height_m": 3.6,
+        "tags": ["pavilion", "plaza"],
+        "departments": [],
+        "footprint": [
+          [10.90265, 76.90055],
+          [10.90265, 76.90070],
+          [10.90278, 76.90070],
+          [10.90278, 76.90055],
+          [10.90265, 76.90055]
+        ]
+      }
+    ],
+    "custom_roads": [
+      {
+        "id": "road/example-link",
+        "name": "Example Connector",
+        "subtype": "residential",
+        "points": [
+          [10.90265, 76.90055],
+          [10.90280, 76.90070]
+        ]
+      }
+    ],
+    "category_colors": {
+      "academic": "#E6DDD0"
+    }
+  },
+  "exclude_ids": [],
+  "bridges": [
+    {
+      "id": "bridge/ab2-library-skybridge",
+      "name": "AB-2 to Central Library Skybridge",
+      "from": [10.90415, 76.89872],
+      "to": [10.90418, 76.89885],
+      "width": 4.0,
+      "bottomY": 4.5,
+      "height": 3.4,
+      "color": "#efe8dc",
+      "roofColor": "#a84b36"
+    }
+  ],
+  "rename_or_retag": {
+    "way/380829415": {
+      "name": "Academic Block 3 (AB-3)",
+      "subtitle": "School of Computing & International School of Law",
+      "category": "academic",
+      "floors": 3,
+      "departments": [
+        "School of Computing",
+        "International School of Law"
+      ],
+      "tags": [
+        "AB3",
+        "AB-3",
+        "School of Computing",
+        "CSE",
+        "AI",
+        "International School of Law",
+        "Law"
+      ]
+    }
+  },
+  "shift_footprints": {},
+  "custom_buildings": [],
+  "custom_roads": [
+    {
+      "id": "road/pool-to-ab3-connector",
+      "name": "Pool Front to AB-3 Connector Road",
+      "subtype": "residential",
+      "points": [
+        [10.905874, 76.898810],
+        [10.905895, 76.898630],
+        [10.905910, 76.898453],
+        [10.905860, 76.898120],
+        [10.905825, 76.897520],
+        [10.905865, 76.896950],
+        [10.906245, 76.896802]
+      ]
+    }
+  ],
+  "category_colors": {}
+}
