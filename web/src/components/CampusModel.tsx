@@ -269,6 +269,9 @@ export default function CampusModel({
       if (obj.name.startsWith("TREES_")) {
         obj.castShadow = true;
         obj.receiveShadow = false;
+      } else if (obj.name.startsWith("STATIC_HeroAccents")) {
+        obj.castShadow = true;
+        obj.receiveShadow = true;
       } else {
         obj.castShadow = false;
         obj.receiveShadow = true;

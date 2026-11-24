@@ -30,8 +30,8 @@
     "bridges": 1,
     "inspectables": 156,
     "trees": 2650,
-    "palms": 673,
-    "canopy": 1977,
+    "palms": 678,
+    "canopy": 1972,
     "overtureBuildings": 58,
     "overturePlaces": 17,
     "unmatchedPois": 2
@@ -72,8 +72,7 @@
           "category": "academic",
           "rawCategory": "campus_building"
         }
-      ],
-      "nearestNodeId": 576
+      ]
     },
     {
       "id": "way/380702789",
@@ -111,8 +110,7 @@
           "category": "academic",
           "rawCategory": "college_university"
         }
-      ],
-      "nearestNodeId": 63
+      ]
     },
     {
       "id": "way/380829415",
@@ -154,8 +152,7 @@
         "building": "university",
         "name": "Academic Block 3 - International school of Law"
       },
-      "subtitle": "School of Computing & International School of Law",
-      "nearestNodeId": 777
+      "subtitle": "School of Computing & International School of Law"
     },
     {
       "id": "way/1256941484",
@@ -187,8 +184,7 @@
         "building": "yes",
         "name": "Adithi Bhavanam",
         "tourism": "hostel"
-      },
-      "nearestNodeId": 140
+      }
     },
     {
       "id": "way/380829421",
@@ -217,8 +213,7 @@
         "building": "yes",
         "name": "Agasthya Bhavanam",
         "tourism": "hostel"
-      },
-      "nearestNodeId": 119
+      }
     },
     {
       "id": "way/380829422",
@@ -250,8 +245,7 @@
         "building": "university",
         "fast_food": "cafeteria",
         "name": "Agastya/Gautama Bhavanam Mess"
-      },
-      "nearestNodeId": 308
+      }
     },
     {
       "id": "way/380829419",
@@ -280,8 +274,7 @@
       "rawTags": {
         "building": "university",
         "name": "Amrita Automative Research & Testing Centre"
-      },
-      "nearestNodeId": 325
+      }
     },
     {
       "id": "way/531088134",
@@ -310,8 +303,7 @@
         "building": "yes",
         "leisure": "fitness_centre",
         "name": "Amrita Boys Gym"
-      },
-      "nearestNodeId": 17
+      }
     },
     {
       "id": "way/380829427",
@@ -341,8 +333,7 @@
         "name": "Amrita Guest House",
         "operator": "Amrita Vishwa Vidyapeetham University",
         "tourism": "guest_house"
-      },
-      "nearestNodeId": 606
+      }
     },
     {
       "id": "way/380829759",
@@ -379,8 +370,7 @@
           "category": "academic",
           "rawCategory": "college_university"
         }
-      ],
-      "nearestNodeId": 659
+      ]
     },
     {
       "id": "way/380925370",
@@ -409,8 +399,7 @@
       "rawTags": {
         "building": "university",
         "name": "Amriteshwari Hall"
-      },
-      "nearestNodeId": 421
+      }
     },
     {
       "id": "way/380829426",
@@ -439,8 +428,7 @@
         "building": "yes",
         "leisure": "fitness_centre",
         "name": "Aroyga Sadhanam - Boys Gym"
-      },
-      "nearestNodeId": 132
+      }
     },
     {
       "id": "way/380829758",
@@ -469,8 +457,7 @@
       "rawTags": {
         "building": "university",
         "name": "Auditorium"
-      },
-      "nearestNodeId": 656
+      }
     },
     {
       "id": "way/380702809",
@@ -499,8 +486,7 @@
       "rawTags": {
         "building": "university",
         "name": "Central Kitchen"
-      },
-      "nearestNodeId": 736
+      }
     },
     {
       "id": "way/380702790",
@@ -531,8 +517,7 @@
         "building": "yes",
         "name": "Central Library",
         "operator": "Amrita Vishwa Vidyapeetham University"
-      },
-      "nearestNodeId": 60
+      }
     },
     {
       "id": "way/380829757",
@@ -561,8 +546,7 @@
       "rawTags": {
         "building": "university",
         "name": "Corporate and Industry Relations"
-      },
-      "nearestNodeId": 211
+      }
     },
     {
       "id": "way/531088187",
@@ -596,8 +580,7 @@
         "building": "yes",
         "name": "Dhanlaxmi Bank",
         "operator": "Dhanlaxmi Bank"
-      },
-      "nearestNodeId": 764
+      }
     },
     {
       "id": "way/380829418",
@@ -626,8 +609,7 @@
       "rawTags": {
         "building": "university",
         "name": "Fabrication workshop"
-      },
-      "nearestNodeId": 337
+      }
     },
     {
       "id": "way/380702791",
@@ -657,8 +639,7 @@
         "building": "yes",
         "name": "Gargi Bhavanam",
         "tourism": "hostel"
-      },
-      "nearestNodeId": 286
+      }
     },
     {
       "id": "way/380829420",
@@ -696,8 +677,7 @@
           "category": "academic",
           "rawCategory": "college_university"
         }
-      ],
-      "nearestNodeId": 113
+      ]
     },
     {
       "id": "way/380829429",
@@ -726,8 +706,7 @@
       "rawTags": {
         "building": "university",
         "name": "Hostel"
-      },
-      "nearestNodeId": 352
+      }
     },
     {
       "id": "way/1080744354",
@@ -758,8 +737,7 @@
         "amenity": "restaurant",
         "building": "yes",
         "name": "IT Canteen"
-      },
-      "nearestNodeId": 171
+      }
     },
     {
       "id": "way/546394562",
@@ -789,8 +767,7 @@
         "amenity": "restaurant",
         "building": "yes",
         "name": "Main Canteen"
-      },
-      "nearestNodeId": 420
+      }
     },
     {
       "id": "way/380702807",
@@ -827,8 +804,7 @@
           "category": "hostel",
           "rawCategory": "hostel"
         }
-      ],
-      "nearestNodeId": 736
+      ]
     },
     {
       "id": "way/380829760",
@@ -858,8 +834,7 @@
         "amenity": "restaurant",
         "building": "yes",
         "name": "MBA Canteen"
-      },
-      "nearestNodeId": 656
+      }
     },
     {
       "id": "way/380925368",
@@ -889,8 +864,7 @@
         "building:levels": "3",
         "name": "Nachiketas Bhavanam",
         "tourism": "hostel"
-      },
-      "nearestNodeId": 427
+      }
     },
     {
       "id": "way/531394576",
@@ -911,7 +885,7 @@
         0.32,
         67.125
       ],
-      "boundingRadius": 10.62,
+      "boundingRadius": 12.06,
       "latLon": [
         10.902097,
         76.901082
@@ -921,8 +895,7 @@
         "building": "yes",
         "name": "Shrine",
         "religion": "hindu"
-      },
-      "nearestNodeId": 567
+      }
     },
     {
       "id": "way/380829425",
@@ -951,8 +924,7 @@
         "building": "yes",
         "name": "Vasishta Bhavanam",
         "tourism": "hostel"
-      },
-      "nearestNodeId": 124
+      }
     },
     {
       "id": "way/380925375",
@@ -982,8 +954,7 @@
         "building:levels": "3",
         "name": "Vyasa Maharishi Bhavanam",
         "tourism": "hostel"
-      },
-      "nearestNodeId": 638
+      }
     },
     {
       "id": "way/380925366",
@@ -1021,8 +992,7 @@
           "category": "academic",
           "rawCategory": "college_university"
         }
-      ],
-      "nearestNodeId": 472
+      ]
     },
     {
       "id": "way/380925377",
@@ -1059,8 +1029,7 @@
           "category": "academic",
           "rawCategory": "educational_service"
         }
-      ],
-      "nearestNodeId": 260
+      ]
     }
   ],
   "inspectables": [
@@ -6366,7 +6335,7 @@
         0.32,
         67.125
       ],
-      "boundingRadius": 10.62,
+      "boundingRadius": 12.06,
       "latLon": [
         10.902097,
         76.901082
@@ -10566,7 +10535,7 @@
         "bridge"
       ],
       "departments": [],
-      "boundingRadius": 7.76
+      "boundingRadius": 8.09
     }
   ],
   "overturePois": [

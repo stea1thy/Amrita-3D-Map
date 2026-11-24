@@ -1,8 +1,6 @@
 {
-  "$schema_version": "1.1",
   "$schema_version": "1.2",
   "_documentation": {
-    "description": "Manual overrides for OSM campus features, exclusions, skybridges, and missing structures.",
     "description": "Manual overrides for OSM campus features, exclusions, skybridges, custom roads, and missing structures.",
     "categories": [
       "academic",

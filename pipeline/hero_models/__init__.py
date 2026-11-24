@@ -1,0 +1,31 @@
+"""Modular Blender 3D hero landmark generators for Amrita Vishwa Vidyapeetham, Coimbatore."""
+
+from __future__ import annotations
+
+HERO_AB1_ID = "way/380925364"
+HERO_AB2_ID = "way/380702789"
+HERO_AB3_ID = "way/380829415"
+HERO_ASB_ID = "way/380829759"
+HERO_LIBRARY_ID = "way/380702790"
+HERO_AMRITESHWARI_ID = "way/380925370"
+HERO_SHRINE_ID = "way/531394576"
+HERO_POOL_WATER_ID = "way/380702787"
+HERO_POOL_DECK_ID = "way/1210976885"
+HERO_PLAYGROUND_ID = "way/528938316"
+HERO_GATE_BANK_ID = "way/531088187"
+HERO_AB2_SKYBRIDGE_ID = "bridge/ab2-library-skybridge"
+
+__all__ = [
+    "HERO_AB1_ID",
+    "HERO_AB2_ID",
+    "HERO_AB3_ID",
+    "HERO_ASB_ID",
+    "HERO_LIBRARY_ID",
+    "HERO_AMRITESHWARI_ID",
+    "HERO_SHRINE_ID",
+    "HERO_POOL_WATER_ID",
+    "HERO_POOL_DECK_ID",
+    "HERO_PLAYGROUND_ID",
+    "HERO_GATE_BANK_ID",
+    "HERO_AB2_SKYBRIDGE_ID",
+]
