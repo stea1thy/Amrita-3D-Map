@@ -16,23 +16,23 @@
     "minZ": -756.97,
     "maxZ": 690.18,
     "minY": -28.11,
-    "maxY": 451.28
+    "maxY": 570.79
   },
   "extendedBounds": {
-    "minX": -1736.1,
+    "minX": -2026.1,
     "maxX": 1174.24,
-    "minZ": -1716.97,
+    "minZ": -2006.97,
     "maxZ": 1110.18
   },
   "counts": {
-    "buildings": 31,
-    "namedBuildings": 31,
+    "buildings": 33,
+    "namedBuildings": 33,
     "bridges": 1,
-    "inspectables": 156,
-    "trees": 2650,
-    "palms": 678,
-    "canopy": 1972,
-    "overtureBuildings": 58,
+    "inspectables": 154,
+    "trees": 2800,
+    "palms": 905,
+    "canopy": 1895,
+    "overtureBuildings": 56,
     "overturePlaces": 17,
     "unmatchedPois": 2
   },
@@ -137,14 +137,14 @@
       "floors": 3,
       "heightM": 10.8,
       "center": [
-        -336.516,
+        -336.452,
         22.021,
-        -391.9
+        -392.869
       ],
-      "boundingRadius": 68.64,
+      "boundingRadius": 68.9,
       "latLon": [
-        10.906221,
-        76.897521
+        10.906229,
+        76.897522
       ],
       "rawTags": {
         "addr:city": "Ettimadai",
@@ -520,6 +520,52 @@
       }
     },
     {
+      "id": "way/380926299",
+      "meshName": "BLDG_way_380926299",
+      "name": "Chemical Labs & Foundry Workshops",
+      "source": "osm",
+      "isNamed": true,
+      "category": "academic",
+      "tags": [
+        "Chemical Laboratory",
+        "Chemical Lab",
+        "Foundry",
+        "Viruksa Garden",
+        "Workshops",
+        "Sheds",
+        "Materials Laboratory",
+        "university",
+        "academic"
+      ],
+      "departments": [
+        "Chemical Engineering",
+        "Mechanical Engineering"
+      ],
+      "floors": 1,
+      "heightM": 5.6,
+      "center": [
+        234.659,
+        1.748,
+        142.708
+      ],
+      "boundingRadius": 65.39,
+      "latLon": [
+        10.901418,
+        76.902747
+      ],
+      "rawTags": {
+        "building": "university"
+      },
+      "subtitle": "1-Floor Engineering Lab Sheds & Viruksa Garden",
+      "places": [
+        {
+          "name": "Materials Laboratory",
+          "category": "admin",
+          "rawCategory": "medical_supply_store"
+        }
+      ]
+    },
+    {
       "id": "way/380829757",
       "meshName": "BLDG_way_380829757",
       "name": "Corporate and Industry Relations",
@@ -740,6 +786,43 @@
       }
     },
     {
+      "id": "way/380926300",
+      "meshName": "BLDG_way_380926300",
+      "name": "Lathe & Mechanical Workshops",
+      "source": "osm",
+      "isNamed": true,
+      "category": "academic",
+      "tags": [
+        "Lathe Workshop",
+        "Lath Workshop",
+        "Mechanical Workshop",
+        "Machine Shop",
+        "Workshops",
+        "Sheds",
+        "university",
+        "academic"
+      ],
+      "departments": [
+        "Mechanical Engineering"
+      ],
+      "floors": 1,
+      "heightM": 5.6,
+      "center": [
+        325.142,
+        2.32,
+        152.326
+      ],
+      "boundingRadius": 41.5,
+      "latLon": [
+        10.901332,
+        76.903574
+      ],
+      "rawTags": {
+        "building": "university"
+      },
+      "subtitle": "1-Floor Machine Shop & Production Sheds"
+    },
+    {
       "id": "way/546394562",
       "meshName": "BLDG_way_546394562",
       "name": "Main Canteen",
@@ -758,7 +841,7 @@
         7.306,
         283.783
       ],
-      "boundingRadius": 20.77,
+      "boundingRadius": 25.52,
       "latLon": [
         10.900151,
         76.903713
@@ -2692,14 +2775,14 @@
       "floors": 3,
       "heightM": 10.8,
       "center": [
-        -336.516,
+        -336.452,
         22.021,
-        -391.9
+        -392.869
       ],
-      "boundingRadius": 68.64,
+      "boundingRadius": 68.9,
       "latLon": [
-        10.906221,
-        76.897521
+        10.906229,
+        76.897522
       ],
       "rawTags": {
         "addr:city": "Ettimadai",
@@ -2727,22 +2810,6 @@
         [
           -277.9,
           -424.9
-        ],
-        [
-          -331.3,
-          -420.8
-        ],
-        [
-          -330.7,
-          -390.9
-        ],
-        [
-          -343.0,
-          -390.3
-        ],
-        [
-          -344.7,
-          -421.4
         ],
         [
           -398.7,
@@ -4781,30 +4848,50 @@
     },
     {
       "id": "way/380926299",
-      "meshName": "STATIC_Buildings",
-      "kind": "building",
-      "name": "Unnamed Structure (way/380926299)",
+      "meshName": "BLDG_way_380926299",
+      "name": "Chemical Labs & Foundry Workshops",
       "source": "osm",
-      "isNamed": false,
+      "isNamed": true,
       "category": "academic",
       "tags": [
+        "Chemical Laboratory",
+        "Chemical Lab",
+        "Foundry",
+        "Viruksa Garden",
+        "Workshops",
+        "Sheds",
         "Materials Laboratory",
         "university",
         "academic"
       ],
-      "departments": [],
-      "floors": 4,
-      "heightM": 14.4,
+      "departments": [
+        "Chemical Engineering",
+        "Mechanical Engineering"
+      ],
+      "floors": 1,
+      "heightM": 5.6,
       "center": [
         234.659,
-        6.148,
+        1.748,
         142.708
       ],
-      "boundingRadius": 71.15,
+      "boundingRadius": 65.39,
       "latLon": [
         10.901418,
         76.902747
       ],
+      "rawTags": {
+        "building": "university"
+      },
+      "subtitle": "1-Floor Engineering Lab Sheds & Viruksa Garden",
+      "places": [
+        {
+          "name": "Materials Laboratory",
+          "category": "admin",
+          "rawCategory": "medical_supply_store"
+        }
+      ],
+      "kind": "building",
       "boundsXZ": [
         167.5,
         111.0,
@@ -4828,43 +4915,45 @@
           167.5,
           126.3
         ]
-      ],
-      "rawTags": {
-        "building": "university"
-      },
-      "places": [
-        {
-          "name": "Materials Laboratory",
-          "category": "admin",
-          "rawCategory": "medical_supply_store"
-        }
       ]
     },
     {
       "id": "way/380926300",
-      "meshName": "STATIC_Buildings",
-      "kind": "building",
-      "name": "Unnamed Structure (way/380926300)",
+      "meshName": "BLDG_way_380926300",
+      "name": "Lathe & Mechanical Workshops",
       "source": "osm",
-      "isNamed": false,
+      "isNamed": true,
       "category": "academic",
       "tags": [
+        "Lathe Workshop",
+        "Lath Workshop",
+        "Mechanical Workshop",
+        "Machine Shop",
+        "Workshops",
+        "Sheds",
         "university",
         "academic"
       ],
-      "departments": [],
-      "floors": 4,
-      "heightM": 14.4,
+      "departments": [
+        "Mechanical Engineering"
+      ],
+      "floors": 1,
+      "heightM": 5.6,
       "center": [
         325.142,
-        6.72,
+        2.32,
         152.326
       ],
-      "boundingRadius": 47.85,
+      "boundingRadius": 41.5,
       "latLon": [
         10.901332,
         76.903574
       ],
+      "rawTags": {
+        "building": "university"
+      },
+      "subtitle": "1-Floor Machine Shop & Production Sheds",
+      "kind": "building",
       "boundsXZ": [
         301.8,
         108.7,
@@ -4888,10 +4977,7 @@
           301.8,
           113.4
         ]
-      ],
-      "rawTags": {
-        "building": "university"
-      }
+      ]
     },
     {
       "id": "way/380926301",
@@ -6391,7 +6477,7 @@
         7.306,
         283.783
       ],
-      "boundingRadius": 20.77,
+      "boundingRadius": 25.52,
       "latLon": [
         10.900151,
         76.903713
@@ -8801,60 +8887,6 @@
       }
     },
     {
-      "id": "overture/6f47537e-53f",
-      "meshName": "STATIC_Buildings",
-      "kind": "building",
-      "name": "Unnamed Structure (overture/6f47537e-53f)",
-      "source": "overture",
-      "isNamed": false,
-      "category": "default",
-      "tags": [
-        "default"
-      ],
-      "departments": [],
-      "floors": 1,
-      "heightM": 3.6,
-      "center": [
-        184.182,
-        -1.526,
-        209.821
-      ],
-      "boundingRadius": 13.1,
-      "latLon": [
-        10.900815,
-        76.902285
-      ],
-      "boundsXZ": [
-        180.4,
-        197.9,
-        188.0,
-        221.8
-      ],
-      "footprintXZ": [
-        [
-          182.2,
-          221.8
-        ],
-        [
-          188.0,
-          221.3
-        ],
-        [
-          186.2,
-          197.9
-        ],
-        [
-          180.4,
-          198.3
-        ]
-      ],
-      "rawTags": {
-        "building": "yes",
-        "source": "Google Open Buildings",
-        "overture_id": "6f47537e-53f6-4581-aa97-bcd5d69b1adf"
-      }
-    },
-    {
       "id": "overture/80d6103a-78f",
       "meshName": "STATIC_Buildings",
       "kind": "building",
@@ -10048,60 +10080,6 @@
         "building": "yes",
         "source": "Google Open Buildings",
         "overture_id": "56682229-07ec-4854-ac30-d8593b3b7584"
-      }
-    },
-    {
-      "id": "overture/3086031b-20b",
-      "meshName": "STATIC_Buildings",
-      "kind": "building",
-      "name": "Unnamed Structure (overture/3086031b-20b)",
-      "source": "overture",
-      "isNamed": false,
-      "category": "default",
-      "tags": [
-        "default"
-      ],
-      "departments": [],
-      "floors": 1,
-      "heightM": 3.6,
-      "center": [
-        192.285,
-        -1.251,
-        211.558
-      ],
-      "boundingRadius": 8.75,
-      "latLon": [
-        10.9008,
-        76.902359
-      ],
-      "boundsXZ": [
-        189.2,
-        204.8,
-        195.4,
-        218.3
-      ],
-      "footprintXZ": [
-        [
-          195.4,
-          218.1
-        ],
-        [
-          194.7,
-          204.8
-        ],
-        [
-          189.2,
-          205.1
-        ],
-        [
-          189.9,
-          218.3
-        ]
-      ],
-      "rawTags": {
-        "building": "yes",
-        "source": "Google Open Buildings",
-        "overture_id": "3086031b-20b0-4233-8f0b-2efa51d2bb22"
       }
     },
     {

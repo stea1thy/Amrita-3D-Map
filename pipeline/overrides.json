@@ -81,7 +81,10 @@
       "academic": "#E6DDD0"
     }
   },
-  "exclude_ids": [],
+  "exclude_ids": [
+    "overture/6f47537e-53f",
+    "overture/3086031b-20b"
+  ],
   "bridges": [
     {
       "id": "bridge/ab2-library-skybridge",
@@ -114,6 +117,43 @@
         "International School of Law",
         "Law"
       ]
+    },
+    "way/380926299": {
+      "name": "Chemical Labs & Foundry Workshops",
+      "subtitle": "1-Floor Engineering Lab Sheds & Viruksa Garden",
+      "category": "academic",
+      "floors": 1,
+      "height_m": 5.6,
+      "departments": [
+        "Chemical Engineering",
+        "Mechanical Engineering"
+      ],
+      "tags": [
+        "Chemical Laboratory",
+        "Chemical Lab",
+        "Foundry",
+        "Viruksa Garden",
+        "Workshops",
+        "Sheds"
+      ]
+    },
+    "way/380926300": {
+      "name": "Lathe & Mechanical Workshops",
+      "subtitle": "1-Floor Machine Shop & Production Sheds",
+      "category": "academic",
+      "floors": 1,
+      "height_m": 5.6,
+      "departments": [
+        "Mechanical Engineering"
+      ],
+      "tags": [
+        "Lathe Workshop",
+        "Lath Workshop",
+        "Mechanical Workshop",
+        "Machine Shop",
+        "Workshops",
+        "Sheds"
+      ]
     }
   },
   "shift_footprints": {},
@@ -131,6 +171,16 @@
         [10.905825, 76.897520],
         [10.905865, 76.896950],
         [10.906245, 76.896802]
+      ]
+    },
+    {
+      "id": "road/halls-road",
+      "name": "Halls Road",
+      "subtype": "residential",
+      "points": [
+        [10.901083, 76.902059],
+        [10.901157, 76.902727],
+        [10.901231, 76.903394]
       ]
     }
   ],

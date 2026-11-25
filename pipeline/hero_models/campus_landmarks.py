@@ -376,3 +376,84 @@ def append_pool_complex_hero(
         cx_p = pav_cx - ca * 4.2 + px_perp * px_off
         cy_p = pav_cy - sa * 4.2 + py_perp * px_off
         add_box_vc(bm, col_layer, cx_p, cy_p, z_deck - 0.1, z_deck + 3.0, 0.22, 0.22, c_dark, c_white, rot_rad=long_ang)
+
+
+def append_octagonal_pavilion_hero(
+    bm: bmesh.types.BMesh,
+    col_layer: Any,
+    win_lit_bm: bmesh.types.BMesh | None,
+    terrain: Any,
+    offset_xyz: tuple[float, float, float],
+    z_bottom: float,
+    z_plinth: float,
+    z_top: float,
+) -> list[tuple[float, float, float]]:
+    """Build satellite-accurate octagonal terracotta-roofed Main Canteen pavilion SE of AB-1."""
+    cx, cy = 341.0, -283.8
+    rot = math.pi / 8.0
+    z_eave = max(z_plinth + 4.8, z_top - 1.2)
+
+    c_plinth = srgb_hex_to_linear_rgba("#B5AC9E")
+    c_wall = srgb_hex_to_linear_rgba("#EFE8DC")
+    c_roof = srgb_hex_to_linear_rgba("#BA6D46")
+    c_trim = srgb_hex_to_linear_rgba("#9E5534")
+    c_white = srgb_hex_to_linear_rgba("#F6F4EE")
+    c_frame = srgb_hex_to_linear_rgba("#2E353C")
+
+    # 1. Octagonal plinth & 1.5-story cream pavilion drum
+    add_cylinder_vc(
+        bm, col_layer, cx, cy, z_bottom, z_plinth, 12.1, 12.1, 8,
+        c_plinth, c_plinth, rot_rad=rot, offset_xyz=offset_xyz,
+    )
+    add_cylinder_vc(
+        bm, col_layer, cx, cy, z_plinth, z_eave, 11.8, 11.8, 8,
+        c_wall, c_wall, rot_rad=rot, offset_xyz=offset_xyz,
+    )
+    add_cylinder_vc(
+        bm, col_layer, cx, cy, z_eave - 0.28, z_eave + 0.04, 12.0, 12.0, 8,
+        c_trim, c_white, rot_rad=rot, offset_xyz=offset_xyz,
+    )
+
+    # Spaced clerestory glass panels along all 8 octagonal sides (dist to flat face = r * cos(pi/8))
+    face_dist = 11.8 * math.cos(math.pi / 8.0)
+    for fi in range(8):
+        ang = (2.0 * math.pi * fi) / 8.0
+        add_glass_panel(
+            win_lit_bm, cx, cy, z_plinth + 1.4, z_eave - 0.8, 3.2, -(face_dist + 0.08),
+            rot_rad=ang, facing_south=True,
+        )
+
+    # 2. Prominent 8-sided pitched terracotta pyramid roof + raised octagonal clerestory cupola
+    add_cylinder_vc(
+        bm, col_layer, cx, cy, z_eave, z_eave + 4.4, 13.5, 3.2, 8,
+        c_roof, c_roof, rot_rad=rot, offset_xyz=offset_xyz, emit_bottom=True,
+    )
+    add_cylinder_vc(
+        bm, col_layer, cx, cy, z_eave + 4.2, z_eave + 5.6, 3.1, 3.1, 8,
+        c_wall, c_white, rot_rad=rot, offset_xyz=offset_xyz,
+    )
+    add_cylinder_vc(
+        bm, col_layer, cx, cy, z_eave + 4.5, z_eave + 5.2, 3.14, 3.14, 8,
+        c_frame, c_frame, rot_rad=rot, offset_xyz=offset_xyz,
+    )
+    add_cylinder_vc(
+        bm, col_layer, cx, cy, z_eave + 5.5, z_eave + 7.4, 3.7, 0.25, 8,
+        c_roof, c_roof, rot_rad=rot, offset_xyz=offset_xyz, emit_bottom=True,
+    )
+
+    # 3. West entrance porch connecting cleanly toward AB-1's east lawn
+    px, py = cx - 14.5, cy - 0.5
+    pz_bot = min(z_bottom, terrain.sample(px, py) - 2.0)
+    add_box_vc(bm, col_layer, px, py, pz_bot, z_plinth, 4.3, 3.7, c_plinth, c_plinth, offset_xyz=offset_xyz)
+    add_box_vc(bm, col_layer, px, py, z_plinth, z_plinth + 4.0, 4.1, 3.5, c_wall, c_white, offset_xyz=offset_xyz)
+    add_hipped_roof_vc(
+        bm, col_layer, px, py, z_plinth + 3.98, z_plinth + 5.6, 4.6, 4.0, c_roof,
+        soffit_rgba=c_white, offset_xyz=offset_xyz,
+    )
+
+    return [
+        (cx - 18.5, cy - 13.5, z_bottom),
+        (cx + 18.5, cy - 13.5, z_bottom),
+        (cx + 18.5, cy + 13.5, z_eave + 7.5),
+        (cx - 18.5, cy + 13.5, z_eave + 7.5),
+    ]

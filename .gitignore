@@ -20,6 +20,8 @@ __pycache__/
 venv/
 *.blend1
 *.blend2
+pipeline/renders/
+pipeline/debug_campus.blend
 
 # OS
 .DS_Store

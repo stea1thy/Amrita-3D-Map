@@ -217,7 +217,7 @@ def build_merged_roads_and_lamps() -> tuple[Path, Path]:
 
     for feat in raw_osm.get("features", []):
         fid = str(feat.get("id", ""))
-        if fid in exclude_ids:
+        if fid in exclude_ids or fid in config.AB1_FRONT_SUPPRESS_IDS:
             continue
         props = feat.get("properties", {})
         layer = props.get("layer")
@@ -270,6 +270,8 @@ def build_merged_roads_and_lamps() -> tuple[Path, Path]:
     if config.OVERTURE_PATH.exists():
         ov_data = json.loads(config.OVERTURE_PATH.read_text(encoding="utf-8"))
         for feat in ov_data.get("new_buildings") or []:
+            if str(feat.get("id", "")) in exclude_ids:
+                continue
             if not feat.get("properties", {}).get("include_in_scene"):
                 continue
             geom = feat.get("geometry", {})

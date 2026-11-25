@@ -24,6 +24,11 @@ TREES_JSON_PATH: Path = WEB_PUBLIC_DIR / "data" / "trees.json"
 OVERTURE_PATH: Path = DATA_DIR / "overture_campus.json"
 ROADS_MERGED_PATH: Path = DATA_DIR / "roads_merged.json"
 STREETLAMP_JSON_PATH: Path = WEB_PUBLIC_DIR / "data" / "streetlamps.json"
+DEBUG_BLEND_PATH: Path = PIPELINE_DIR / "debug_campus.blend"
+HEROES_DIR: Path = PIPELINE_DIR / "heroes"
+HERO_MODELS_DIR: Path = PIPELINE_DIR / "hero_models"
+RENDERS_DIR: Path = PIPELINE_DIR / "renders"
+REFS_DIR: Path = PIPELINE_DIR / "refs"
 
 # Export budget limits
 MAX_TRIANGLES: int = 150_000
@@ -53,6 +58,22 @@ VALID_CATEGORIES: tuple[str, ...] = (
 )
 
 EARTH_RADIUS_M: float = 6378137.0
+
+# Front-yard OSM paths & stray ponds suppressed inside AB-1's custom scalloped plaza clear_zone
+AB1_FRONT_SUPPRESS_IDS: frozenset[str] = frozenset({
+    "way/546394550",  # Old skinny striped fountain loop
+    "way/528944019",  # Old striped entry stem (replaced by flared plaza entry road)
+    "way/531088149",  # Stray footpath east of AB-1
+    "way/531088154",  # Stray footpath east lawn
+    "way/531088176",  # Stray footpath SE lawn
+    "way/531088179",  # Stray footpath SW lawn
+    "way/531088181",  # Stray footpath south-west lawn
+    "way/531288690",  # Stray footpath west lawn
+})
+AB1_FRONT_WATER_SUPPRESS_IDS: frozenset[str] = frozenset({
+    "way/531088129",  # Stray light-blue pond blob NE of plaza
+    "way/531088183",  # Stray light-blue pond blob east of plaza
+})
 
 
 def overpass_bbox_str() -> str:

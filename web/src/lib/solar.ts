@@ -165,7 +165,7 @@ export function computeSolarLighting(
     skyTopColor,
     fogColor: skyHorizonColor,
     fogNear: Math.round(mixNum(950, 750, nightFactor)),
-    fogFar: Math.round(mixNum(2800, 2300, nightFactor)),
+    fogFar: Math.round(mixNum(3400, 2600, nightFactor)),
     sunPosition,
     sunColor,
     sunIntensity,

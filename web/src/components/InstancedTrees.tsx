@@ -9,8 +9,8 @@ interface InstancedTreesProps {
   treesData: TreesData | null;
 }
 
-const PALM_SHADES = ["#4F8F46", "#5BA04D", "#437F3E", "#67AC56"];
-const CANOPY_SHADES = ["#3F7F44", "#4F914B", "#346B3C", "#5C9B4E"];
+const PALM_SHADES = ["#3E663A", "#497141", "#355934", "#557A46"];
+const CANOPY_SHADES = ["#2F5534", "#3E623B", "#4B693D", "#2A4A30"];
 
 function toFlatNonIndexed(geom: THREE.BufferGeometry): THREE.BufferGeometry {
   const nonIdx = geom.index ? geom.toNonIndexed() : geom;
@@ -77,15 +77,15 @@ function buildCanopyGeometries(): {
   trunk: THREE.BufferGeometry;
   crown: THREE.BufferGeometry;
 } {
-  const t = new THREE.CylinderGeometry(0.20, 0.34, 3.2, 5, 1, false);
-  t.translate(0, 1.4, 0);
+  const t = new THREE.CylinderGeometry(0.18, 0.30, 3.0, 5, 1, false);
+  t.translate(0, 1.35, 0);
   const trunk = toFlatNonIndexed(t);
   t.dispose();
 
   const lobes: Array<[number, number, number, number, number]> = [
-    [2.35, 0.0, 4.75, 0.0, 0.88],
-    [1.75, 1.15, 3.95, 0.65, 0.92],
-    [1.65, -1.05, 4.05, -0.75, 0.90],
+    [2.05, 0.0, 4.35, 0.0, 0.88],
+    [1.52, 1.0, 3.65, 0.56, 0.92],
+    [1.45, -0.92, 3.72, -0.62, 0.90],
   ];
   const crownParts: THREE.BufferGeometry[] = [];
   for (const [radius, x, y, z, sy] of lobes) {

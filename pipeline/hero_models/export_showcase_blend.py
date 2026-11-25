@@ -89,6 +89,8 @@ def export_showcase_blend(output_path: Path = SHOWCASE_BLEND_PATH) -> Path:
         ("Hero_CentralLibrary", build_scene.HERO_LIBRARY_ID, "CentralLibrary"),
         ("Hero_AmriteshwariHall", build_scene.HERO_AMRITESHWARI_ID, "AmriteshwariHall"),
         ("Hero_Shrine", build_scene.HERO_SHRINE_ID, "CampusShrine"),
+        ("Hero_Workshops_West", build_scene.HERO_WORKSHOPS_WEST_ID, "ChemicalLabs_Foundry_Sheds"),
+        ("Hero_Workshops_East", build_scene.HERO_WORKSHOPS_EAST_ID, "Lathe_Mechanical_Sheds"),
     ]
     collections: dict[str, bpy.types.Collection] = {
         cname: _make_collection(cname)

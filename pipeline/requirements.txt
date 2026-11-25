@@ -2,3 +2,4 @@ requests
 shapely
 numpy
 duckdb
+Pillow
