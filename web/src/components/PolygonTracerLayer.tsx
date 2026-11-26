@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-import { Html, Line } from "@react-three/drei";
+import { Line } from "@react-three/drei";
+import ScreenLabel from "./ScreenLabel";
 import * as THREE from "three";
 import { CATEGORY_META, type OverturePoi } from "@/types/campus";
 
@@ -140,7 +141,7 @@ export default function PolygonTracerLayer({
                 <sphereGeometry args={[1.1, 12, 10]} />
                 <meshBasicMaterial color={color} />
               </mesh>
-              <Html
+              <ScreenLabel
                 position={[0, 12.2, 0]}
                 center
                 zIndexRange={[8, 0]}
@@ -155,7 +156,7 @@ export default function PolygonTracerLayer({
                 >
                   {poi.name}
                 </div>
-              </Html>
+              </ScreenLabel>
             </group>
           );
         })}

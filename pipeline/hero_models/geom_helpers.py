@@ -32,6 +32,15 @@ HERO_PALETTE: dict[str, str] = {
     "lawn_green": "#56A14A",
     "bleacher_white": "#F2F0EA",
     "charcoal_wall": "#3D4249",
+    # AB-3 East front (photo-matched): cream stucco, bright orange eaves/pilasters, rust panels, blue curtain glass
+    "ab3_cream": "#F5EFE3",
+    "ab3_orange": "#EA8540",
+    "ab3_rust_panel": "#CC5A33",
+    "ab3_glass_blue": "#5E87B8",
+    "ab3_garden_stone": "#A69886",
+    "ab3_hedge_green": "#3F8A3A",
+    "ab3_roof_tile": "#D9774A",
+    "ab3_baluster_shadow": "#B9B3A8",
 }
 
 

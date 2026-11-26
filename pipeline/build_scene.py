@@ -108,7 +108,8 @@ PALETTE: dict[str, str] = {
     "balcony_recess": "#5E544C",
     "portico_column": "#373B42",
     "ab3_accent_brick": "#A54E37",
-    "roof_ab3_slab": "#DCD5C8",
+    "ab3_orange_trim": "#EA8540",
+    "roof_ab3_slab": "#A9A69F",
     "roof_ab1_concrete": "#B7B5AE",
     "ab1_cornice_trim": "#C27856",
     # Roofs (Mangalore terracotta vs slate)
@@ -1390,7 +1391,7 @@ def build_ground_features_object(
         clearance_margin=0.15,
     )
     _add_rect(-240.0, 86.0, 14.0, 5.5, 0.08, 0.14, 6)    # AB-2 south forecourt
-    _add_rect(-270.6, 393.2, 14.0, 3.6, 1.6413, 0.14, 6)   # AB-3 east forecourt
+    _add_rect(*ab3_hero.ab3_forecourt_rect(), 0.14, 6)   # AB-3 east forecourt (porches + garden island)
     _add_rect(-160.0, 137.0, 11.0, 5.5, 0.08, 0.14, 6)   # Central Library south forecourt
 
     if not bm.faces:
@@ -1548,11 +1549,9 @@ def build_hero_accents_object(
     # 5. Grand Amrita Entrance Gate Archway straddling the entrance boulevard
     campus_landmarks.append_main_gate_archway(bm, col_layer, terrain)
 
-    # 6. Forecourt planter beds flanking AB-2, AB-3, and Central Library entrances (on sandstone plazas, clear of road curbs)
+    # 6. Forecourt planter beds flanking AB-2 and Central Library entrances (AB-3 uses its garden island) (on sandstone plazas, clear of road curbs)
     _add_planter_bed(-251.0, 86.0, 2.5, 1.1, 0.08)
     _add_planter_bed(-229.0, 86.0, 2.5, 1.1, 0.08)
-    _add_planter_bed(-268.85, 384.83, 2.4, 1.0, 1.6413)
-    _add_planter_bed(-270.22, 404.28, 2.4, 1.0, 1.6413)
     _add_planter_bed(-150.0, 136.0, 2.4, 1.1, 0.08)
 
     bm.normal_update()
@@ -1992,7 +1991,7 @@ def _compute_building_floors_and_height(category: str, area_m2: float, rec: dict
     if fid == HERO_AB2_ID:
         return 4, round(4 * FLOOR_HEIGHT_M, 2)
     if fid == HERO_AB3_ID:
-        return 3, round(3 * FLOOR_HEIGHT_M, 2)
+        return 4, round(4 * FLOOR_HEIGHT_M, 2)
     if fid == HERO_ASB_ID:
         return 4, round(4 * FLOOR_HEIGHT_M, 2)
     if rec.get("overture_levels") is not None:
@@ -2331,7 +2330,7 @@ def _append_amrita_building(
     c_eave_tile = srgb_hex_to_linear_rgba(PALETTE["roof_terracotta"])
     c_ab1_cornice = srgb_hex_to_linear_rgba(PALETTE["ab1_cornice_trim"])
     trim_key = "trim_hostel" if category == "hostel" else "trim_ochre" if category in {"food", "admin"} else "trim_terracotta"
-    c_trim = srgb_hex_to_linear_rgba(PALETTE[trim_key])
+    c_trim = srgb_hex_to_linear_rgba(PALETTE["ab3_orange_trim" if fid == HERO_AB3_ID else trim_key])
     c_recess = srgb_hex_to_linear_rgba(PALETTE["balcony_recess"])
     c_ab3_brick = srgb_hex_to_linear_rgba(PALETTE["ab3_accent_brick"])
 
@@ -2451,7 +2450,12 @@ def _append_amrita_building(
         if r_idx == 0 and roof_in_ring is not None:
             top_in_v = [_v(x, y, z_top) for x, y in roof_in_ring]
             # Sloped terracotta Mangalore-tile eave skirt (or terracotta/coping rim on flat parapet roofs)
-            eave_rgba = c_eave_tile if has_terracotta_eave else (c_ab1_cornice if fid == HERO_AB1_ID else c_coping)
+            eave_rgba = (
+                c_eave_tile if has_terracotta_eave
+                else c_ab1_cornice if fid == HERO_AB1_ID
+                else c_trim if fid == HERO_AB3_ID
+                else c_coping
+            )
             _emit_quad_strip_ring(bm, col_layer, eave_v, top_in_v, eave_rgba)
             roof_flat_verts.extend(top_in_v)
             roof_flat_world.extend(roof_in_ring)
@@ -2862,8 +2866,10 @@ def build_buildings(
         min_clearance_m = float(rec["min_clearance_m"])
 
         if fid in (HERO_AB1_ID, HERO_AB3_ID) and len(rings) > 1:
-            courtyard_lawns.extend(list(reversed(h)) for h in rings[1:])
-        elif fid not in (HERO_WORKSHOPS_WEST_ID, HERO_WORKSHOPS_EAST_ID) and not is_elevated and len(rings) == 1 and area_m2 >= 3000.0 and concavity < 0.14:
+            # AB-3: only the big central court (rings[1]) is a garden; its small light wells are paved
+            lawn_holes = rings[1:] if fid == HERO_AB1_ID else rings[1:2]
+            courtyard_lawns.extend(list(reversed(h)) for h in lawn_holes)
+        elif fid not in (HERO_WORKSHOPS_WEST_ID, HERO_WORKSHOPS_EAST_ID, HERO_AB3_ID) and not is_elevated and len(rings) == 1 and area_m2 >= 3000.0 and concavity < 0.14:
             hole_ccw = inset_ccw_ring_2d(outer_ring, 15.2, min_ratio=0.10, min_area=320.0)
             if hole_ccw is not None:
                 courtyard_lawns.append(list(hole_ccw))
@@ -3144,6 +3150,7 @@ def generate_trees_data(
         avoid_courtyards: bool,
         allow_inside_courtyard_hole: bool = False,
         allow_ab1_entry: bool = False,
+        allow_ab3_front: bool = False,
     ) -> bool:
         if (
             tx < terrain.min_x + 15.0
@@ -3198,9 +3205,8 @@ def generate_trees_data(
             (171.8, 36.0, 14.0 * 14.0),
             (171.8, 16.0, 14.0 * 14.0),
             (171.8, -6.0, 14.0 * 14.0),
-            (-270.6, 393.2, 10.5 * 10.5),
             (ab1_hero.AB1_PARKING_CX, ab1_hero.AB1_PARKING_CY, 22.5 * 22.5),
-        )
+        ) + (() if allow_ab3_front else tuple(ab3_hero.ab3_front_clear_discs()))
         for hx, hy, hr2 in hero_clear_discs:
             if (tx - hx) ** 2 + (ty - hy) ** 2 < hr2:
                 return False
@@ -3237,6 +3243,11 @@ def generate_trees_data(
     for px, py in entry_palm_spots:
         if _is_clear(px, py, min_tree_spacing=4.2, avoid_courtyards=False, allow_ab1_entry=True):
             _place(px, py, 0, (0.85, 1.08))
+
+    # AB-3 East front garden: palms & a shade tree on the raised island, palms flanking the twin porches
+    for px, py, ttype, scale_rng in ab3_hero.ab3_front_tree_spots():
+        if _is_clear(px, py, min_tree_spacing=3.0, avoid_courtyards=False, allow_ab3_front=True):
+            _place(px, py, ttype, scale_rng)
 
     # Loose natural perimeter clusters on outer AB-1 lawn edges & back corners (clear central lawn & sightline!)
     ab1_grove_candidates: list[tuple[float, float, int]] = []
@@ -3414,8 +3425,10 @@ def main() -> None:
         import merge_roads
         merge_roads.build_merged_roads_and_lamps()
     except ImportError:
-        venv_py = config.PIPELINE_DIR / ".venv" / "Scripts" / "python.exe"
-        py_exe = str(venv_py) if venv_py.exists() else sys.executable
+        venv_dir = config.PIPELINE_DIR / ".venv"
+        venv_candidates = (venv_dir / "Scripts" / "python.exe", venv_dir / "bin" / "python")
+        venv_py = next((p for p in venv_candidates if p.exists()), None)
+        py_exe = str(venv_py) if venv_py is not None else sys.executable
         subprocess.run([py_exe, str(config.PIPELINE_DIR / "merge_roads.py")], check=True)
 
     print("Loading raw_osm.json, elevation.json, overrides.json, and optional overture_campus.json...")

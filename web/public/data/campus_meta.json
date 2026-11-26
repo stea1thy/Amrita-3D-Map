@@ -30,8 +30,8 @@
     "bridges": 1,
     "inspectables": 154,
     "trees": 2800,
-    "palms": 905,
-    "canopy": 1895,
+    "palms": 892,
+    "canopy": 1908,
     "overtureBuildings": 56,
     "overturePlaces": 17,
     "unmatchedPois": 2
@@ -72,7 +72,8 @@
           "category": "academic",
           "rawCategory": "campus_building"
         }
-      ]
+      ],
+      "nearestNodeId": 576
     },
     {
       "id": "way/380702789",
@@ -110,7 +111,8 @@
           "category": "academic",
           "rawCategory": "college_university"
         }
-      ]
+      ],
+      "nearestNodeId": 63
     },
     {
       "id": "way/380829415",
@@ -134,17 +136,17 @@
         "School of Computing",
         "International School of Law"
       ],
-      "floors": 3,
-      "heightM": 10.8,
+      "floors": 4,
+      "heightM": 14.4,
       "center": [
-        -336.452,
-        22.021,
-        -392.869
+        -335.611,
+        24.091,
+        -398.365
       ],
-      "boundingRadius": 68.9,
+      "boundingRadius": 69.56,
       "latLon": [
-        10.906229,
-        76.897522
+        10.906279,
+        76.89753
       ],
       "rawTags": {
         "addr:city": "Ettimadai",
@@ -152,7 +154,8 @@
         "building": "university",
         "name": "Academic Block 3 - International school of Law"
       },
-      "subtitle": "School of Computing & International School of Law"
+      "subtitle": "School of Computing & International School of Law",
+      "nearestNodeId": 777
     },
     {
       "id": "way/1256941484",
@@ -184,7 +187,8 @@
         "building": "yes",
         "name": "Adithi Bhavanam",
         "tourism": "hostel"
-      }
+      },
+      "nearestNodeId": 140
     },
     {
       "id": "way/380829421",
@@ -213,7 +217,8 @@
         "building": "yes",
         "name": "Agasthya Bhavanam",
         "tourism": "hostel"
-      }
+      },
+      "nearestNodeId": 119
     },
     {
       "id": "way/380829422",
@@ -245,7 +250,8 @@
         "building": "university",
         "fast_food": "cafeteria",
         "name": "Agastya/Gautama Bhavanam Mess"
-      }
+      },
+      "nearestNodeId": 308
     },
     {
       "id": "way/380829419",
@@ -274,7 +280,8 @@
       "rawTags": {
         "building": "university",
         "name": "Amrita Automative Research & Testing Centre"
-      }
+      },
+      "nearestNodeId": 325
     },
     {
       "id": "way/531088134",
@@ -303,7 +310,8 @@
         "building": "yes",
         "leisure": "fitness_centre",
         "name": "Amrita Boys Gym"
-      }
+      },
+      "nearestNodeId": 17
     },
     {
       "id": "way/380829427",
@@ -333,7 +341,8 @@
         "name": "Amrita Guest House",
         "operator": "Amrita Vishwa Vidyapeetham University",
         "tourism": "guest_house"
-      }
+      },
+      "nearestNodeId": 606
     },
     {
       "id": "way/380829759",
@@ -370,7 +379,8 @@
           "category": "academic",
           "rawCategory": "college_university"
         }
-      ]
+      ],
+      "nearestNodeId": 659
     },
     {
       "id": "way/380925370",
@@ -399,7 +409,8 @@
       "rawTags": {
         "building": "university",
         "name": "Amriteshwari Hall"
-      }
+      },
+      "nearestNodeId": 421
     },
     {
       "id": "way/380829426",
@@ -428,7 +439,8 @@
         "building": "yes",
         "leisure": "fitness_centre",
         "name": "Aroyga Sadhanam - Boys Gym"
-      }
+      },
+      "nearestNodeId": 132
     },
     {
       "id": "way/380829758",
@@ -457,7 +469,8 @@
       "rawTags": {
         "building": "university",
         "name": "Auditorium"
-      }
+      },
+      "nearestNodeId": 656
     },
     {
       "id": "way/380702809",
@@ -486,7 +499,8 @@
       "rawTags": {
         "building": "university",
         "name": "Central Kitchen"
-      }
+      },
+      "nearestNodeId": 736
     },
     {
       "id": "way/380702790",
@@ -517,7 +531,8 @@
         "building": "yes",
         "name": "Central Library",
         "operator": "Amrita Vishwa Vidyapeetham University"
-      }
+      },
+      "nearestNodeId": 60
     },
     {
       "id": "way/380926299",
@@ -563,7 +578,8 @@
           "category": "admin",
           "rawCategory": "medical_supply_store"
         }
-      ]
+      ],
+      "nearestNodeId": 789
     },
     {
       "id": "way/380829757",
@@ -592,7 +608,8 @@
       "rawTags": {
         "building": "university",
         "name": "Corporate and Industry Relations"
-      }
+      },
+      "nearestNodeId": 211
     },
     {
       "id": "way/531088187",
@@ -626,7 +643,8 @@
         "building": "yes",
         "name": "Dhanlaxmi Bank",
         "operator": "Dhanlaxmi Bank"
-      }
+      },
+      "nearestNodeId": 764
     },
     {
       "id": "way/380829418",
@@ -655,7 +673,8 @@
       "rawTags": {
         "building": "university",
         "name": "Fabrication workshop"
-      }
+      },
+      "nearestNodeId": 337
     },
     {
       "id": "way/380702791",
@@ -685,7 +704,8 @@
         "building": "yes",
         "name": "Gargi Bhavanam",
         "tourism": "hostel"
-      }
+      },
+      "nearestNodeId": 286
     },
     {
       "id": "way/380829420",
@@ -723,7 +743,8 @@
           "category": "academic",
           "rawCategory": "college_university"
         }
-      ]
+      ],
+      "nearestNodeId": 113
     },
     {
       "id": "way/380829429",
@@ -752,7 +773,8 @@
       "rawTags": {
         "building": "university",
         "name": "Hostel"
-      }
+      },
+      "nearestNodeId": 352
     },
     {
       "id": "way/1080744354",
@@ -783,7 +805,8 @@
         "amenity": "restaurant",
         "building": "yes",
         "name": "IT Canteen"
-      }
+      },
+      "nearestNodeId": 171
     },
     {
       "id": "way/380926300",
@@ -820,7 +843,8 @@
       "rawTags": {
         "building": "university"
       },
-      "subtitle": "1-Floor Machine Shop & Production Sheds"
+      "subtitle": "1-Floor Machine Shop & Production Sheds",
+      "nearestNodeId": 416
     },
     {
       "id": "way/546394562",
@@ -850,7 +874,8 @@
         "amenity": "restaurant",
         "building": "yes",
         "name": "Main Canteen"
-      }
+      },
+      "nearestNodeId": 420
     },
     {
       "id": "way/380702807",
@@ -887,7 +912,8 @@
           "category": "hostel",
           "rawCategory": "hostel"
         }
-      ]
+      ],
+      "nearestNodeId": 736
     },
     {
       "id": "way/380829760",
@@ -917,7 +943,8 @@
         "amenity": "restaurant",
         "building": "yes",
         "name": "MBA Canteen"
-      }
+      },
+      "nearestNodeId": 656
     },
     {
       "id": "way/380925368",
@@ -947,7 +974,8 @@
         "building:levels": "3",
         "name": "Nachiketas Bhavanam",
         "tourism": "hostel"
-      }
+      },
+      "nearestNodeId": 427
     },
     {
       "id": "way/531394576",
@@ -978,7 +1006,8 @@
         "building": "yes",
         "name": "Shrine",
         "religion": "hindu"
-      }
+      },
+      "nearestNodeId": 567
     },
     {
       "id": "way/380829425",
@@ -1007,7 +1036,8 @@
         "building": "yes",
         "name": "Vasishta Bhavanam",
         "tourism": "hostel"
-      }
+      },
+      "nearestNodeId": 124
     },
     {
       "id": "way/380925375",
@@ -1037,7 +1067,8 @@
         "building:levels": "3",
         "name": "Vyasa Maharishi Bhavanam",
         "tourism": "hostel"
-      }
+      },
+      "nearestNodeId": 638
     },
     {
       "id": "way/380925366",
@@ -1075,7 +1106,8 @@
           "category": "academic",
           "rawCategory": "college_university"
         }
-      ]
+      ],
+      "nearestNodeId": 472
     },
     {
       "id": "way/380925377",
@@ -1112,7 +1144,8 @@
           "category": "academic",
           "rawCategory": "educational_service"
         }
-      ]
+      ],
+      "nearestNodeId": 260
     }
   ],
   "inspectables": [
@@ -2772,17 +2805,17 @@
         "School of Computing",
         "International School of Law"
       ],
-      "floors": 3,
-      "heightM": 10.8,
+      "floors": 4,
+      "heightM": 14.4,
       "center": [
-        -336.452,
-        22.021,
-        -392.869
+        -335.611,
+        24.091,
+        -398.365
       ],
-      "boundingRadius": 68.9,
+      "boundingRadius": 69.56,
       "latLon": [
-        10.906229,
-        76.897522
+        10.906279,
+        76.89753
       ],
       "rawTags": {
         "addr:city": "Ettimadai",
@@ -2793,27 +2826,67 @@
       "subtitle": "School of Computing & International School of Law",
       "kind": "building",
       "boundsXZ": [
-        -398.7,
-        -424.9,
-        -273.8,
-        -361.6
+        -399.5,
+        -430.7,
+        -274.3,
+        -366.6
       ],
       "footprintXZ": [
         [
-          -396.3,
-          -361.6
+          -274.3,
+          -373.4
         ],
         [
-          -273.8,
-          -366.8
+          -278.3,
+          -430.7
         ],
         [
-          -277.9,
-          -424.9
+          -399.5,
+          -422.2
         ],
         [
-          -398.7,
-          -418.4
+          -398.3,
+          -405.6
+        ],
+        [
+          -390.8,
+          -406.1
+        ],
+        [
+          -390.4,
+          -399.7
+        ],
+        [
+          -397.9,
+          -399.2
+        ],
+        [
+          -397.1,
+          -387.8
+        ],
+        [
+          -389.6,
+          -388.3
+        ],
+        [
+          -389.1,
+          -381.9
+        ],
+        [
+          -396.6,
+          -381.4
+        ],
+        [
+          -395.6,
+          -366.6
+        ],
+        [
+          -328.3,
+          -371.4
+        ],
+        [
+          -328.1,
+          -369.6
         ]
       ]
     },

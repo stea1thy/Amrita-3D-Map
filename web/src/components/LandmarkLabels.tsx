@@ -2,7 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
+import ScreenLabel from "./ScreenLabel";
 import type { BuildingMeta } from "@/types/campus";
 
 interface LandmarkLabelsProps {
@@ -89,7 +89,7 @@ export default function LandmarkLabels({
           return null;
         }
         return (
-          <Html
+          <ScreenLabel
             key={id}
             position={[
               building.center[0],
@@ -113,7 +113,7 @@ export default function LandmarkLabels({
             >
               {shortLabel}
             </button>
-          </Html>
+          </ScreenLabel>
         );
       })}
     </group>
