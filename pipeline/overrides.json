@@ -83,7 +83,15 @@
   },
   "exclude_ids": [
     "overture/6f47537e-53f",
-    "overture/3086031b-20b"
+    "overture/3086031b-20b",
+    "way/546394580",
+    "way/546394581",
+    "way/531088187",
+    "way/531088194",
+    "overture/c72d394b-5e8",
+    "overture/a35b7227-0f1",
+    "overture/6cde8c35-13b",
+    "overture/ee2b3cc9-c5f"
   ],
   "bridges": [
     {
@@ -153,6 +161,63 @@
         "Machine Shop",
         "Workshops",
         "Sheds"
+      ]
+    },
+    "hero/main-gate": {
+      "name": "Main Gate",
+      "subtitle": "Amrita Vishwa Vidyapeetham Campus Entrance & Checkpoint",
+      "category": "landmark",
+      "floors": 1,
+      "tags": [
+        "main gate",
+        "gate",
+        "entrance",
+        "arch",
+        "checkpoint",
+        "ettimadai",
+        "railway crossing"
+      ]
+    },
+    "hero/security-office": {
+      "name": "Security Office",
+      "subtitle": "Campus Security Gatehouse & Visitor Pass Desk",
+      "category": "admin",
+      "floors": 2,
+      "tags": [
+        "security",
+        "security office",
+        "gatehouse",
+        "visitor pass",
+        "checkpoint",
+        "main gate"
+      ]
+    },
+    "hero/students-parking": {
+      "name": "Student's Parking",
+      "subtitle": "Covered Two-Wheeler Parking Sheds",
+      "category": "landmark",
+      "floors": 1,
+      "tags": [
+        "parking",
+        "student parking",
+        "students parking",
+        "two wheeler",
+        "bike parking",
+        "sheds"
+      ]
+    },
+    "hero/visitor-parking": {
+      "name": "Visitor / Car Parking",
+      "subtitle": "Main Gate Paved Car & Visitor Parking Lot",
+      "category": "landmark",
+      "floors": 1,
+      "tags": [
+        "parking",
+        "car parking",
+        "visitor parking",
+        "visitors",
+        "parking lot",
+        "main gate"
       ]
     }
   },

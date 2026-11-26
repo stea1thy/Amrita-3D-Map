@@ -15,7 +15,7 @@ export interface QuickJumpItem {
 }
 
 export const QUICK_JUMP_ITEMS: QuickJumpItem[] = [
-  { id: "main-gate", label: "Main Gate", buildingId: "way/531088187" },
+  { id: "main-gate", label: "Main Gate", buildingId: "hero/main-gate" },
   { id: "ab1", label: "AB-1", buildingId: "way/380925364" },
   { id: "ab2", label: "AB-2", buildingId: "way/380702789" },
   { id: "ab3", label: "AB-3", buildingId: "way/380829415" },
