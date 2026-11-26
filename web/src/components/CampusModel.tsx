@@ -2,7 +2,8 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import type { ThreeEvent } from "@react-three/fiber";
-import { Html, useGLTF } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
+import ScreenLabel from "./ScreenLabel";
 import * as THREE from "three";
 import { resolveDebugHit } from "@/lib/debugPicking";
 import {
@@ -516,7 +517,7 @@ export default function CampusModel({
         )}
 
       {debugMode && debugHovered && (
-        <Html
+        <ScreenLabel
           position={[
             debugHovered.center[0],
             debugHovered.center[1] + Math.max(4, debugHovered.heightM * 0.5 + 5),
@@ -539,11 +540,11 @@ export default function CampusModel({
               </span>
             )}
           </div>
-        </Html>
+        </ScreenLabel>
       )}
 
       {hoveredBuilding && (
-        <Html
+        <ScreenLabel
           position={[
             hoveredBuilding.center[0],
             hoveredBuilding.center[1] + hoveredBuilding.heightM * 0.5 + 8,
@@ -569,7 +570,7 @@ export default function CampusModel({
               <span>{hoveredBuilding.name}</span>
             </span>
           </div>
-        </Html>
+        </ScreenLabel>
       )}
     </group>
   );

@@ -30,8 +30,8 @@
     "bridges": 1,
     "inspectables": 151,
     "trees": 2800,
-    "palms": 731,
-    "canopy": 2069,
+    "palms": 736,
+    "canopy": 2064,
     "overtureBuildings": 53,
     "overturePlaces": 17,
     "unmatchedPois": 2
@@ -136,17 +136,17 @@
         "School of Computing",
         "International School of Law"
       ],
-      "floors": 3,
-      "heightM": 10.8,
+      "floors": 4,
+      "heightM": 14.4,
       "center": [
-        -336.452,
-        22.021,
-        -392.869
+        -335.611,
+        24.091,
+        -398.365
       ],
-      "boundingRadius": 68.9,
+      "boundingRadius": 69.56,
       "latLon": [
-        10.906229,
-        76.897522
+        10.906279,
+        76.89753
       ],
       "rawTags": {
         "addr:city": "Ettimadai",
@@ -2907,17 +2907,17 @@
         "School of Computing",
         "International School of Law"
       ],
-      "floors": 3,
-      "heightM": 10.8,
+      "floors": 4,
+      "heightM": 14.4,
       "center": [
-        -336.452,
-        22.021,
-        -392.869
+        -335.611,
+        24.091,
+        -398.365
       ],
-      "boundingRadius": 68.9,
+      "boundingRadius": 69.56,
       "latLon": [
-        10.906229,
-        76.897522
+        10.906279,
+        76.89753
       ],
       "rawTags": {
         "addr:city": "Ettimadai",
@@ -2928,27 +2928,67 @@
       "subtitle": "School of Computing & International School of Law",
       "kind": "building",
       "boundsXZ": [
-        -398.7,
-        -424.9,
-        -273.8,
-        -361.6
+        -399.5,
+        -430.7,
+        -274.3,
+        -366.6
       ],
       "footprintXZ": [
         [
-          -396.3,
-          -361.6
+          -274.3,
+          -373.4
         ],
         [
-          -273.8,
-          -366.8
+          -278.3,
+          -430.7
         ],
         [
-          -277.9,
-          -424.9
+          -399.5,
+          -422.2
         ],
         [
-          -398.7,
-          -418.4
+          -398.3,
+          -405.6
+        ],
+        [
+          -390.8,
+          -406.1
+        ],
+        [
+          -390.4,
+          -399.7
+        ],
+        [
+          -397.9,
+          -399.2
+        ],
+        [
+          -397.1,
+          -387.8
+        ],
+        [
+          -389.6,
+          -388.3
+        ],
+        [
+          -389.1,
+          -381.9
+        ],
+        [
+          -396.6,
+          -381.4
+        ],
+        [
+          -395.6,
+          -366.6
+        ],
+        [
+          -328.3,
+          -371.4
+        ],
+        [
+          -328.1,
+          -369.6
         ]
       ]
     },
