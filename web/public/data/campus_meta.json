@@ -25,14 +25,14 @@
     "maxZ": 1110.18
   },
   "counts": {
-    "buildings": 33,
-    "namedBuildings": 33,
+    "buildings": 36,
+    "namedBuildings": 36,
     "bridges": 1,
-    "inspectables": 154,
+    "inspectables": 151,
     "trees": 2800,
-    "palms": 892,
-    "canopy": 1908,
-    "overtureBuildings": 56,
+    "palms": 736,
+    "canopy": 2064,
+    "overtureBuildings": 53,
     "overturePlaces": 17,
     "unmatchedPois": 2
   },
@@ -612,41 +612,6 @@
       "nearestNodeId": 211
     },
     {
-      "id": "way/531088187",
-      "meshName": "BLDG_way_531088187",
-      "name": "Dhanlaxmi Bank",
-      "source": "osm",
-      "isNamed": true,
-      "category": "admin",
-      "tags": [
-        "bank",
-        "admin"
-      ],
-      "departments": [],
-      "floors": 1,
-      "heightM": 3.6,
-      "center": [
-        -25.579,
-        -11.025,
-        340.794
-      ],
-      "boundingRadius": 11.46,
-      "latLon": [
-        10.899639,
-        76.900366
-      ],
-      "rawTags": {
-        "amenity": "bank",
-        "atm": "yes",
-        "brand": "Dhanlaxmi Bank",
-        "brand:wikidata": "Q2040440",
-        "building": "yes",
-        "name": "Dhanlaxmi Bank",
-        "operator": "Dhanlaxmi Bank"
-      },
-      "nearestNodeId": 764
-    },
-    {
       "id": "way/380829418",
       "meshName": "BLDG_way_380829418",
       "name": "Fabrication workshop",
@@ -1146,6 +1111,143 @@
         }
       ],
       "nearestNodeId": 260
+    },
+    {
+      "id": "hero/main-gate",
+      "meshName": "BLDG_hero_main_gate",
+      "name": "Main Gate",
+      "source": "hero",
+      "isNamed": true,
+      "category": "landmark",
+      "tags": [
+        "main gate",
+        "gate",
+        "entrance",
+        "arch",
+        "checkpoint",
+        "ettimadai",
+        "railway crossing"
+      ],
+      "departments": [],
+      "floors": 1,
+      "heightM": 5.2,
+      "center": [
+        -55.5,
+        -9.72,
+        385.75
+      ],
+      "boundingRadius": 16.13,
+      "latLon": [
+        10.899235,
+        76.900092
+      ],
+      "rawTags": {
+        "hero": "hero/main-gate"
+      },
+      "subtitle": "Amrita Vishwa Vidyapeetham Campus Entrance & Checkpoint",
+      "nearestNodeId": 67
+    },
+    {
+      "id": "hero/security-office",
+      "meshName": "BLDG_hero_security_office",
+      "name": "Security Office",
+      "source": "hero",
+      "isNamed": true,
+      "category": "admin",
+      "tags": [
+        "security",
+        "security office",
+        "gatehouse",
+        "visitor pass",
+        "checkpoint",
+        "main gate"
+      ],
+      "departments": [],
+      "floors": 2,
+      "heightM": 9.5,
+      "center": [
+        -19.0,
+        -7.26,
+        382.25
+      ],
+      "boundingRadius": 12.31,
+      "latLon": [
+        10.899266,
+        76.900426
+      ],
+      "rawTags": {
+        "hero": "hero/security-office"
+      },
+      "subtitle": "Campus Security Gatehouse & Visitor Pass Desk",
+      "nearestNodeId": 71
+    },
+    {
+      "id": "hero/students-parking",
+      "meshName": "BLDG_hero_students_parking",
+      "name": "Student's Parking",
+      "source": "hero",
+      "isNamed": true,
+      "category": "landmark",
+      "tags": [
+        "parking",
+        "student parking",
+        "students parking",
+        "two wheeler",
+        "bike parking",
+        "sheds"
+      ],
+      "departments": [],
+      "floors": 1,
+      "heightM": 4.0,
+      "center": [
+        -35.25,
+        -9.97,
+        327.0
+      ],
+      "boundingRadius": 26.54,
+      "latLon": [
+        10.899763,
+        76.900278
+      ],
+      "rawTags": {
+        "hero": "hero/students-parking"
+      },
+      "subtitle": "Covered Two-Wheeler Parking Sheds",
+      "nearestNodeId": 762
+    },
+    {
+      "id": "hero/visitor-parking",
+      "meshName": "BLDG_hero_visitor_parking",
+      "name": "Visitor / Car Parking",
+      "source": "hero",
+      "isNamed": true,
+      "category": "landmark",
+      "tags": [
+        "parking",
+        "car parking",
+        "visitor parking",
+        "visitors",
+        "parking lot",
+        "main gate"
+      ],
+      "departments": [],
+      "floors": 1,
+      "heightM": 2.0,
+      "center": [
+        11.25,
+        -9.78,
+        327.0
+      ],
+      "boundingRadius": 33.91,
+      "latLon": [
+        10.899763,
+        76.900703
+      ],
+      "rawTags": {
+        "hero": "hero/visitor-parking"
+      },
+      "subtitle": "Main Gate Paved Car & Visitor Parking Lot",
+      "nearestNodeId": 766
     }
   ],
   "inspectables": [
@@ -6365,117 +6467,6 @@
       ]
     },
     {
-      "id": "way/531088187",
-      "meshName": "BLDG_way_531088187",
-      "name": "Dhanlaxmi Bank",
-      "source": "osm",
-      "isNamed": true,
-      "category": "admin",
-      "tags": [
-        "bank",
-        "admin"
-      ],
-      "departments": [],
-      "floors": 1,
-      "heightM": 3.6,
-      "center": [
-        -25.579,
-        -11.025,
-        340.794
-      ],
-      "boundingRadius": 11.46,
-      "latLon": [
-        10.899639,
-        76.900366
-      ],
-      "rawTags": {
-        "amenity": "bank",
-        "atm": "yes",
-        "brand": "Dhanlaxmi Bank",
-        "brand:wikidata": "Q2040440",
-        "building": "yes",
-        "name": "Dhanlaxmi Bank",
-        "operator": "Dhanlaxmi Bank"
-      },
-      "kind": "building",
-      "boundsXZ": [
-        -30.9,
-        331.0,
-        -20.3,
-        351.0
-      ],
-      "footprintXZ": [
-        [
-          -30.9,
-          332.7
-        ],
-        [
-          -27.4,
-          351.0
-        ],
-        [
-          -20.3,
-          348.5
-        ],
-        [
-          -23.6,
-          331.0
-        ]
-      ]
-    },
-    {
-      "id": "way/531088194",
-      "meshName": "STATIC_Buildings",
-      "kind": "building",
-      "name": "Unnamed Structure (way/531088194)",
-      "source": "osm",
-      "isNamed": false,
-      "category": "default",
-      "tags": [
-        "default"
-      ],
-      "departments": [],
-      "floors": 1,
-      "heightM": 3.6,
-      "center": [
-        -28.633,
-        -11.07,
-        327.948
-      ],
-      "boundingRadius": 6.43,
-      "latLon": [
-        10.899754,
-        76.900338
-      ],
-      "boundsXZ": [
-        -32.5,
-        324.9,
-        -24.9,
-        331.0
-      ],
-      "footprintXZ": [
-        [
-          -32.5,
-          326.5
-        ],
-        [
-          -31.4,
-          331.0
-        ],
-        [
-          -24.9,
-          329.5
-        ],
-        [
-          -25.8,
-          324.9
-        ]
-      ],
-      "rawTags": {
-        "building": "yes"
-      }
-    },
-    {
       "id": "way/531394576",
       "meshName": "BLDG_way_531394576",
       "name": "Shrine",
@@ -7243,110 +7234,6 @@
       ],
       "rawTags": {
         "building": "residential"
-      }
-    },
-    {
-      "id": "way/546394580",
-      "meshName": "STATIC_Buildings",
-      "kind": "building",
-      "name": "Unnamed Structure (way/546394580)",
-      "source": "osm",
-      "isNamed": false,
-      "category": "default",
-      "tags": [
-        "default"
-      ],
-      "departments": [],
-      "floors": 1,
-      "heightM": 3.6,
-      "center": [
-        -18.665,
-        -10.862,
-        376.411
-      ],
-      "boundingRadius": 8.22,
-      "latLon": [
-        10.899319,
-        76.900429
-      ],
-      "boundsXZ": [
-        -23.0,
-        371.3,
-        -14.2,
-        381.3
-      ],
-      "footprintXZ": [
-        [
-          -23.0,
-          371.7
-        ],
-        [
-          -22.8,
-          381.2
-        ],
-        [
-          -14.2,
-          381.3
-        ],
-        [
-          -14.8,
-          371.3
-        ]
-      ],
-      "rawTags": {
-        "building": "yes"
-      }
-    },
-    {
-      "id": "way/546394581",
-      "meshName": "STATIC_Buildings",
-      "kind": "building",
-      "name": "Unnamed Structure (way/546394581)",
-      "source": "osm",
-      "isNamed": false,
-      "category": "default",
-      "tags": [
-        "default"
-      ],
-      "departments": [],
-      "floors": 1,
-      "heightM": 3.6,
-      "center": [
-        -18.203,
-        -10.851,
-        387.397
-      ],
-      "boundingRadius": 7.55,
-      "latLon": [
-        10.89922,
-        76.900433
-      ],
-      "boundsXZ": [
-        -22.7,
-        383.8,
-        -13.8,
-        391.0
-      ],
-      "footprintXZ": [
-        [
-          -13.8,
-          391.0
-        ],
-        [
-          -14.2,
-          383.8
-        ],
-        [
-          -22.7,
-          384.0
-        ],
-        [
-          -22.2,
-          390.8
-        ]
-      ],
-      "rawTags": {
-        "building": "yes"
       }
     },
     {
@@ -8286,68 +8173,6 @@
         "source": "Google Open Buildings",
         "overture_id": "92c6998a-b93d-44e0-ac33-6f2397eb0c50"
       }
-    },
-    {
-      "id": "overture/c72d394b-5e8",
-      "meshName": "STATIC_Buildings",
-      "kind": "building",
-      "name": "Unnamed Structure (overture/c72d394b-5e8)",
-      "source": "overture",
-      "isNamed": false,
-      "category": "default",
-      "tags": [
-        "Department of Mass Communication, Amrita Vishwa Vidyapeetham",
-        "default"
-      ],
-      "departments": [],
-      "floors": 1,
-      "heightM": 3.6,
-      "center": [
-        -42.828,
-        -10.455,
-        320.021
-      ],
-      "boundingRadius": 16.63,
-      "latLon": [
-        10.899825,
-        76.900208
-      ],
-      "boundsXZ": [
-        -47.9,
-        304.4,
-        -37.8,
-        335.6
-      ],
-      "footprintXZ": [
-        [
-          -37.8,
-          334.8
-        ],
-        [
-          -42.2,
-          304.4
-        ],
-        [
-          -47.9,
-          305.3
-        ],
-        [
-          -43.4,
-          335.6
-        ]
-      ],
-      "rawTags": {
-        "building": "yes",
-        "source": "Google Open Buildings",
-        "overture_id": "c72d394b-5e8d-44c6-ba75-103eef25a667"
-      },
-      "places": [
-        {
-          "name": "Department of Mass Communication, Amrita Vishwa Vidyapeetham",
-          "category": "academic",
-          "rawCategory": "college_university"
-        }
-      ]
     },
     {
       "id": "overture/becff551-d85",
@@ -9778,60 +9603,6 @@
       }
     },
     {
-      "id": "overture/a35b7227-0f1",
-      "meshName": "STATIC_Buildings",
-      "kind": "building",
-      "name": "Unnamed Structure (overture/a35b7227-0f1)",
-      "source": "overture",
-      "isNamed": false,
-      "category": "default",
-      "tags": [
-        "default"
-      ],
-      "departments": [],
-      "floors": 1,
-      "heightM": 3.6,
-      "center": [
-        -63.351,
-        -11.591,
-        377.471
-      ],
-      "boundingRadius": 8.58,
-      "latLon": [
-        10.899309,
-        76.90002
-      ],
-      "boundsXZ": [
-        -67.2,
-        371.5,
-        -59.5,
-        383.5
-      ],
-      "footprintXZ": [
-        [
-          -67.1,
-          383.5
-        ],
-        [
-          -59.5,
-          383.4
-        ],
-        [
-          -59.6,
-          371.5
-        ],
-        [
-          -67.2,
-          371.5
-        ]
-      ],
-      "rawTags": {
-        "building": "yes",
-        "source": "Google Open Buildings",
-        "overture_id": "a35b7227-0f18-41d3-8dff-793d86305f59"
-      }
-    },
-    {
       "id": "overture/5f45283a-f87",
       "meshName": "STATIC_Buildings",
       "kind": "building",
@@ -10264,60 +10035,6 @@
       }
     },
     {
-      "id": "overture/6cde8c35-13b",
-      "meshName": "STATIC_Buildings",
-      "kind": "building",
-      "name": "Unnamed Structure (overture/6cde8c35-13b)",
-      "source": "overture",
-      "isNamed": false,
-      "category": "default",
-      "tags": [
-        "default"
-      ],
-      "departments": [],
-      "floors": 1,
-      "heightM": 3.6,
-      "center": [
-        -56.718,
-        -11.539,
-        377.41
-      ],
-      "boundingRadius": 8.18,
-      "latLon": [
-        10.89931,
-        76.900081
-      ],
-      "boundsXZ": [
-        -59.6,
-        371.4,
-        -53.8,
-        383.4
-      ],
-      "footprintXZ": [
-        [
-          -59.5,
-          383.4
-        ],
-        [
-          -53.8,
-          383.4
-        ],
-        [
-          -53.9,
-          371.4
-        ],
-        [
-          -59.6,
-          371.5
-        ]
-      ],
-      "rawTags": {
-        "building": "yes",
-        "source": "Google Open Buildings",
-        "overture_id": "6cde8c35-13b3-45cb-9ef6-54cdb42bf7f4"
-      }
-    },
-    {
       "id": "overture/a6086595-61f",
       "meshName": "STATIC_Buildings",
       "kind": "building",
@@ -10587,6 +10304,239 @@
       ],
       "departments": [],
       "boundingRadius": 8.09
+    },
+    {
+      "id": "hero/main-gate",
+      "meshName": "BLDG_hero_main_gate",
+      "name": "Main Gate",
+      "source": "hero",
+      "isNamed": true,
+      "category": "landmark",
+      "tags": [
+        "main gate",
+        "gate",
+        "entrance",
+        "arch",
+        "checkpoint",
+        "ettimadai",
+        "railway crossing"
+      ],
+      "departments": [],
+      "floors": 1,
+      "heightM": 5.2,
+      "center": [
+        -55.5,
+        -9.72,
+        385.75
+      ],
+      "boundingRadius": 16.13,
+      "latLon": [
+        10.899235,
+        76.900092
+      ],
+      "rawTags": {
+        "hero": "hero/main-gate"
+      },
+      "subtitle": "Amrita Vishwa Vidyapeetham Campus Entrance & Checkpoint",
+      "kind": "building",
+      "boundsXZ": [
+        -66.0,
+        373.5,
+        -45.0,
+        398.0
+      ],
+      "footprintXZ": [
+        [
+          -66.0,
+          398.0
+        ],
+        [
+          -45.0,
+          398.0
+        ],
+        [
+          -45.0,
+          373.5
+        ],
+        [
+          -66.0,
+          373.5
+        ]
+      ]
+    },
+    {
+      "id": "hero/security-office",
+      "meshName": "BLDG_hero_security_office",
+      "name": "Security Office",
+      "source": "hero",
+      "isNamed": true,
+      "category": "admin",
+      "tags": [
+        "security",
+        "security office",
+        "gatehouse",
+        "visitor pass",
+        "checkpoint",
+        "main gate"
+      ],
+      "departments": [],
+      "floors": 2,
+      "heightM": 9.5,
+      "center": [
+        -19.0,
+        -7.26,
+        382.25
+      ],
+      "boundingRadius": 12.31,
+      "latLon": [
+        10.899266,
+        76.900426
+      ],
+      "rawTags": {
+        "hero": "hero/security-office"
+      },
+      "subtitle": "Campus Security Gatehouse & Visitor Pass Desk",
+      "kind": "building",
+      "boundsXZ": [
+        -25.0,
+        371.5,
+        -13.0,
+        393.0
+      ],
+      "footprintXZ": [
+        [
+          -25.0,
+          393.0
+        ],
+        [
+          -13.0,
+          393.0
+        ],
+        [
+          -13.0,
+          371.5
+        ],
+        [
+          -25.0,
+          371.5
+        ]
+      ]
+    },
+    {
+      "id": "hero/students-parking",
+      "meshName": "BLDG_hero_students_parking",
+      "name": "Student's Parking",
+      "source": "hero",
+      "isNamed": true,
+      "category": "landmark",
+      "tags": [
+        "parking",
+        "student parking",
+        "students parking",
+        "two wheeler",
+        "bike parking",
+        "sheds"
+      ],
+      "departments": [],
+      "floors": 1,
+      "heightM": 4.0,
+      "center": [
+        -35.25,
+        -9.97,
+        327.0
+      ],
+      "boundingRadius": 26.54,
+      "latLon": [
+        10.899763,
+        76.900278
+      ],
+      "rawTags": {
+        "hero": "hero/students-parking"
+      },
+      "subtitle": "Covered Two-Wheeler Parking Sheds",
+      "kind": "building",
+      "boundsXZ": [
+        -48.5,
+        304.0,
+        -22.0,
+        350.0
+      ],
+      "footprintXZ": [
+        [
+          -48.5,
+          350.0
+        ],
+        [
+          -22.0,
+          350.0
+        ],
+        [
+          -22.0,
+          304.0
+        ],
+        [
+          -48.5,
+          304.0
+        ]
+      ]
+    },
+    {
+      "id": "hero/visitor-parking",
+      "meshName": "BLDG_hero_visitor_parking",
+      "name": "Visitor / Car Parking",
+      "source": "hero",
+      "isNamed": true,
+      "category": "landmark",
+      "tags": [
+        "parking",
+        "car parking",
+        "visitor parking",
+        "visitors",
+        "parking lot",
+        "main gate"
+      ],
+      "departments": [],
+      "floors": 1,
+      "heightM": 2.0,
+      "center": [
+        11.25,
+        -9.78,
+        327.0
+      ],
+      "boundingRadius": 33.91,
+      "latLon": [
+        10.899763,
+        76.900703
+      ],
+      "rawTags": {
+        "hero": "hero/visitor-parking"
+      },
+      "subtitle": "Main Gate Paved Car & Visitor Parking Lot",
+      "kind": "building",
+      "boundsXZ": [
+        -18.0,
+        309.5,
+        40.5,
+        344.5
+      ],
+      "footprintXZ": [
+        [
+          -17.8,
+          344.5
+        ],
+        [
+          40.5,
+          333.0
+        ],
+        [
+          34.0,
+          309.5
+        ],
+        [
+          -18.0,
+          322.0
+        ]
+      ]
     }
   ],
   "overturePois": [

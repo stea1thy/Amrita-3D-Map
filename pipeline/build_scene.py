@@ -1303,7 +1303,8 @@ def build_ground_features_object(
                 max_z, min_edge_z = _grid_sample_ring_elevations(clipped_outer, terrain, steps=9)
                 z_top = max_z + 0.26
                 flat_pad_heights[HERO_PLAYGROUND_ID] = z_top
-                _add_flat_terrace_slab(bm, [clipped_outer], z_top, min_edge_z - 3.0, 3, 7)
+                # Dedicated geometry is emitted by modular hero `pipeline/heroes/main_ground.py`.
+                break
         elif subtype in {"pitch", "soccer", "cricket", "football"}:
             for rings in geojson_polygon_rings_to_blender(feat["geometry"]):
                 clipped_outer = clip_polygon_bbox(rings[0], min_x, min_y, max_x, max_y)
@@ -1494,50 +1495,7 @@ def build_hero_accents_object(
                 water_flat_z=flat_pads.get(HERO_POOL_WATER_ID),
             )
 
-    # 2. Main Sports Ground (Amrita Playground) track oval, pitch markings, 6-tier bleachers & goalposts
-    pg_feat = next((f for f in raw_features if f["id"] == HERO_PLAYGROUND_ID), None)
-    if pg_feat:
-        pts = [latlon_to_blender_xy(p[1], p[0]) for p in pg_feat["geometry"]["coordinates"][0][:-1]]
-        if len(pts) >= 4:
-            gcx, gcy = sum(p[0] for p in pts) / 4.0, sum(p[1] for p in pts) / 4.0
-            ang = math.atan2(pts[1][1] - pts[0][1], pts[1][0] - pts[0][0])
-            ca, sa = math.cos(ang), math.sin(ang)
-            pg_flat_z = flat_pads.get(HERO_PLAYGROUND_ID)
-            pg_line_z = pg_flat_z + 0.05 if pg_flat_z is not None else None
-
-            rx, ry, track_w = 78.0, 56.0, 1.8
-            segs = 40
-            in_vs: list[bmesh.types.BMVert] = []
-            out_vs: list[bmesh.types.BMVert] = []
-            for i in range(segs):
-                th = (2.0 * math.pi * i) / segs
-                lx, ly = rx * math.cos(th), ry * math.sin(th)
-                ix, iy = (rx - track_w) * math.cos(th), (ry - track_w) * math.sin(th)
-                ox_w, oy_w = gcx + lx * ca - ly * sa, gcy + lx * sa + ly * ca
-                ix_w, iy_w = gcx + ix * ca - iy * sa, gcy + ix * sa + iy * ca
-                z_out = pg_line_z if pg_line_z is not None else terrain.sample(ox_w, oy_w) + 0.095
-                z_in = pg_line_z if pg_line_z is not None else terrain.sample(ix_w, iy_w) + 0.095
-                out_vs.append(bm.verts.new((ox_w, oy_w, z_out)))
-                in_vs.append(bm.verts.new((ix_w, iy_w, z_in)))
-            for i in range(segs):
-                j = (i + 1) % segs
-                _add_tri_vc(bm, col_layer, (in_vs[i], out_vs[i], out_vs[j]), 0, c_white)
-                _add_tri_vc(bm, col_layer, (in_vs[i], out_vs[j], in_vs[j]), 0, c_white)
-
-            _add_ground_strip(gcx, gcy, 96.0, 1.1, ang, 0.095, c_white, segs=4, fixed_z=pg_line_z)
-            _add_ground_strip(gcx - sa * 32.0, gcy + ca * 32.0, 96.0, 0.9, ang, 0.095, c_white, segs=4, fixed_z=pg_line_z)
-            _add_ground_strip(gcx + sa * 32.0, gcy - ca * 32.0, 96.0, 0.9, ang, 0.095, c_white, segs=4, fixed_z=pg_line_z)
-            _add_ground_strip(gcx, gcy, 64.0, 0.9, ang + math.pi * 0.5, 0.095, c_white, segs=3, fixed_z=pg_line_z)
-
-            ab3_hero.append_playground_bleachers_and_goals(
-                bm=bm,
-                col_layer=col_layer,
-                terrain=terrain,
-                gcx=gcx,
-                gcy=gcy,
-                pitch_ang_rad=ang,
-                pg_flat_z=pg_flat_z,
-            )
+    # 2. Main Sports Ground (Amrita Playground) is now built modularly by `pipeline/heroes/main_ground.py`.
 
     # 3. AB-1 Circular Lotus/Saraswati Fountain Roundabout & Forecourt Planters
     ab1_hero.append_ab1_fountain_plaza(bm, col_layer, terrain)
@@ -1546,8 +1504,7 @@ def build_hero_accents_object(
     # 4. ASB Curved Stone-Masonry Driveway Planter Island
     asb_hero.append_asb_driveway_planter(bm, col_layer, terrain)
 
-    # 5. Grand Amrita Entrance Gate Archway straddling the entrance boulevard
-    campus_landmarks.append_main_gate_archway(bm, col_layer, terrain)
+    # 5. Grand Amrita Entrance Gate Archway & Checkpoint are built modularly by `pipeline/heroes/main_gate.py`.
 
     # 6. Forecourt planter beds flanking AB-2 and Central Library entrances (AB-3 uses its garden island) (on sandstone plazas, clear of road curbs)
     _add_planter_bed(-251.0, 86.0, 2.5, 1.1, 0.08)
@@ -3197,14 +3154,10 @@ def generate_trees_data(
                     if dist_point_to_segment_sq(tx, ty, pts[i][0], pts[i][1], pts[i + 1][0], pts[i + 1][1]) < pad_sq:
                         return False
 
-        # Keep hero plazas, Main Gate wings, AB-1 Lotus Fountain, ASB median planter & bleachers clear of trees
+        # Keep hero plazas, AB-1 Lotus Fountain & ASB median planter clear of trees
         hero_clear_discs = (
             (ab1_hero.AB1_FOUNTAIN_CX, ab1_hero.AB1_FOUNTAIN_CY, 11.5 * 11.5),
-            (campus_landmarks.MAIN_GATE_CX, campus_landmarks.MAIN_GATE_CY, 17.5 * 17.5),
             (132.5, 157.2, 6.5 * 6.5),
-            (171.8, 36.0, 14.0 * 14.0),
-            (171.8, 16.0, 14.0 * 14.0),
-            (171.8, -6.0, 14.0 * 14.0),
             (ab1_hero.AB1_PARKING_CX, ab1_hero.AB1_PARKING_CY, 22.5 * 22.5),
         ) + (() if allow_ab3_front else tuple(ab3_hero.ab3_front_clear_discs()))
         for hx, hy, hr2 in hero_clear_discs:
@@ -3274,6 +3227,47 @@ def generate_trees_data(
         if _is_clear(jx, jy, min_tree_spacing=9.5, avoid_courtyards=False):
             _place(jx, jy, ttype, (0.52, 0.72) if ttype == 1 else (0.78, 0.98))
             ab1_canopy_count += 1
+
+    # 1B. Main Sports Ground dense tropical canopy belt behind east gallery & along north/west edges
+    from heroes import main_ground as hero_main_ground
+
+    mg_belt_candidates: list[tuple[float, float, int, float]] = []
+    for belt_name, u0, u1, v0, v1, step in hero_main_ground.get_main_ground_tree_belts():
+        vu = v0 + 1.0
+        while vu <= v1 - 1.0:
+            uu = u0 + 1.0
+            while uu <= u1 - 1.0:
+                ju = uu + rng.uniform(-1.6, 1.6)
+                jv = vu + rng.uniform(-1.8, 1.8)
+                wx, wy = hero_main_ground.belt_local_to_world(ju, jv)
+                ttype = 0 if (belt_name != "east_gallery_screen" and rng.random() < 0.12) else 1
+                spacing = 4.8 if belt_name == "east_gallery_screen" else 5.8
+                mg_belt_candidates.append((wx, wy, ttype, spacing))
+                uu += step
+            vu += step
+    rng.shuffle(mg_belt_candidates)
+    for wx, wy, ttype, spacing in mg_belt_candidates:
+        if _is_clear(wx, wy, min_tree_spacing=spacing, avoid_courtyards=False):
+            _place(wx, wy, ttype, (1.05, 1.48) if ttype == 1 else (0.90, 1.22))
+
+    # 1C. Main Gate & Parking Perimeter tropical shade trees (outside sheds/lots/rail crossing)
+    from heroes import main_gate as hero_main_gate
+
+    gate_candidates: list[tuple[float, float, int]] = []
+    for gx0, gy0, gx1, gy1, step in hero_main_gate.get_main_gate_shade_tree_belts():
+        yg = gy0 + 1.5
+        while yg <= gy1 - 1.5:
+            xg = gx0 + 1.5
+            while xg <= gx1 - 1.5:
+                jx = xg + rng.uniform(-1.8, 1.8)
+                jy = yg + rng.uniform(-1.8, 1.8)
+                gate_candidates.append((jx, jy, 0 if rng.random() < 0.25 else 1))
+                xg += step
+            yg += step
+    rng.shuffle(gate_candidates)
+    for wx, wy, ttype in gate_candidates:
+        if _is_clear(wx, wy, min_tree_spacing=7.5, avoid_courtyards=False):
+            _place(wx, wy, ttype, (0.95, 1.35) if ttype == 1 else (0.88, 1.18))
 
     # 2. Coconut palm & shade avenues flanking both sides of campus roads (4-6m offset)
     for pts, half_w, curb_w in road_colliders:
