@@ -25,14 +25,14 @@
     "maxZ": 1110.18
   },
   "counts": {
-    "buildings": 36,
-    "namedBuildings": 36,
-    "bridges": 1,
-    "inspectables": 151,
+    "buildings": 49,
+    "namedBuildings": 49,
+    "bridges": 2,
+    "inspectables": 164,
     "trees": 2800,
-    "palms": 729,
-    "canopy": 2071,
-    "overtureBuildings": 53,
+    "palms": 704,
+    "canopy": 2096,
+    "overtureBuildings": 52,
     "overturePlaces": 17,
     "unmatchedPois": 2
   },
@@ -90,14 +90,14 @@
       "floors": 4,
       "heightM": 14.4,
       "center": [
-        -237.734,
-        18.131,
-        -163.458
+        -237.666,
+        16.172,
+        -168.171
       ],
-      "boundingRadius": 143.88,
+      "boundingRadius": 138.66,
       "latLon": [
-        10.904168,
-        76.898425
+        10.904211,
+        76.898426
       ],
       "rawTags": {
         "building": "university",
@@ -503,14 +503,14 @@
       "floors": 3,
       "heightM": 10.8,
       "center": [
-        -163.646,
-        15.866,
-        -189.68
+        -164.482,
+        13.6,
+        -191.898
       ],
-      "boundingRadius": 52.95,
+      "boundingRadius": 50.52,
       "latLon": [
-        10.904404,
-        76.899103
+        10.904424,
+        76.899095
       ],
       "rawTags": {
         "amenity": "library",
@@ -639,10 +639,10 @@
       "heightM": 18.0,
       "center": [
         -88.334,
-        14.296,
+        13.847,
         -35.33
       ],
-      "boundingRadius": 70.6,
+      "boundingRadius": 69.91,
       "latLon": [
         10.903017,
         76.899792
@@ -729,27 +729,368 @@
       "category": "food",
       "tags": [
         "IT Canteen",
-        "restaurant",
-        "food"
+        "AB2 IT Canteen",
+        "canteen",
+        "food",
+        "restaurant"
       ],
       "departments": [],
-      "floors": 2,
-      "heightM": 7.2,
+      "floors": 1,
+      "heightM": 7.7,
       "center": [
-        -276.505,
-        16.025,
-        -247.852
+        -303.189,
+        14.75,
+        -257.249
       ],
-      "boundingRadius": 24.29,
+      "boundingRadius": 20.94,
       "latLon": [
-        10.904926,
-        76.89807
+        10.905011,
+        76.897826
       ],
       "rawTags": {
         "amenity": "restaurant",
         "building": "yes",
         "name": "IT Canteen"
-      }
+      },
+      "subtitle": "AB-2 IT Canteen: single-storey dining hall with garden seating"
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-north-wing-1",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_north_wing_1",
+      "name": "Kashyapa Bhavanam",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "First-Year Boys Hostel",
+        "UG Boys Hostel",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 4,
+      "heightM": 14.4,
+      "center": [
+        519.967,
+        11.72,
+        -92.985
+      ],
+      "boundingRadius": 37.23,
+      "latLon": [
+        10.903535,
+        76.905357
+      ],
+      "rawTags": {},
+      "subtitle": "First-Year UG Boys Hostel — North Wing"
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-central-spine",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_central_spine",
+      "name": "Kashyapa Bhavanam — Central Spine",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "Hostel Services",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        541.04,
+        9.865,
+        -31.75
+      ],
+      "boundingRadius": 53.49,
+      "latLon": [
+        10.902985,
+        76.90555
+      ],
+      "rawTags": {}
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-east-wing-1",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_east_wing_1",
+      "name": "Kashyapa Bhavanam — East Wing 1",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "Hostel Services",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        655.156,
+        10.256,
+        -72.313
+      ],
+      "boundingRadius": 50.68,
+      "latLon": [
+        10.90335,
+        76.906594
+      ],
+      "rawTags": {}
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-east-wing-2",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_east_wing_2",
+      "name": "Kashyapa Bhavanam — East Wing 2",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "Hostel Services",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        659.354,
+        9.781,
+        -47.843
+      ],
+      "boundingRadius": 50.84,
+      "latLon": [
+        10.90313,
+        76.906632
+      ],
+      "rawTags": {}
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-east-wing-3",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_east_wing_3",
+      "name": "Kashyapa Bhavanam — East Wing 3",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "Hostel Services",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        663.546,
+        8.793,
+        -23.375
+      ],
+      "boundingRadius": 50.8,
+      "latLon": [
+        10.90291,
+        76.90667
+      ],
+      "rawTags": {}
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-north-wing-2",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_north_wing_2",
+      "name": "Kashyapa Bhavanam — North Wing 2",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "First-Year Boys Hostel",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 4,
+      "heightM": 14.4,
+      "center": [
+        561.089,
+        11.72,
+        -100.265
+      ],
+      "boundingRadius": 37.23,
+      "latLon": [
+        10.903601,
+        76.905733
+      ],
+      "rawTags": {}
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-north-wing-3",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_north_wing_3",
+      "name": "Kashyapa Bhavanam — North Wing 3",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "First-Year Boys Hostel",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 4,
+      "heightM": 14.4,
+      "center": [
+        602.211,
+        12.336,
+        -107.546
+      ],
+      "boundingRadius": 37.31,
+      "latLon": [
+        10.903666,
+        76.906109
+      ],
+      "rawTags": {}
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-north-wing-4",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_north_wing_4",
+      "name": "Kashyapa Bhavanam — North Wing 4",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "First-Year Boys Hostel",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 4,
+      "heightM": 14.4,
+      "center": [
+        643.334,
+        12.72,
+        -114.826
+      ],
+      "boundingRadius": 37.31,
+      "latLon": [
+        10.903731,
+        76.906485
+      ],
+      "rawTags": {}
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-south-block",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_south_block",
+      "name": "Kashyapa Bhavanam — South Block",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "First-Year Boys Hostel",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 4,
+      "heightM": 14.4,
+      "center": [
+        608.486,
+        9.22,
+        17.405
+      ],
+      "boundingRadius": 111.39,
+      "latLon": [
+        10.902544,
+        76.906167
+      ],
+      "rawTags": {}
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-south-spine",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_south_spine",
+      "name": "Kashyapa Bhavanam — South Spine",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "Hostel Services",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        548.134,
+        8.492,
+        9.661
+      ],
+      "boundingRadius": 53.52,
+      "latLon": [
+        10.902613,
+        76.905614
+      ],
+      "rawTags": {}
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-southwest-spine",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_southwest_spine",
+      "name": "Kashyapa Bhavanam — Southwest Spine",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "Hostel Services",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        544.587,
+        9.179,
+        -11.044
+      ],
+      "boundingRadius": 53.45,
+      "latLon": [
+        10.902799,
+        76.905582
+      ],
+      "rawTags": {}
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-west-spine",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_west_spine",
+      "name": "Kashyapa Bhavanam — West Spine",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "Hostel Services",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        537.493,
+        9.92,
+        -52.455
+      ],
+      "boundingRadius": 53.46,
+      "latLon": [
+        10.903171,
+        76.905517
+      ],
+      "rawTags": {}
     },
     {
       "id": "way/380926300",
@@ -914,6 +1255,33 @@
         "name": "Nachiketas Bhavanam",
         "tourism": "hostel"
       }
+    },
+    {
+      "id": "custom/hostel-south-of-nataraja",
+      "meshName": "BLDG_custom_hostel_south_of_nataraja",
+      "name": "New Hostel (name to be confirmed)",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "hostel",
+        "new hostel"
+      ],
+      "departments": [],
+      "floors": 5,
+      "heightM": 16.4,
+      "center": [
+        -178.501,
+        8.408,
+        -9.019
+      ],
+      "boundingRadius": 48.76,
+      "latLon": [
+        10.902781,
+        76.898967
+      ],
+      "rawTags": {},
+      "subtitle": "Five-floor courtyard hostel south-east of the Nataraja fountain"
     },
     {
       "id": "way/531394576",
@@ -1224,50 +1592,53 @@
       "category": "food",
       "tags": [
         "IT Canteen",
-        "restaurant",
-        "food"
+        "AB2 IT Canteen",
+        "canteen",
+        "food",
+        "restaurant"
       ],
       "departments": [],
-      "floors": 2,
-      "heightM": 7.2,
+      "floors": 1,
+      "heightM": 7.7,
       "center": [
-        -276.505,
-        16.025,
-        -247.852
+        -303.189,
+        14.75,
+        -257.249
       ],
-      "boundingRadius": 24.29,
+      "boundingRadius": 20.94,
       "latLon": [
-        10.904926,
-        76.89807
+        10.905011,
+        76.897826
       ],
       "rawTags": {
         "amenity": "restaurant",
         "building": "yes",
         "name": "IT Canteen"
       },
+      "subtitle": "AB-2 IT Canteen: single-storey dining hall with garden seating",
       "kind": "building",
       "boundsXZ": [
-        -292.1,
-        -268.1,
-        -261.3,
-        -226.7
+        -315.2,
+        -275.7,
+        -291.2,
+        -238.8
       ],
       "footprintXZ": [
         [
-          -282.9,
-          -226.7
+          -306.7,
+          -238.8
         ],
         [
-          -261.3,
-          -234.1
+          -291.2,
+          -242.8
         ],
         [
-          -269.2,
-          -268.1
+          -299.7,
+          -275.7
         ],
         [
-          -292.1,
-          -262.1
+          -315.2,
+          -271.7
         ]
       ]
     },
@@ -1400,14 +1771,14 @@
       "floors": 4,
       "heightM": 14.4,
       "center": [
-        -237.734,
-        18.131,
-        -163.458
+        -237.666,
+        16.172,
+        -168.171
       ],
-      "boundingRadius": 143.88,
+      "boundingRadius": 138.66,
       "latLon": [
-        10.904168,
-        76.898425
+        10.904211,
+        76.898426
       ],
       "rawTags": {
         "building": "university",
@@ -1423,159 +1794,203 @@
       ],
       "kind": "building",
       "boundsXZ": [
-        -299.2,
-        -266.5,
-        -133.8,
-        -90.9
+        -302.0,
+        -265.9,
+        -135.8,
+        -90.3
       ],
       "footprintXZ": [
         [
-          -293.3,
-          -103.5
+          -295.4,
+          -106.0
         ],
         [
-          -254.6,
-          -107.9
+          -256.3,
+          -110.6
         ],
         [
-          -254.0,
-          -101.7
-        ],
-        [
-          -249.9,
-          -102.6
-        ],
-        [
-          -248.8,
-          -90.9
-        ],
-        [
-          -232.4,
-          -92.9
-        ],
-        [
-          -233.5,
-          -103.8
-        ],
-        [
-          -229.7,
+          -255.6,
           -104.7
         ],
         [
-          -230.6,
-          -109.9
+          -251.2,
+          -105.2
         ],
         [
-          -197.2,
-          -114.9
+          -249.4,
+          -90.3
         ],
         [
-          -198.9,
-          -131.6
+          -233.0,
+          -92.3
         ],
         [
-          -214.8,
-          -129.5
+          -234.8,
+          -107.1
         ],
         [
-          -233.2,
-          -126.9
+          -232.3,
+          -107.4
         ],
         [
-          -234.4,
-          -135.7
+          -233.1,
+          -113.9
         ],
         [
           -199.8,
-          -140.7
+          -117.8
         ],
         [
-          -203.9,
-          -178.8
+          -201.6,
+          -133.2
         ],
         [
-          -246.7,
-          -174.1
+          -236.4,
+          -129.1
         ],
         [
-          -248.5,
-          -195.3
+          -236.6,
+          -131.1
         ],
         [
-          -207.1,
-          -199.9
+          -237.6,
+          -131.0
         ],
         [
-          -210.4,
-          -237.5
+          -238.5,
+          -138.4
         ],
         [
-          -133.8,
-          -249.5
+          -200.0,
+          -143.0
         ],
         [
-          -136.2,
-          -263.9
+          -203.1,
+          -169.3
         ],
         [
-          -167.0,
-          -259.2
+          -209.3,
+          -168.6
         ],
         [
-          -167.9,
-          -266.5
+          -210.6,
+          -179.5
+        ],
+        [
+          -242.4,
+          -175.7
+        ],
+        [
+          -242.5,
+          -176.2
+        ],
+        [
+          -245.4,
+          -175.9
+        ],
+        [
+          -247.5,
+          -193.2
+        ],
+        [
+          -213.2,
+          -197.3
+        ],
+        [
+          -213.5,
+          -199.3
+        ],
+        [
+          -206.8,
+          -200.1
+        ],
+        [
+          -211.5,
+          -239.8
+        ],
+        [
+          -135.8,
+          -248.8
+        ],
+        [
+          -137.3,
+          -262.2
+        ],
+        [
+          -168.6,
+          -258.5
+        ],
+        [
+          -169.5,
+          -265.9
+        ],
+        [
+          -177.5,
+          -265.0
         ],
         [
           -176.6,
-          -264.7
+          -257.5
         ],
         [
-          -175.8,
-          -256.5
+          -219.8,
+          -252.4
         ],
         [
-          -208.3,
-          -251.5
+          -215.6,
+          -217.2
         ],
         [
-          -207.4,
-          -243.6
+          -266.7,
+          -211.1
         ],
         [
-          -217.7,
-          -242.2
+          -263.6,
+          -184.3
         ],
         [
-          -214.5,
-          -214.3
+          -253.6,
+          -185.5
         ],
         [
-          -264.0,
-          -208.2
+          -252.4,
+          -175.0
         ],
         [
-          -260.5,
-          -173.6
+          -263.3,
+          -173.7
         ],
         [
-          -299.2,
-          -169.2
+          -263.3,
+          -173.3
         ],
         [
-          -297.7,
-          -153.1
+          -302.0,
+          -168.7
         ],
         [
           -297.6,
-          -151.0
+          -131.4
         ],
         [
-          -297.4,
-          -148.7
+          -258.3,
+          -136.1
         ],
         [
-          -296.3,
-          -136.3
+          -257.5,
+          -128.6
+        ],
+        [
+          -258.5,
+          -128.5
+        ],
+        [
+          -258.2,
+          -126.5
+        ],
+        [
+          -297.2,
+          -121.9
         ]
       ]
     },
@@ -1594,14 +2009,14 @@
       "floors": 3,
       "heightM": 10.8,
       "center": [
-        -163.646,
-        15.866,
-        -189.68
+        -164.482,
+        13.6,
+        -191.898
       ],
-      "boundingRadius": 52.95,
+      "boundingRadius": 50.52,
       "latLon": [
-        10.904404,
-        76.899103
+        10.904424,
+        76.899095
       ],
       "rawTags": {
         "amenity": "library",
@@ -1611,183 +2026,139 @@
       },
       "kind": "building",
       "boundsXZ": [
-        -204.8,
-        -232.2,
-        -123.9,
-        -141.7
+        -201.7,
+        -230.6,
+        -125.6,
+        -153.9
       ],
       "footprintXZ": [
         [
-          -201.6,
-          -197.9
-        ],
-        [
-          -187.5,
-          -199.4
-        ],
-        [
-          -186.6,
-          -194.4
-        ],
-        [
-          -191.6,
-          -187.1
-        ],
-        [
-          -185.1,
-          -181.8
-        ],
-        [
-          -184.0,
-          -175.6
-        ],
-        [
-          -196.6,
-          -173.8
-        ],
-        [
           -193.7,
-          -150.7
+          -153.9
         ],
         [
-          -170.5,
-          -154.2
+          -172.8,
+          -156.4
         ],
         [
-          -171.1,
-          -160.4
+          -173.6,
+          -162.9
         ],
         [
-          -163.5,
-          -161.8
-        ],
-        [
-          -162.1,
-          -153.2
-        ],
-        [
-          -164.9,
-          -151.0
-        ],
-        [
-          -167.6,
-          -147.8
+          -168.5,
+          -163.5
         ],
         [
           -167.5,
-          -145.5
+          -155.4
         ],
         [
-          -162.3,
-          -141.7
+          -153.6,
+          -157.1
         ],
         [
-          -157.1,
-          -142.4
+          -154.5,
+          -165.2
         ],
         [
-          -153.5,
-          -142.8
+          -149.9,
+          -165.7
         ],
         [
           -149.2,
-          -147.2
+          -160.3
         ],
         [
-          -149.3,
-          -148.5
+          -125.6,
+          -163.1
         ],
         [
-          -149.4,
-          -149.8
+          -128.2,
+          -185.2
         ],
         [
-          -154.7,
-          -154.2
+          -143.6,
+          -183.4
         ],
         [
-          -155.5,
-          -163.0
+          -145.3,
+          -197.3
         ],
         [
-          -147.9,
-          -164.5
+          -132.6,
+          -198.8
         ],
         [
-          -146.7,
-          -157.7
+          -133.6,
+          -207.5
         ],
         [
-          -123.9,
-          -160.4
+          -132.0,
+          -207.6
         ],
         [
-          -127.4,
-          -185.0
+          -134.7,
+          -230.6
         ],
         [
-          -140.9,
-          -183.5
-        ],
-        [
-          -141.5,
-          -188.5
-        ],
-        [
-          -135.3,
-          -195.3
-        ],
-        [
-          -143.8,
-          -201.1
-        ],
-        [
-          -144.7,
-          -205.5
-        ],
-        [
-          -130.6,
-          -207.9
-        ],
-        [
-          -134.4,
-          -232.2
-        ],
-        [
-          -157.0,
-          -228.4
-        ],
-        [
-          -155.5,
-          -215.2
-        ],
-        [
-          -159.1,
-          -214.0
-        ],
-        [
-          -161.1,
+          -157.9,
           -227.8
         ],
         [
-          -177.2,
+          -156.2,
+          -213.1
+        ],
+        [
+          -160.8,
+          -212.6
+        ],
+        [
+          -162.5,
+          -227.5
+        ],
+        [
+          -177.9,
           -225.7
         ],
         [
-          -175.5,
-          -212.0
+          -176.2,
+          -210.8
         ],
         [
-          -179.3,
-          -211.1
+          -180.6,
+          -210.2
         ],
         [
-          -181.1,
-          -224.6
+          -182.2,
+          -223.8
         ],
         [
-          -204.8,
-          -220.8
+          -201.7,
+          -221.5
+        ],
+        [
+          -199.2,
+          -200.0
+        ],
+        [
+          -197.9,
+          -199.6
+        ],
+        [
+          -196.2,
+          -185.2
+        ],
+        [
+          -186.5,
+          -186.4
+        ],
+        [
+          -185.4,
+          -177.4
+        ],
+        [
+          -196.3,
+          -176.2
         ]
       ]
     },
@@ -1807,10 +2178,10 @@
       "heightM": 18.0,
       "center": [
         -88.334,
-        14.296,
+        13.847,
         -35.33
       ],
-      "boundingRadius": 70.6,
+      "boundingRadius": 69.91,
       "latLon": [
         10.903017,
         76.899792
@@ -3745,7 +4116,7 @@
         12.236,
         -180.732
       ],
-      "boundingRadius": 14.79,
+      "boundingRadius": 14.82,
       "latLon": [
         10.904324,
         76.900111
@@ -3795,10 +4166,10 @@
       "heightM": 7.2,
       "center": [
         -48.001,
-        10.997,
+        11.059,
         -167.471
       ],
-      "boundingRadius": 15.25,
+      "boundingRadius": 15.28,
       "latLon": [
         10.904204,
         76.900161
@@ -5912,7 +6283,7 @@
       "heightM": 7.2,
       "center": [
         -392.123,
-        7.12,
+        7.129,
         -134.623
       ],
       "boundingRadius": 16.1,
@@ -7258,7 +7629,7 @@
       "heightM": 7.2,
       "center": [
         -206.96,
-        0.192,
+        0.196,
         80.738
       ],
       "boundingRadius": 21.31,
@@ -8629,60 +9000,6 @@
       }
     },
     {
-      "id": "overture/fccbfe4c-0a5",
-      "meshName": "STATIC_Buildings",
-      "kind": "building",
-      "name": "Unnamed Structure (overture/fccbfe4c-0a5)",
-      "source": "overture",
-      "isNamed": false,
-      "category": "default",
-      "tags": [
-        "default"
-      ],
-      "departments": [],
-      "floors": 1,
-      "heightM": 3.6,
-      "center": [
-        -324.351,
-        10.679,
-        -225.639
-      ],
-      "boundingRadius": 10.16,
-      "latLon": [
-        10.904727,
-        76.897633
-      ],
-      "boundsXZ": [
-        -331.7,
-        -231.5,
-        -317.0,
-        -219.7
-      ],
-      "footprintXZ": [
-        [
-          -330.5,
-          -219.7
-        ],
-        [
-          -317.0,
-          -221.3
-        ],
-        [
-          -318.2,
-          -231.5
-        ],
-        [
-          -331.7,
-          -229.9
-        ]
-      ],
-      "rawTags": {
-        "building": "yes",
-        "source": "Google Open Buildings",
-        "overture_id": "fccbfe4c-0a5f-4f91-9718-fa522ee939ef"
-      }
-    },
-    {
       "id": "overture/b61efa56-4e4",
       "meshName": "STATIC_Buildings",
       "kind": "building",
@@ -9516,10 +9833,10 @@
       "heightM": 3.6,
       "center": [
         -376.459,
-        5.32,
+        5.434,
         -147.824
       ],
-      "boundingRadius": 8.94,
+      "boundingRadius": 8.97,
       "latLon": [
         10.904028,
         76.897156
@@ -9735,7 +10052,7 @@
         4.907,
         -78.725
       ],
-      "boundingRadius": 8.72,
+      "boundingRadius": 8.65,
       "latLon": [
         10.903407,
         76.897242
@@ -10203,6 +10520,696 @@
       }
     },
     {
+      "id": "custom/hostel-south-of-nataraja",
+      "meshName": "BLDG_custom_hostel_south_of_nataraja",
+      "name": "New Hostel (name to be confirmed)",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "hostel",
+        "new hostel"
+      ],
+      "departments": [],
+      "floors": 5,
+      "heightM": 16.4,
+      "center": [
+        -178.501,
+        8.408,
+        -9.019
+      ],
+      "boundingRadius": 48.76,
+      "latLon": [
+        10.902781,
+        76.898967
+      ],
+      "rawTags": {},
+      "subtitle": "Five-floor courtyard hostel south-east of the Nataraja fountain",
+      "kind": "building",
+      "boundsXZ": [
+        -214.7,
+        -45.0,
+        -142.3,
+        26.9
+      ],
+      "footprintXZ": [
+        [
+          -209.6,
+          26.9
+        ],
+        [
+          -142.3,
+          21.9
+        ],
+        [
+          -147.4,
+          -45.0
+        ],
+        [
+          -214.7,
+          -39.9
+        ]
+      ]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-north-wing-1",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_north_wing_1",
+      "name": "Kashyapa Bhavanam",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "First-Year Boys Hostel",
+        "UG Boys Hostel",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 4,
+      "heightM": 14.4,
+      "center": [
+        519.967,
+        11.72,
+        -92.985
+      ],
+      "boundingRadius": 37.23,
+      "latLon": [
+        10.903535,
+        76.905357
+      ],
+      "rawTags": {},
+      "subtitle": "First-Year UG Boys Hostel — North Wing",
+      "kind": "building",
+      "boundsXZ": [
+        499.8,
+        -127.6,
+        540.1,
+        -58.4
+      ],
+      "footprintXZ": [
+        [
+          510.8,
+          -58.4
+        ],
+        [
+          540.1,
+          -63.6
+        ],
+        [
+          529.2,
+          -127.6
+        ],
+        [
+          499.8,
+          -122.4
+        ]
+      ]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-north-wing-2",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_north_wing_2",
+      "name": "Kashyapa Bhavanam — North Wing 2",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "First-Year Boys Hostel",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 4,
+      "heightM": 14.4,
+      "center": [
+        561.089,
+        11.72,
+        -100.265
+      ],
+      "boundingRadius": 37.23,
+      "latLon": [
+        10.903601,
+        76.905733
+      ],
+      "rawTags": {},
+      "kind": "building",
+      "boundsXZ": [
+        540.9,
+        -134.9,
+        581.3,
+        -65.7
+      ],
+      "footprintXZ": [
+        [
+          551.9,
+          -65.7
+        ],
+        [
+          581.3,
+          -70.9
+        ],
+        [
+          570.3,
+          -134.9
+        ],
+        [
+          540.9,
+          -129.7
+        ]
+      ]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-north-wing-3",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_north_wing_3",
+      "name": "Kashyapa Bhavanam — North Wing 3",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "First-Year Boys Hostel",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 4,
+      "heightM": 14.4,
+      "center": [
+        602.211,
+        12.336,
+        -107.546
+      ],
+      "boundingRadius": 37.31,
+      "latLon": [
+        10.903666,
+        76.906109
+      ],
+      "rawTags": {},
+      "kind": "building",
+      "boundsXZ": [
+        582.0,
+        -142.1,
+        622.4,
+        -72.9
+      ],
+      "footprintXZ": [
+        [
+          593.0,
+          -72.9
+        ],
+        [
+          622.4,
+          -78.1
+        ],
+        [
+          611.4,
+          -142.1
+        ],
+        [
+          582.0,
+          -136.9
+        ]
+      ]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-north-wing-4",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_north_wing_4",
+      "name": "Kashyapa Bhavanam — North Wing 4",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "First-Year Boys Hostel",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 4,
+      "heightM": 14.4,
+      "center": [
+        643.334,
+        12.72,
+        -114.826
+      ],
+      "boundingRadius": 37.31,
+      "latLon": [
+        10.903731,
+        76.906485
+      ],
+      "rawTags": {},
+      "kind": "building",
+      "boundsXZ": [
+        623.2,
+        -149.4,
+        663.5,
+        -80.2
+      ],
+      "footprintXZ": [
+        [
+          634.1,
+          -80.2
+        ],
+        [
+          663.5,
+          -85.4
+        ],
+        [
+          652.5,
+          -149.4
+        ],
+        [
+          623.2,
+          -144.2
+        ]
+      ]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-west-spine",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_west_spine",
+      "name": "Kashyapa Bhavanam — West Spine",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "Hostel Services",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        537.493,
+        9.92,
+        -52.455
+      ],
+      "boundingRadius": 53.46,
+      "latLon": [
+        10.903171,
+        76.905517
+      ],
+      "rawTags": {},
+      "kind": "building",
+      "boundsXZ": [
+        485.0,
+        -68.1,
+        590.0,
+        -36.8
+      ],
+      "footprintXZ": [
+        [
+          487.2,
+          -36.8
+        ],
+        [
+          590.0,
+          -55.0
+        ],
+        [
+          587.8,
+          -68.1
+        ],
+        [
+          485.0,
+          -49.9
+        ]
+      ]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-central-spine",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_central_spine",
+      "name": "Kashyapa Bhavanam — Central Spine",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "Hostel Services",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        541.04,
+        9.865,
+        -31.75
+      ],
+      "boundingRadius": 53.49,
+      "latLon": [
+        10.902985,
+        76.90555
+      ],
+      "rawTags": {},
+      "kind": "building",
+      "boundsXZ": [
+        488.5,
+        -47.4,
+        593.6,
+        -16.1
+      ],
+      "footprintXZ": [
+        [
+          490.8,
+          -16.1
+        ],
+        [
+          593.6,
+          -34.3
+        ],
+        [
+          591.3,
+          -47.4
+        ],
+        [
+          488.5,
+          -29.2
+        ]
+      ]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-southwest-spine",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_southwest_spine",
+      "name": "Kashyapa Bhavanam — Southwest Spine",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "Hostel Services",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        544.587,
+        9.179,
+        -11.044
+      ],
+      "boundingRadius": 53.45,
+      "latLon": [
+        10.902799,
+        76.905582
+      ],
+      "rawTags": {},
+      "kind": "building",
+      "boundsXZ": [
+        492.1,
+        -26.7,
+        597.1,
+        4.6
+      ],
+      "footprintXZ": [
+        [
+          494.3,
+          4.6
+        ],
+        [
+          597.1,
+          -13.6
+        ],
+        [
+          594.9,
+          -26.7
+        ],
+        [
+          492.1,
+          -8.5
+        ]
+      ]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-south-spine",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_south_spine",
+      "name": "Kashyapa Bhavanam — South Spine",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "Hostel Services",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        548.134,
+        8.492,
+        9.661
+      ],
+      "boundingRadius": 53.52,
+      "latLon": [
+        10.902613,
+        76.905614
+      ],
+      "rawTags": {},
+      "kind": "building",
+      "boundsXZ": [
+        495.6,
+        -6.0,
+        600.7,
+        25.3
+      ],
+      "footprintXZ": [
+        [
+          497.9,
+          25.3
+        ],
+        [
+          600.7,
+          7.1
+        ],
+        [
+          598.4,
+          -6.0
+        ],
+        [
+          495.6,
+          12.2
+        ]
+      ]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-east-wing-1",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_east_wing_1",
+      "name": "Kashyapa Bhavanam — East Wing 1",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "Hostel Services",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        655.156,
+        10.256,
+        -72.313
+      ],
+      "boundingRadius": 50.68,
+      "latLon": [
+        10.90335,
+        76.906594
+      ],
+      "rawTags": {},
+      "kind": "building",
+      "boundsXZ": [
+        605.4,
+        -88.4,
+        704.9,
+        -56.2
+      ],
+      "footprintXZ": [
+        [
+          608.0,
+          -56.2
+        ],
+        [
+          704.9,
+          -73.4
+        ],
+        [
+          702.3,
+          -88.4
+        ],
+        [
+          605.4,
+          -71.3
+        ]
+      ]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-east-wing-2",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_east_wing_2",
+      "name": "Kashyapa Bhavanam — East Wing 2",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "Hostel Services",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        659.354,
+        9.781,
+        -47.843
+      ],
+      "boundingRadius": 50.84,
+      "latLon": [
+        10.90313,
+        76.906632
+      ],
+      "rawTags": {},
+      "kind": "building",
+      "boundsXZ": [
+        609.6,
+        -64.0,
+        709.1,
+        -31.7
+      ],
+      "footprintXZ": [
+        [
+          612.2,
+          -31.7
+        ],
+        [
+          709.1,
+          -48.9
+        ],
+        [
+          706.5,
+          -64.0
+        ],
+        [
+          609.6,
+          -46.8
+        ]
+      ]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-east-wing-3",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_east_wing_3",
+      "name": "Kashyapa Bhavanam — East Wing 3",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "Hostel Services",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        663.546,
+        8.793,
+        -23.375
+      ],
+      "boundingRadius": 50.8,
+      "latLon": [
+        10.90291,
+        76.90667
+      ],
+      "rawTags": {},
+      "kind": "building",
+      "boundsXZ": [
+        613.8,
+        -39.5,
+        713.3,
+        -7.3
+      ],
+      "footprintXZ": [
+        [
+          616.4,
+          -7.3
+        ],
+        [
+          713.3,
+          -24.4
+        ],
+        [
+          710.7,
+          -39.5
+        ],
+        [
+          613.8,
+          -22.3
+        ]
+      ]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-south-block",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_south_block",
+      "name": "Kashyapa Bhavanam — South Block",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavanam",
+        "Kashyapa",
+        "First-Year Boys Hostel",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 4,
+      "heightM": 14.4,
+      "center": [
+        608.486,
+        9.22,
+        17.405
+      ],
+      "boundingRadius": 111.39,
+      "latLon": [
+        10.902544,
+        76.906167
+      ],
+      "rawTags": {},
+      "kind": "building",
+      "boundsXZ": [
+        498.2,
+        -11.2,
+        718.8,
+        46.1
+      ],
+      "footprintXZ": [
+        [
+          501.4,
+          46.1
+        ],
+        [
+          718.8,
+          7.6
+        ],
+        [
+          715.6,
+          -11.2
+        ],
+        [
+          498.2,
+          27.2
+        ]
+      ]
+    },
+    {
       "id": "bridge/ab2-library-skybridge",
       "meshName": "BRIDGE_bridge_ab2_library_skybridge",
       "kind": "bridge",
@@ -10213,36 +11220,36 @@
       "floors": 1,
       "heightM": 3.4,
       "center": [
-        -198.398,
-        14.72,
-        -163.083
+        -197.742,
+        14.4,
+        -156.849
       ],
       "latLon": [
-        10.904165,
-        76.898785
+        10.904109,
+        76.898791
       ],
       "boundsXZ": [
-        -206.0,
-        -166.7,
-        -190.8,
-        -159.5
+        -202.0,
+        -159.3,
+        -193.5,
+        -154.4
       ],
       "footprintXZ": [
         [
-          -205.0,
-          -159.5
+          -201.6,
+          -154.4
         ],
         [
-          -190.8,
-          -162.8
+          -193.5,
+          -155.3
         ],
         [
-          -191.8,
-          -166.7
+          -193.9,
+          -159.3
         ],
         [
-          -206.0,
-          -163.4
+          -202.0,
+          -158.4
         ]
       ],
       "rawTags": {
@@ -10255,7 +11262,88 @@
         "bridge"
       ],
       "departments": [],
-      "boundingRadius": 8.09
+      "boundingRadius": 5.37
+    },
+    {
+      "id": "footbridge/ab2-it-canteen",
+      "meshName": "BRIDGE_footbridge_ab2_it_canteen",
+      "kind": "bridge",
+      "name": "AB-2 to IT Canteen Footbridge",
+      "subtitle": "Covered high-level shortcut with stairs",
+      "isNamed": true,
+      "category": "landmark",
+      "floors": 1,
+      "heightM": 7.84,
+      "center": [
+        -230.39,
+        15.418,
+        -266.936
+      ],
+      "latLon": [
+        10.905098,
+        76.898492
+      ],
+      "boundsXZ": [
+        -243.8,
+        -290.4,
+        -224.2,
+        -234.8
+      ],
+      "footprintXZ": [
+        [
+          -224.2,
+          -235.2
+        ],
+        [
+          -226.4,
+          -249.6
+        ],
+        [
+          -232.7,
+          -290.4
+        ],
+        [
+          -237.0,
+          -288.5
+        ],
+        [
+          -243.8,
+          -285.4
+        ],
+        [
+          -242.7,
+          -283.0
+        ],
+        [
+          -235.9,
+          -286.1
+        ],
+        [
+          -234.7,
+          -286.7
+        ],
+        [
+          -229.0,
+          -249.2
+        ],
+        [
+          -226.8,
+          -234.8
+        ]
+      ],
+      "rawTags": {
+        "bridge": "yes",
+        "highway": "footway"
+      },
+      "tags": [
+        "bridge",
+        "footbridge",
+        "shortcut",
+        "it canteen",
+        "stairs"
+      ],
+      "departments": [],
+      "boundingRadius": 33.31
     },
     {
       "id": "hero/main-gate",
@@ -10502,7 +11590,7 @@
       ],
       "position": [
         -94.01,
-        7.02,
+        7.53,
         -122.45
       ],
       "rawCategory": "school",

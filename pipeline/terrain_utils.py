@@ -8,8 +8,9 @@ from typing import Any
 import numpy as np
 
 try:
-    from . import config
+    from . import campus_frame, config
 except ImportError:
+    import campus_frame
     import config
 
 POOL_COMPLEX_ID = "way/1210976885"
@@ -137,6 +138,19 @@ def _strip_closed_ring(coords: list[Any]) -> list[tuple[float, float]]:
     return pts
 
 
+def _grade_building_terraces(core_xs: np.ndarray, core_ys: np.ndarray, zs: np.ndarray) -> None:
+    """Level the building terraces (AB-2 / Central Library, IT Canteen) so ground floors sit on the ground."""
+    for ring, level, apron, blend in campus_frame.terraces():
+        for r, y in enumerate(core_ys):
+            for c, x in enumerate(core_xs):
+                inside = point_in_ring_2d(float(x), float(y), ring)
+                d = 0.0 if inside else dist_point_to_ring_2d(float(x), float(y), ring)
+                if d >= apron + blend:
+                    continue
+                w = 1.0 if d <= apron else 1.0 - smoothstep(apron, apron + blend, d)
+                zs[r, c] = zs[r, c] * (1.0 - w) + level * w
+
+
 def grade_core_terrain_pads(
     core_xs: np.ndarray,
     core_ys: np.ndarray,
@@ -147,6 +161,7 @@ def grade_core_terrain_pads(
     zs_out = np.array(core_zs, dtype=float, copy=True)
     if not raw_osm:
         return zs_out
+    _grade_building_terraces(core_xs, core_ys, zs_out)
 
     pads: list[tuple[list[tuple[float, float]], float, float, float]] = []
     for feat in raw_osm.get("features", []):

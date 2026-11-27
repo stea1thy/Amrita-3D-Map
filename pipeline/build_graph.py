@@ -12,9 +12,11 @@ from shapely.geometry import LineString, MultiLineString, Polygon, box
 from shapely.ops import unary_union
 
 try:
-    from . import config, terrain_utils
+    from . import campus_frame, config, footbridges, terrain_utils
 except ImportError:
+    import campus_frame
     import config
+    import footbridges
     import terrain_utils
 
 WALKABLE_HIGHWAY_SUBTYPES = {
@@ -80,9 +82,30 @@ class TerrainSampler:
         z01 = self.zs[r + 1, c]
         z11 = self.zs[r + 1, c + 1]
 
-        if u >= v:
-            return float(z00 + u * (z10 - z00) + v * (z11 - z10))
-        return float(z00 + v * (z01 - z00) + u * (z11 - z01))
+        z = z00 + u * (z10 - z00) + v * (z11 - z10) if u >= v else z00 + v * (z01 - z00) + u * (z11 - z01)
+        return float(z) + campus_frame.rise_offset(bx, by)
+
+
+def _add_footbridge_line(lines: list[LineString], bridge: footbridges.Footbridge) -> None:
+    """Add a bridge as a densified walkable line, splitting any path its landings rest on."""
+    steps = max(2, int(math.ceil(bridge.length / 4.0)))
+    deck = [bridge.point_at(i / steps)[:2] for i in range(steps + 1)]
+    deck_xz = [(x, -y) for x, y in deck]
+    for end in (0, -1):
+        px, pz = deck_xz[end]
+        for index, line in enumerate(lines):
+            coords = list(line.coords)
+            for seg, ((ax, az), (bx, bz)) in enumerate(zip(coords, coords[1:])):
+                dx, dz = bx - ax, bz - az
+                span2 = dx * dx + dz * dz
+                if span2 <= 1e-8:
+                    continue
+                f = ((px - ax) * dx + (pz - az) * dz) / span2
+                if 0.0 < f < 1.0 and math.hypot(px - ax - f * dx, pz - az - f * dz) <= 0.6:
+                    deck_xz[end] = (px, pz)
+                    lines[index] = LineString(coords[: seg + 1] + [(px, pz)] + coords[seg + 1 :])
+                    break
+    lines.append(LineString(deck_xz))
 
 
 def tobler_speed_mps(slope: float) -> float:
@@ -189,9 +212,10 @@ def main() -> None:
     walkable_lines: list[LineString] = []
     step_segments: list[tuple[float, float, float, float]] = []
 
+    excluded_ids = {str(x) for x in (overrides.get("exclude_ids") or [])}
     for feat in raw_osm.get("features", []):
         props = feat.get("properties", {})
-        if props.get("layer") != "path":
+        if props.get("layer") != "path" or str(feat.get("id", "")) in excluded_ids:
             continue
         subtype = str(props.get("subtype", ""))
         if subtype not in WALKABLE_HIGHWAY_SUBTYPES:
@@ -200,7 +224,7 @@ def main() -> None:
         if geom.get("type") != "LineString":
             continue
 
-        xz_pts = [config.latlon_to_local_xz(pt[1], pt[0]) for pt in geom.get("coordinates", [])]
+        xz_pts = [config.latlon_to_local_xz(pt[1], pt[0]) for pt in config.path_coords(feat)]
         if len(xz_pts) < 2:
             continue
         clipped = LineString(xz_pts).intersection(clip_rect)
@@ -224,6 +248,10 @@ def main() -> None:
         clipped = LineString(xz_pts).intersection(clip_rect)
         for line in _extract_lines(clipped):
             walkable_lines.append(line)
+
+    bridges = footbridges.load_footbridges(overrides)
+    for bridge in bridges:
+        _add_footbridge_line(walkable_lines, bridge)
 
     if not walkable_lines:
         raise RuntimeError("No walkable OSM paths found inside terrain bounds")
@@ -301,10 +329,14 @@ def main() -> None:
                 unique_edges[ekey] = unique_edges.get(ekey, False) or is_steps
                 prev_id = curr_id
 
-    nodes: list[list[float]] = [
-        [qx, round(terrain.sample_gltf_y(qx, qz), 1), qz]
-        for qx, qz in q_xz
-    ]
+    def _node_height(qx: float, qz: float) -> float:
+        for bridge in bridges:
+            t, dist = bridge.project(qx, -qz)
+            if dist <= 0.2:
+                return bridge.deck_height(t, lambda x, y: terrain.sample_gltf_y(x, -y))
+        return terrain.sample_gltf_y(qx, qz)
+
+    nodes: list[list[float]] = [[qx, round(_node_height(qx, qz), 1), qz] for qx, qz in q_xz]
 
     edges: list[list[Any]] = []
     for (u, v), is_steps in sorted(unique_edges.items()):

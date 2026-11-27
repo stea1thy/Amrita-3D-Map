@@ -15,8 +15,9 @@
     "bridges": "List of elevated skybridges ({ id, name, from: [lat, lon], to: [lat, lon], width, bottomY, height, color, roofColor } or { id, osm_id, bottomY / min_height, height, color, roofColor }) rendered floating above ground clearance",
     "rename_or_retag": "Map OSM ID -> { name, subtitle (optional), category, floors (optional), height_m (optional), min_height (optional), bottomY (optional), tags (optional list), departments (optional list) }",
     "shift_footprints": "Map OSM ID -> [dx_meters, dz_meters] in local 3D world space (+X East, +Z South / -Z North)",
+    "footbridges": "Raised pedestrian bridges ({ id, name, points: [[lat, lon], ...] with ground-level ends, width, clearance, roof }) built by heroes/footbridge.py and routed by build_graph.py",
     "custom_buildings": "List of manual buildings missing from OSM, each with footprint as [[lat, lon], ...] polygon ring",
-    "custom_roads": "List of custom campus road/footpath polylines missing from OSM ({ id, name, subtype, points: [[lat, lon], ...] }) rendered & routed alongside OSM roads",
+    "custom_roads": "List of custom campus road/footpath polylines missing from OSM ({ id, name, subtype, points: [[lat, lon], ...], render (optional) }) rendered & routed alongside OSM roads; render: false routes along paving another model already draws",
     "category_colors": "Optional map of category -> hex color string (e.g. '#E6DDD0') overriding default palette colors"
   },
   "_examples": {
@@ -91,14 +92,16 @@
     "overture/c72d394b-5e8",
     "overture/a35b7227-0f1",
     "overture/6cde8c35-13b",
-    "overture/ee2b3cc9-c5f"
+    "overture/ee2b3cc9-c5f",
+    "overture/fccbfe4c-0a5",
+    "way/380702782"
   ],
   "bridges": [
     {
       "id": "bridge/ab2-library-skybridge",
       "name": "AB-2 to Central Library Skybridge",
-      "from": [10.90415, 76.89872],
-      "to": [10.90418, 76.89885],
+      "from": [10.904105, 76.898754],
+      "to": [10.904113, 76.898828],
       "width": 4.0,
       "bottomY": 4.5,
       "height": 3.4,
@@ -107,6 +110,19 @@
     }
   ],
   "rename_or_retag": {
+    "way/1080744354": {
+      "name": "IT Canteen",
+      "subtitle": "AB-2 IT Canteen: single-storey dining hall with garden seating",
+      "category": "food",
+      "floors": 1,
+      "height_m": 7.7,
+      "tags": [
+        "IT Canteen",
+        "AB2 IT Canteen",
+        "canteen",
+        "food"
+      ]
+    },
     "way/380829415": {
       "name": "Academic Block 3 (AB-3)",
       "subtitle": "School of Computing & International School of Law",
@@ -221,21 +237,135 @@
       ]
     }
   },
-  "shift_footprints": {},
-  "custom_buildings": [],
+  "shift_footprints": {
+    "way/1080744354": [-23.9, -10.25]
+  },
+  "footbridges": [
+    {
+      "id": "footbridge/ab2-it-canteen",
+      "name": "AB-2 to IT Canteen Footbridge",
+      "points": [[10.904811, 76.898537], [10.90494, 76.898517], [10.905292, 76.898462], [10.905281, 76.898437], [10.905253, 76.898375]],
+      "width": 2.6,
+      "clearance": 3.4,
+      "roof": true
+    }
+  ],
+  "custom_buildings": [
+    {
+      "id": "custom/hostel-south-of-nataraja",
+      "name": "New Hostel (name to be confirmed)",
+      "subtitle": "Five-floor courtyard hostel south-east of the Nataraja fountain",
+      "category": "hostel",
+      "floors": 5,
+      "height_m": 16.4,
+      "tags": ["hostel", "new hostel"],
+      "departments": [],
+      "footprint": [[10.902458, 76.89868], [10.902503, 76.899295], [10.903103, 76.89925], [10.903058, 76.898634], [10.902458, 76.89868]]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-north-wing-1",
+      "name": "Kashyapa Bhavanam",
+      "subtitle": "First-Year UG Boys Hostel — North Wing",
+      "category": "hostel",
+      "floors": 4,
+      "height_m": 14.4,
+      "tags": ["Kashyapa Bhavanam", "Kashyapa", "First-Year Boys Hostel", "UG Boys Hostel"],
+      "departments": [],
+      "footprint": [
+        [10.9037994, 76.9051723], [10.9038461, 76.9054410], [10.9032712, 76.9055413],
+        [10.9032245, 76.9052726], [10.9037994, 76.9051723]
+      ]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-north-wing-2", "name": "Kashyapa Bhavanam — North Wing 2", "category": "hostel", "floors": 4, "height_m": 14.4,
+      "tags": ["Kashyapa Bhavanam", "Kashyapa", "First-Year Boys Hostel"], "departments": [],
+      "footprint": [[10.9038648, 76.9055485], [10.9039115, 76.9058172], [10.9033366, 76.9059175], [10.9032899, 76.9056488], [10.9038648, 76.9055485]]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-north-wing-3", "name": "Kashyapa Bhavanam — North Wing 3", "category": "hostel", "floors": 4, "height_m": 14.4,
+      "tags": ["Kashyapa Bhavanam", "Kashyapa", "First-Year Boys Hostel"], "departments": [],
+      "footprint": [[10.9039302, 76.9059247], [10.9039769, 76.9061934], [10.9034020, 76.9062937], [10.9033553, 76.9060250], [10.9039302, 76.9059247]]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-north-wing-4", "name": "Kashyapa Bhavanam — North Wing 4", "category": "hostel", "floors": 4, "height_m": 14.4,
+      "tags": ["Kashyapa Bhavanam", "Kashyapa", "First-Year Boys Hostel"], "departments": [],
+      "footprint": [[10.9039956, 76.9063009], [10.9040423, 76.9065696], [10.9034674, 76.9066699], [10.9034207, 76.9064012], [10.9039956, 76.9063009]]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-west-spine", "name": "Kashyapa Bhavanam — West Spine", "category": "hostel", "floors": 3, "height_m": 10.8,
+      "tags": ["Kashyapa Bhavanam", "Kashyapa", "Hostel Services"], "departments": [],
+      "footprint": [[10.9031487, 76.9050366], [10.9033121, 76.9059771], [10.9031938, 76.9059978], [10.9030303, 76.9050573], [10.9031487, 76.9050366]]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-central-spine", "name": "Kashyapa Bhavanam — Central Spine", "category": "hostel", "floors": 3, "height_m": 10.8,
+      "tags": ["Kashyapa Bhavanam", "Kashyapa", "Hostel Services"], "departments": [],
+      "footprint": [[10.9029627, 76.9050691], [10.9031261, 76.9060096], [10.9030078, 76.9060302], [10.9028443, 76.9050897], [10.9029627, 76.9050691]]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-southwest-spine", "name": "Kashyapa Bhavanam — Southwest Spine", "category": "hostel", "floors": 3, "height_m": 10.8,
+      "tags": ["Kashyapa Bhavanam", "Kashyapa", "Hostel Services"], "departments": [],
+      "footprint": [[10.9027767, 76.9051015], [10.9029401, 76.9060420], [10.9028218, 76.9060627], [10.9026583, 76.9051222], [10.9027767, 76.9051015]]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-south-spine", "name": "Kashyapa Bhavanam — South Spine", "category": "hostel", "floors": 3, "height_m": 10.8,
+      "tags": ["Kashyapa Bhavanam", "Kashyapa", "Hostel Services"], "departments": [],
+      "footprint": [[10.9025907, 76.9051340], [10.9027541, 76.9060745], [10.9026358, 76.9060951], [10.9024723, 76.9051546], [10.9025907, 76.9051340]]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-east-wing-1", "name": "Kashyapa Bhavanam — East Wing 1", "category": "hostel", "floors": 3, "height_m": 10.8,
+      "tags": ["Kashyapa Bhavanam", "Kashyapa", "Hostel Services"], "departments": [],
+      "footprint": [[10.9033402, 76.9061384], [10.9034943, 76.9070251], [10.9033590, 76.9070487], [10.9032049, 76.9061620], [10.9033402, 76.9061384]]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-east-wing-2", "name": "Kashyapa Bhavanam — East Wing 2", "category": "hostel", "floors": 3, "height_m": 10.8,
+      "tags": ["Kashyapa Bhavanam", "Kashyapa", "Hostel Services"], "departments": [],
+      "footprint": [[10.9031203, 76.9061767], [10.9032745, 76.9070635], [10.9031392, 76.9070871], [10.9029851, 76.9062003], [10.9031203, 76.9061767]]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-east-wing-3", "name": "Kashyapa Bhavanam — East Wing 3", "category": "hostel", "floors": 3, "height_m": 10.8,
+      "tags": ["Kashyapa Bhavanam", "Kashyapa", "Hostel Services"], "departments": [],
+      "footprint": [[10.9029005, 76.9062151], [10.9030547, 76.9071018], [10.9029194, 76.9071254], [10.9027653, 76.9062387], [10.9029005, 76.9062151]]
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-south-block", "name": "Kashyapa Bhavanam — South Block", "category": "hostel", "floors": 4, "height_m": 14.4,
+      "tags": ["Kashyapa Bhavanam", "Kashyapa", "First-Year Boys Hostel"], "departments": [],
+      "footprint": [[10.9024554, 76.9051576], [10.9028010, 76.9071461], [10.9026319, 76.9071756], [10.9022863, 76.9051871], [10.9024554, 76.9051576]]
+    }
+  ],
   "custom_roads": [
     {
+      "id": "road/ab2-footbridge-access",
+      "name": "AB-2 Footbridge Access Walk",
+      "subtype": "footway",
+      "points": [[10.9047652, 76.8987062], [10.904811, 76.898537]]
+    },
+    {
+      "id": "road/it-canteen-walk",
+      "name": "IT Canteen Walk",
+      "subtype": "footway",
+      "points": [[10.905253, 76.898375], [10.905232, 76.898329], [10.905107, 76.89813], [10.905101, 76.898034]]
+    },
+    {
+      "id": "road/it-canteen-link",
+      "name": "IT Canteen Road Link",
+      "subtype": "footway",
+      "points": [[10.9050677, 76.8981981], [10.905107, 76.89813]]
+    },
+    {
+      "id": "road/it-canteen-door",
+      "name": "IT Canteen Garden Path",
+      "subtype": "footway",
+      "render": false,
+      "points": [[10.905101, 76.898034], [10.905071, 76.897902]]
+    },
+    {
       "id": "road/pool-to-ab3-connector",
-      "name": "Pool Front to AB-3 Connector Road",
+      "name": "Pool Front to AB-3 Road",
       "subtype": "residential",
       "points": [
         [10.905874, 76.898810],
         [10.905895, 76.898630],
-        [10.905910, 76.898453],
-        [10.905860, 76.898120],
-        [10.905825, 76.897520],
-        [10.905865, 76.896950],
-        [10.906245, 76.896802]
+        [10.905910, 76.898453]
       ]
     },
     {
