@@ -16,7 +16,6 @@ HERO_PALETTE: dict[str, str] = {
     "ab1_tile_roof": "#C77456",
     "terracotta_tile": "#B54E34",
     "terracotta_portal": "#C9603B",
-    "ab2_dark_roof": "#4A352C",
     "ab3_brick": "#A54E37",
     "asb_slate_tile": "#727B85",
     "amrita_maroon": "#8E1B3E",
@@ -41,6 +40,32 @@ HERO_PALETTE: dict[str, str] = {
     "ab3_hedge_green": "#3F8A3A",
     "ab3_roof_tile": "#D9774A",
     "ab3_baluster_shadow": "#B9B3A8",
+    # AB-2 & Central Library (sampled from Google Maps ground photos and satellite views)
+    "ab2_salmon": "#CF7A55",
+    "roof_concrete": "#8D8984",
+    "verandah_shadow": "#4A3A33",
+    "timber_post": "#3B2E28",
+    "walkway_red": "#A8553F",
+    "channel_water": "#2F5F66",
+    "skylight_vault": "#DCE3E4",
+    "skylight_glass": "#6F7C80",
+    "library_tile": "#D2866A",
+    "ab2_tile": "#CC7F5E",
+    "porch_tile": "#C98E76",
+    "path_stone": "#CDBFAE",
+    "sign_red": "#B4252C",
+    "granite_dark": "#55585C",
+    "granite_light": "#8B8D8F",
+    "bronze_patina": "#2F5C52",
+    # IT Canteen (Google Maps photos)
+    "canteen_wall": "#EEE9DA",
+    "canteen_tile": "#C4705A",
+    "rock_brown": "#5E554B",
+    "table_red": "#B4533E",
+    # Courtyard hostel (Google satellite)
+    "hostel_white": "#EDEAE1",
+    "hostel_roof": "#E2DDD0",
+    "hostel_trim": "#CFC7B6",
 }
 
 
@@ -336,60 +361,3 @@ def add_tiered_vimana_roof(
         bm, col_layer, cx, cy, z_base + 4.15, z_base + 4.95, 0.24, 0.04, 8,
         gold_rgba, gold_rgba, offset_xyz=offset_xyz,
     )
-
-
-def add_octagonal_dome_vc(
-    bm: bmesh.types.BMesh,
-    col_layer: Any,
-    cx: float,
-    cy: float,
-    z_base: float,
-    radius: float,
-    drum_h: float,
-    dome_h: float,
-    drum_rgba: tuple[float, float, float, float],
-    dome_rgba: tuple[float, float, float, float],
-    gold_rgba: tuple[float, float, float, float],
-    win_lit_bm: bmesh.types.BMesh | None = None,
-    segments: int = 10,
-    offset_xyz: tuple[float, float, float] = (0.0, 0.0, 0.0),
-) -> None:
-    """Emit a classical polygonal clerestory drum, stepped dome cupola, and finial."""
-    add_cylinder_vc(
-        bm, col_layer, cx, cy, z_base, z_base + drum_h, radius, radius, segments,
-        drum_rgba, drum_rgba, rot_rad=math.pi / segments, offset_xyz=offset_xyz,
-    )
-    # Cornice ring
-    add_cylinder_vc(
-        bm, col_layer, cx, cy, z_base + drum_h - 0.18, z_base + drum_h + 0.14,
-        radius + 0.35, radius + 0.35, segments,
-        drum_rgba, drum_rgba, rot_rad=math.pi / segments, offset_xyz=offset_xyz,
-    )
-    # Lower and upper tapered dome tiers
-    z_mid = z_base + drum_h + dome_h * 0.56
-    add_cylinder_vc(
-        bm, col_layer, cx, cy, z_base + drum_h + 0.10, z_mid,
-        radius + 0.28, radius * 0.68, segments,
-        dome_rgba, dome_rgba, rot_rad=math.pi / segments, offset_xyz=offset_xyz,
-    )
-    add_cylinder_vc(
-        bm, col_layer, cx, cy, z_mid - 0.04, z_base + drum_h + dome_h,
-        radius * 0.68, radius * 0.16, segments,
-        dome_rgba, dome_rgba, rot_rad=math.pi / segments, offset_xyz=offset_xyz,
-    )
-    add_cylinder_vc(
-        bm, col_layer, cx, cy, z_base + drum_h + dome_h - 0.05, z_base + drum_h + dome_h + 0.95,
-        0.24, 0.04, 8, gold_rgba, gold_rgba, offset_xyz=offset_xyz,
-    )
-    # Clerestory glass panels around the drum
-    if win_lit_bm is not None:
-        r_glass = radius * math.cos(math.pi / segments) + 0.06
-        face_w = radius * math.sin(math.pi / segments) * 0.68
-        for i in range(segments):
-            ang = math.pi / segments + (2.0 * math.pi * i) / segments
-            mid_ang = ang + math.pi / segments
-            add_glass_panel(
-                win_lit_bm, cx, cy,
-                z_base + drum_h * 0.25, z_base + drum_h * 0.80,
-                face_w, -r_glass, rot_rad=mid_ang + math.pi * 0.5, facing_south=True,
-            )

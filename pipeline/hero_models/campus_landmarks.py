@@ -1,4 +1,4 @@
-"""Additional Amrita Coimbatore architectural hero landmarks: Main Gate, Library, Amriteshwari Hall, Shrine & Pool."""
+"""Additional Amrita Coimbatore architectural hero landmarks: Main Gate, Amriteshwari Hall, Shrine & Pool."""
 
 from __future__ import annotations
 
@@ -14,7 +14,6 @@ from .geom_helpers import (
     add_gabled_roof_vc,
     add_glass_panel,
     add_hipped_roof_vc,
-    add_octagonal_dome_vc,
     add_tiered_vimana_roof,
     local_to_world_2d,
     srgb_hex_to_linear_rgba,
@@ -24,50 +23,6 @@ from .geom_helpers import (
 MAIN_GATE_CX = -55.45
 MAIN_GATE_CY = -398.5
 MAIN_GATE_ROT = 0.01  # perpendicular to N-S entrance boulevard way/128964701
-
-
-def append_central_library_hero(
-    bm: bmesh.types.BMesh,
-    col_layer: Any,
-    win_lit_bm: bmesh.types.BMesh | None,
-    terrain: Any,
-    offset_xyz: tuple[float, float, float],
-    z_plinth: float,
-    z_top: float,
-) -> None:
-    """Crown Central Library (way/380702790) with classical south rotunda dome, portico columns & roof monitors."""
-    c_white = srgb_hex_to_linear_rgba(HERO_PALETTE["stucco_white"])
-    c_cream = srgb_hex_to_linear_rgba(HERO_PALETTE["stucco_cream"])
-    c_tile = srgb_hex_to_linear_rgba(HERO_PALETTE["terracotta_tile"])
-    c_gold = srgb_hex_to_linear_rgba(HERO_PALETTE["bronze_gold"])
-
-    # 1. Classical entrance portico & octagonal domed rotunda at real OSM rounded bay (-158.0, 148.0)
-    rx, ry, rrot = -158.0, 148.0, 0.08
-    rz0 = terrain.sample(rx, ry) - 1.5
-    for clx in (-4.8, -1.8, 1.8, 4.8):
-        pwx, pwy = local_to_world_2d(rx, ry, clx, -4.6, rrot)
-        add_cylinder_vc(
-            bm, col_layer, pwx, pwy, rz0, z_top - 1.35,
-            0.38, 0.34, 8, c_white, c_white, offset_xyz=offset_xyz,
-        )
-    add_octagonal_dome_vc(
-        bm, col_layer, rx, ry + 1.8, z_top - 0.08,
-        radius=6.8, drum_h=2.1, dome_h=3.4,
-        drum_rgba=c_cream, dome_rgba=c_tile, gold_rgba=c_gold,
-        win_lit_bm=win_lit_bm, segments=10, offset_xyz=offset_xyz,
-    )
-
-    # 2. Twin longitudinal daylight roof skylight monitors over East & West library wings
-    for mx, my in ((-178.0, 195.0), (-145.0, 195.0)):
-        add_box_vc(
-            bm, col_layer, mx, my, z_top - 0.1, z_top + 1.25,
-            5.8, 12.0, c_cream, c_white, rot_rad=rrot, offset_xyz=offset_xyz,
-        )
-        add_gabled_roof_vc(
-            bm, col_layer, mx, my, z_top + 1.22, z_top + 2.85,
-            6.2, 12.4, c_tile, c_white, rot_rad=rrot, ridge_along_x=False,
-            soffit_rgba=c_white, offset_xyz=offset_xyz,
-        )
 
 
 def append_amriteshwari_hall_hero(
