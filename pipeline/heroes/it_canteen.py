@@ -1,4 +1,5 @@
-"""IT Canteen garden: lawn, kerbed stone paths, standing boulder, round red tables and shade trees.
+"""IT Canteen garden: lawn, kerbed stone paths, standing boulder, round red tables (grouped in the
+south part of the lawn) and shade trees.
 
 Placed from the canteen's emitted footprint, so it moves with the building.
 Local frame (see `hero_models.it_canteen_hero`): u = east of the hall centre, v = north.
@@ -20,12 +21,11 @@ from hero_models.it_canteen_hero import frame_from_hall_ring
 LAWN: Rect = (9.2, 25.0, -17.0, 15.0)
 FRONT_WALK: Rect = (9.2, 11.2, -15.0, 13.0)
 DOOR_WALK: Rect = (11.2, 25.0, 3.4, 5.6)
-SOUTH_WALK: list[tuple[float, float]] = [(11.2, -9.2), (17.0, -10.6), (22.0, -14.0), (25.0, -17.0)]
 BOULDER_UV: tuple[float, float] = (17.5, -2.5)
-TABLE_UVS: tuple[tuple[float, float], ...] = ((14.0, -14.2), (19.2, -7.2), (22.5, -2.2), (14.2, 10.2))
+TABLE_UVS: tuple[tuple[float, float], ...] = ((13.8, -13.6), (20.4, -13.6), (13.8, -8.0), (20.4, -8.0))
 # (u, v, scale low, scale high): slender shade trees clear of the paths and tables
 TREE_SPOTS: tuple[tuple[float, float, float, float], ...] = (
-    (13.5, -5.5, 0.62, 0.72), (19.0, 9.5, 0.75, 0.88), (23.0, 13.0, 0.7, 0.82),
+    (12.8, -4.0, 0.62, 0.72), (19.0, 9.5, 0.75, 0.88), (23.0, 13.0, 0.7, 0.82),
     (24.2, -12.0, 0.68, 0.8),(11.5, 17.5, 0.8, 0.95), (3.0, 22.0, 1.0, 1.15), (-6.0, 23.0, 0.95, 1.1),
     (-15.0, 12.0, 1.0, 1.2), (-15.5, 0.0, 0.9, 1.1), (-14.5, -13.0, 1.0, 1.2), (-5.0, -23.5, 0.9, 1.05),
     (6.0, -22.5, 0.85, 1.0), (17.0, -21.0, 0.95, 1.1), (30.0, -15.0, 0.9, 1.05), (28.0, 10.0, 0.95, 1.15),
@@ -47,11 +47,6 @@ def build_hero(context: dict[str, Any]) -> None:
     kit.flat(LAWN, ground + 0.12, color("lawn_green"))
     for walk in (FRONT_WALK, DOOR_WALK):
         _kerbed_walk(kit, walk, ground)
-    for (u0, v0), (u1, v1) in zip(SOUTH_WALK, SOUTH_WALK[1:]):
-        length = math.hypot(u1 - u0, v1 - v0)
-        du, dv = -(v1 - v0) / length * 0.8, (u1 - u0) / length * 0.8
-        kit.quad([(u0 - du, v0 - dv, ground + 0.17), (u1 - du, v1 - dv, ground + 0.17),
-                  (u1 + du, v1 + dv, ground + 0.17), (u0 + du, v0 + dv, ground + 0.17)], color("path_stone"))
     _boulder(bm, col, frame.to_xy(*BOULDER_UV), ground + 0.1)
     for uv in TABLE_UVS:
         _round_table(bm, col, kit, frame.to_xy(*uv), uv, ground + 0.12)

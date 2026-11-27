@@ -18,6 +18,7 @@ HERO_WORKSHOPS_WEST_ID = "way/380926299"
 HERO_WORKSHOPS_EAST_ID = "way/380926300"
 HERO_MAIN_CANTEEN_ID = "way/546394562"
 HERO_IT_CANTEEN_ID = "way/1080744354"
+HERO_NEW_HOSTEL_ID = "custom/hostel-south-of-nataraja"
 
 __all__ = [
     "HERO_AB1_ID",
@@ -36,4 +37,5 @@ __all__ = [
     "HERO_WORKSHOPS_EAST_ID",
     "HERO_MAIN_CANTEEN_ID",
     "HERO_IT_CANTEEN_ID",
+    "HERO_NEW_HOSTEL_ID",
 ]

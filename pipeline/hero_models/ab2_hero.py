@@ -100,11 +100,12 @@ TOWERS: tuple[Rect, ...] = (
     (-36.0, -29.0, 6.0, 13.5),
 )
 
-SOUTH_PORCH: Rect = (-46.0, -29.5, -62.2, -56.0)
+SOUTH_PORCH: Rect = (-46.0, -29.5, -71.0, -56.0)  # porte-cochere: the front road runs underneath
+PORCH_COLUMN_ROWS: tuple[float, float] = (-70.4, -62.9)  # either side of the carriageway
 STATUE_UV: tuple[float, float] = (-37.3, -83.5)
 
 _OUTLINE_UV: list[tuple[float, float]] = [
-    (-89.8, -50.0), (-50.5, -50.0), (-50.5, -56.0), (-46.0, -56.0), (-46.0, -62.2), (-29.5, -62.2),
+    (-89.8, -50.0), (-50.5, -50.0), (-50.5, -56.0), (-46.0, -56.0), (-46.0, -71.0), (-29.5, -71.0),
     (-29.5, -56.0), (-27.0, -56.0), (-27.0, -49.5), (6.5, -49.5), (6.5, -34.0), (-28.5, -34.0),
     (-28.5, -32.0), (-29.5, -32.0), (-29.5, -24.5), (9.3, -24.5), (9.3, 2.0), (3.0, 2.0),
     (3.0, 13.0), (-29.0, 13.0), (-29.0, 13.5), (-32.0, 13.5), (-32.0, 31.0), (2.5, 31.0),
@@ -233,16 +234,18 @@ def rect_slice(rect: Rect, d0: float, d1: float) -> Rect:
 
 
 def _build_south_porch(kit: Kit, z_floor: float, terrain: Any) -> None:
-    u0, u1, v0, v1 = SOUTH_PORCH
-    z_ground = terrain.sample(*uv_to_xy((u0 + u1) / 2.0, v0)) - 0.6
-    z_beam = z_floor + 4.3
+    """Entrance canopy reaching over the road, carried on a column row at each kerb."""
+    u0, u1, _, _ = SOUTH_PORCH
+    z_beam = z_floor + 4.4
     white = color("stucco_white")
-    for u in (u0 + 0.7, u0 + 4.6, u1 - 4.6, u1 - 0.7):
-        kit.box((u - 0.35, u + 0.35, v0 + 0.35, v0 + 1.05), z_ground, z_beam, white)
-    for u in (u0 + 0.7, u1 - 0.7):
-        kit.box((u - 0.35, u + 0.35, v1 - 2.6, v1 - 1.9), z_ground, z_beam, color("ab2_salmon"))
+    for v in PORCH_COLUMN_ROWS:
+        z_ground = terrain.sample(*uv_to_xy((u0 + u1) / 2.0, v)) - 0.6
+        for u in (u0 + 0.7, u0 + 4.6, u1 - 4.6, u1 - 0.7):
+            kit.box((u - 0.35, u + 0.35, v - 0.35, v + 0.35), z_ground, z_beam, white)
     kit.box(SOUTH_PORCH, z_beam, z_beam + 0.7, white)
-    kit.hip_roof(SOUTH_PORCH, z_beam + 0.7, 2.6, color("ab2_tile"), overhang=0.6)
+    kit.quad([(u, v, z_beam) for u, v in ((u0, SOUTH_PORCH[3]), (u1, SOUTH_PORCH[3]),
+                                          (u1, SOUTH_PORCH[2]), (u0, SOUTH_PORCH[2]))], color("stucco_cream"))
+    kit.hip_roof(SOUTH_PORCH, z_beam + 0.7, 2.9, color("ab2_tile"), overhang=0.6)
 
 
 def _build_courtyards(kit: Kit, z_floor: float) -> None:

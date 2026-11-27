@@ -22,6 +22,7 @@ PIPELINE_DIR = Path(__file__).resolve().parent
 if str(PIPELINE_DIR) not in sys.path:
     sys.path.insert(0, str(PIPELINE_DIR))
 
+import campus_frame  # noqa: E402
 import config  # noqa: E402
 import footbridges  # noqa: E402
 import terrain_utils  # noqa: E402
@@ -37,6 +38,7 @@ from hero_models import (  # noqa: E402
     HERO_IT_CANTEEN_ID,
     HERO_LIBRARY_ID,
     HERO_MAIN_CANTEEN_ID,
+    HERO_NEW_HOSTEL_ID,
     HERO_PLAYGROUND_ID,
     HERO_POOL_DECK_ID,
     HERO_POOL_WATER_ID,
@@ -50,6 +52,7 @@ from hero_models import (  # noqa: E402
     campus_landmarks,
     it_canteen_hero,
     library_hero,
+    new_hostel_hero,
     workshops_hero,
 )
 
@@ -388,9 +391,8 @@ class TerrainSurface:
         v = (cy - self.ys[r]) / (self.ys[r + 1] - self.ys[r])
         z00, z10 = self.zs[r, c], self.zs[r, c + 1]
         z01, z11 = self.zs[r + 1, c], self.zs[r + 1, c + 1]
-        if u >= v:
-            return float(z00 + u * (z10 - z00) + v * (z11 - z10))
-        return float(z00 + v * (z01 - z00) + u * (z11 - z01))
+        z = z00 + u * (z10 - z00) + v * (z11 - z10) if u >= v else z00 + v * (z01 - z00) + u * (z11 - z01)
+        return float(z) + campus_frame.rise_offset(cx, cy)
 
 
 def signed_area_2d(ring: list[tuple[float, float]]) -> float:
@@ -1027,6 +1029,8 @@ def build_terrain_object(
             f2.loops[1][col_layer] = c11
             f2.loops[2][col_layer] = c01
 
+    _append_rise_patch(bm, col_layer, terrain, vert_colors)
+
     skirt_z = terrain.min_z - TERRAIN_SKIRT_DEPTH_M
 
     def _add_skirt_strip(top_edge: list[bmesh.types.BMVert]) -> None:
@@ -1049,6 +1053,49 @@ def build_terrain_object(
 
     bm.normal_update()
     return create_mesh_object("TERRAIN_Campus", bm, [mat_ground, mat_skirt]), green_entries
+
+
+def _append_rise_patch(
+    bm: bmesh.types.BMesh,
+    col_layer: Any,
+    terrain: TerrainSurface,
+    vert_colors: list[list[tuple[float, float, float, float]]],
+) -> None:
+    """Fine terrain sheet over the raised library ground (the base grid is too coarse for the slope)."""
+
+    def _color_at(x: float, y: float) -> tuple[float, float, float, float]:
+        c = min(max(int(np.searchsorted(terrain.xs, x, side="right")) - 1, 0), len(terrain.xs) - 2)
+        r = min(max(int(np.searchsorted(terrain.ys, y, side="right")) - 1, 0), len(terrain.ys) - 2)
+        fx = (x - terrain.xs[c]) / (terrain.xs[c + 1] - terrain.xs[c])
+        fy = (y - terrain.ys[r]) / (terrain.ys[r + 1] - terrain.ys[r])
+        mix = [
+            (vert_colors[r][c][k] * (1 - fx) + vert_colors[r][c + 1][k] * fx) * (1 - fy)
+            + (vert_colors[r + 1][c][k] * (1 - fx) + vert_colors[r + 1][c + 1][k] * fx) * fy
+            for k in range(3)
+        ]
+        return (float(mix[0]), float(mix[1]), float(mix[2]), 1.0)
+
+    us, vs = campus_frame.RISE_U_LINES, campus_frame.RISE_V_LINES
+    verts: dict[tuple[int, int], tuple[bmesh.types.BMVert, tuple[float, float, float, float]]] = {}
+
+    def _vert(i: int, j: int) -> tuple[bmesh.types.BMVert, tuple[float, float, float, float]]:
+        if (i, j) not in verts:
+            x, y = campus_frame.uv_to_xy(us[i], vs[j])
+            verts[(i, j)] = (bm.verts.new((x, y, terrain.sample(x, y) + 0.02)), _color_at(x, y))
+        return verts[(i, j)]
+
+    for i in range(len(us) - 1):
+        for j in range(len(vs) - 1):
+            corners = ((i, j), (i + 1, j), (i + 1, j + 1), (i, j + 1))
+            if max(campus_frame.rise_offset_uv(us[a], vs[b]) for a, b in corners) <= 0.001:
+                continue
+            quad = [_vert(a, b) for a, b in corners]
+            for tri in ((0, 1, 2), (0, 2, 3)):
+                face = bm.faces.new(tuple(quad[k][0] for k in tri))
+                face.smooth = True
+                face.material_index = 0
+                for loop, k in zip(face.loops, tri):
+                    loop[col_layer] = quad[k][1]
 
 
 def _densify_ring_2d(ring: list[tuple[float, float]], max_step_m: float) -> list[tuple[float, float]]:
@@ -1539,8 +1586,9 @@ def build_roads_object(
         ]
         return kept if len(kept) >= 2 else None
 
+    excluded_ids = {str(x) for x in (overrides.get("exclude_ids") or [])}
     for feat in path_features:
-        if str(feat.get("id", "")) in config.AB1_FRONT_SUPPRESS_IDS:
+        if str(feat.get("id", "")) in config.AB1_FRONT_SUPPRESS_IDS | excluded_ids:
             continue
         geom = feat["geometry"]
         if geom.get("type") != "LineString":
@@ -2198,6 +2246,8 @@ def _prepare_building_records(
             rec["rings"] = library_hero.normalize_library_footprint_rings()
         elif fid == HERO_IT_CANTEEN_ID:
             rec["rings"] = it_canteen_hero.normalize_it_canteen_footprint_rings(rec["rings"][0])
+        elif fid == HERO_NEW_HOSTEL_ID:
+            rec["rings"] = new_hostel_hero.normalize_hostel_footprint_rings()
 
         # Attach Overture Places metadata and search aliases
         snapped_places = building_places.get(fid) or []
@@ -2358,6 +2408,8 @@ def _append_amrita_building(
         return ab2_hero.build_ab2_complex(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
     if fid == HERO_LIBRARY_ID:
         return library_hero.build_central_library(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
+    if fid == HERO_NEW_HOSTEL_ID:
+        return new_hostel_hero.build_new_hostel(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
     if fid == HERO_IT_CANTEEN_ID:
         return it_canteen_hero.build_it_canteen(
             bm, col_layer, win_lit_bm, win_dark_bm, rings[0], terrain, offset_xyz,

@@ -12,8 +12,9 @@ from shapely.geometry import LineString, MultiPolygon, Point, Polygon, box
 from shapely.ops import unary_union
 
 try:
-    from . import config, terrain_utils
+    from . import campus_frame, config, terrain_utils
 except ImportError:
+    import campus_frame
     import config
     import terrain_utils
 
@@ -79,9 +80,8 @@ class CoreTerrainSampler:
         u, v = fx - c, fy - r
         z00, z10 = self.zs[r, c], self.zs[r, c + 1]
         z01, z11 = self.zs[r + 1, c], self.zs[r + 1, c + 1]
-        if u >= v:
-            return float(z00 + u * (z10 - z00) + v * (z11 - z10))
-        return float(z00 + v * (z01 - z00) + u * (z11 - z01))
+        z = z00 + u * (z10 - z00) + v * (z11 - z10) if u >= v else z00 + v * (z01 - z00) + u * (z11 - z01)
+        return float(z) + campus_frame.rise_offset(cx, cy)
 
 
 def _extract_polygons(geom: Any) -> list[Polygon]:

@@ -62,6 +62,10 @@ HERO_PALETTE: dict[str, str] = {
     "canteen_tile": "#C4705A",
     "rock_brown": "#5E554B",
     "table_red": "#B4533E",
+    # Courtyard hostel (Google satellite)
+    "hostel_white": "#EDEAE1",
+    "hostel_roof": "#E2DDD0",
+    "hostel_trim": "#CFC7B6",
 }
 
 

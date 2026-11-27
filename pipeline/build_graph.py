@@ -12,8 +12,9 @@ from shapely.geometry import LineString, MultiLineString, Polygon, box
 from shapely.ops import unary_union
 
 try:
-    from . import config, footbridges, terrain_utils
+    from . import campus_frame, config, footbridges, terrain_utils
 except ImportError:
+    import campus_frame
     import config
     import footbridges
     import terrain_utils
@@ -81,9 +82,8 @@ class TerrainSampler:
         z01 = self.zs[r + 1, c]
         z11 = self.zs[r + 1, c + 1]
 
-        if u >= v:
-            return float(z00 + u * (z10 - z00) + v * (z11 - z10))
-        return float(z00 + v * (z01 - z00) + u * (z11 - z01))
+        z = z00 + u * (z10 - z00) + v * (z11 - z10) if u >= v else z00 + v * (z01 - z00) + u * (z11 - z01)
+        return float(z) + campus_frame.rise_offset(bx, by)
 
 
 def _add_footbridge_line(lines: list[LineString], bridge: footbridges.Footbridge) -> None:
@@ -212,9 +212,10 @@ def main() -> None:
     walkable_lines: list[LineString] = []
     step_segments: list[tuple[float, float, float, float]] = []
 
+    excluded_ids = {str(x) for x in (overrides.get("exclude_ids") or [])}
     for feat in raw_osm.get("features", []):
         props = feat.get("properties", {})
-        if props.get("layer") != "path":
+        if props.get("layer") != "path" or str(feat.get("id", "")) in excluded_ids:
             continue
         subtype = str(props.get("subtype", ""))
         if subtype not in WALKABLE_HIGHWAY_SUBTYPES:
