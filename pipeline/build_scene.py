@@ -110,8 +110,9 @@ PALETTE: dict[str, str] = {
     "ab3_accent_brick": "#A54E37",
     "ab3_orange_trim": "#EA8540",
     "roof_ab3_slab": "#A9A69F",
-    "roof_ab1_concrete": "#B7B5AE",
-    "ab1_cornice_trim": "#C27856",
+    "roof_ab1_concrete": "#D3CBBD",
+    "ab1_cornice_trim": "#BFA185",
+    "ab1_band_trim": "#D2BEA6",
     # Roofs (Mangalore terracotta vs slate)
     "roof_terracotta": "#B54E34",
     "roof_terracotta_top": "#C56244",
@@ -2287,7 +2288,11 @@ def _append_amrita_building(
     c_eave_tile = srgb_hex_to_linear_rgba(PALETTE["roof_terracotta"])
     c_ab1_cornice = srgb_hex_to_linear_rgba(PALETTE["ab1_cornice_trim"])
     trim_key = "trim_hostel" if category == "hostel" else "trim_ochre" if category in {"food", "admin"} else "trim_terracotta"
-    c_trim = srgb_hex_to_linear_rgba(PALETTE["ab3_orange_trim" if fid == HERO_AB3_ID else trim_key])
+    if fid == HERO_AB3_ID:
+        trim_key = "ab3_orange_trim"
+    elif fid == HERO_AB1_ID:
+        trim_key = "ab1_band_trim"
+    c_trim = srgb_hex_to_linear_rgba(PALETTE[trim_key])
     c_recess = srgb_hex_to_linear_rgba(PALETTE["balcony_recess"])
     c_ab3_brick = srgb_hex_to_linear_rgba(PALETTE["ab3_accent_brick"])
 
@@ -2434,6 +2439,9 @@ def _append_amrita_building(
                 pitch, bay_w, bay_ratio = 4.4, 2.35, 0.50
             elif is_elevated:
                 pitch, bay_w, bay_ratio = 3.8, 2.1, 0.48
+            elif fid == HERO_AB1_ID:
+                # AB-1 front photo: narrow ~1.35 m punched windows at ~3.3 m centres, no hoods
+                pitch, bay_w, bay_ratio = 3.3, 1.35, 0.42
             else:
                 pitch, bay_w, bay_ratio = 4.4, 2.2, 0.48
 
@@ -2468,7 +2476,7 @@ def _append_amrita_building(
                         x0, y0 = ax + tx * d0 + nx * 0.065, ay + ty * d0 + ny * 0.065
                         x1, y1 = ax + tx * d1 + nx * 0.065, ay + ty * d1 + ny * 0.065
 
-                        if (category == "hostel" or is_courtyard or fid == HERO_AB1_ID) and not is_elevated:
+                        if (category == "hostel" or is_courtyard) and not is_elevated:
                             rx0, ry0 = ax + tx * d0 + nx * 0.032, ay + ty * d0 + ny * 0.032
                             rx1, ry1 = ax + tx * d1 + nx * 0.032, ay + ty * d1 + ny * 0.032
                             rv0 = _v(rx0, ry0, wz1 - 0.14)
@@ -3196,6 +3204,11 @@ def generate_trees_data(
     for px, py in entry_palm_spots:
         if _is_clear(px, py, min_tree_spacing=4.2, avoid_courtyards=False, allow_ab1_entry=True):
             _place(px, py, 0, (0.85, 1.08))
+
+    # AB-1 front landscaping from the aerial photos: fountain palms, East garden round bush & shrubs, West lawn shrubs
+    for px, py, ttype, scale_rng in ab1_hero.ab1_front_tree_spots():
+        if _is_clear(px, py, min_tree_spacing=3.0, avoid_courtyards=False, allow_ab1_entry=True):
+            _place(px, py, ttype, scale_rng)
 
     # AB-3 East front garden: palms & a shade tree on the raised island, palms flanking the twin porches
     for px, py, ttype, scale_rng in ab3_hero.ab3_front_tree_spots():
