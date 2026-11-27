@@ -224,7 +224,7 @@ def build_merged_roads_and_lamps() -> tuple[Path, Path]:
         geom = feat.get("geometry", {})
 
         if layer == "path" and geom.get("type") == "LineString":
-            coords = geom.get("coordinates", [])
+            coords = config.path_coords(feat)
             if len(coords) < 2:
                 continue
             subtype = str(props.get("subtype", "path"))
@@ -247,7 +247,7 @@ def build_merged_roads_and_lamps() -> tuple[Path, Path]:
 
     # Append custom campus connector roads from overrides.json
     for custom_road in overrides.get("custom_roads") or []:
-        if not isinstance(custom_road, dict):
+        if not isinstance(custom_road, dict) or custom_road.get("render") is False:
             continue
         raw_pts = custom_road.get("points") or []
         if len(raw_pts) < 2:

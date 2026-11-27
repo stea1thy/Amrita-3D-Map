@@ -15,8 +15,9 @@
     "bridges": "List of elevated skybridges ({ id, name, from: [lat, lon], to: [lat, lon], width, bottomY, height, color, roofColor } or { id, osm_id, bottomY / min_height, height, color, roofColor }) rendered floating above ground clearance",
     "rename_or_retag": "Map OSM ID -> { name, subtitle (optional), category, floors (optional), height_m (optional), min_height (optional), bottomY (optional), tags (optional list), departments (optional list) }",
     "shift_footprints": "Map OSM ID -> [dx_meters, dz_meters] in local 3D world space (+X East, +Z South / -Z North)",
+    "footbridges": "Arched pedestrian bridges ({ id, name, points: [[lat, lon], ...], width, rise }) built by heroes/footbridge.py and routed by build_graph.py",
     "custom_buildings": "List of manual buildings missing from OSM, each with footprint as [[lat, lon], ...] polygon ring",
-    "custom_roads": "List of custom campus road/footpath polylines missing from OSM ({ id, name, subtype, points: [[lat, lon], ...] }) rendered & routed alongside OSM roads",
+    "custom_roads": "List of custom campus road/footpath polylines missing from OSM ({ id, name, subtype, points: [[lat, lon], ...], render (optional) }) rendered & routed alongside OSM roads; render: false routes along paving another model already draws",
     "category_colors": "Optional map of category -> hex color string (e.g. '#E6DDD0') overriding default palette colors"
   },
   "_examples": {
@@ -97,8 +98,8 @@
     {
       "id": "bridge/ab2-library-skybridge",
       "name": "AB-2 to Central Library Skybridge",
-      "from": [10.90415, 76.89872],
-      "to": [10.90418, 76.89885],
+      "from": [10.904105, 76.898754],
+      "to": [10.904113, 76.898828],
       "width": 4.0,
       "bottomY": 4.5,
       "height": 3.4,
@@ -107,6 +108,19 @@
     }
   ],
   "rename_or_retag": {
+    "way/1080744354": {
+      "name": "IT Canteen",
+      "subtitle": "AB-2 IT Canteen: single-storey dining hall with garden seating",
+      "category": "food",
+      "floors": 1,
+      "height_m": 7.7,
+      "tags": [
+        "IT Canteen",
+        "AB2 IT Canteen",
+        "canteen",
+        "food"
+      ]
+    },
     "way/380829415": {
       "name": "Academic Block 3 (AB-3)",
       "subtitle": "School of Computing & International School of Law",
@@ -221,9 +235,39 @@
       ]
     }
   },
-  "shift_footprints": {},
+  "shift_footprints": {
+    "way/1080744354": [-55.6, -26.8]
+  },
+  "footbridges": [
+    {
+      "id": "footbridge/ab2-it-canteen",
+      "name": "AB-2 to IT Canteen Footbridge",
+      "points": [[10.904811, 76.898537], [10.905188, 76.898478]],
+      "width": 2.4,
+      "rise": 2.8
+    }
+  ],
   "custom_buildings": [],
   "custom_roads": [
+    {
+      "id": "road/ab2-footbridge-access",
+      "name": "AB-2 Footbridge Access Walk",
+      "subtype": "footway",
+      "points": [[10.9047652, 76.8987062], [10.904811, 76.898537]]
+    },
+    {
+      "id": "road/it-canteen-walk",
+      "name": "IT Canteen Walk",
+      "subtype": "footway",
+      "points": [[10.9050677, 76.8981981], [10.905116, 76.897947], [10.905254, 76.897742]]
+    },
+    {
+      "id": "road/it-canteen-door",
+      "name": "IT Canteen Garden Path",
+      "subtype": "footway",
+      "render": false,
+      "points": [[10.905254, 76.897742], [10.90522, 76.897611]]
+    },
     {
       "id": "road/pool-to-ab3-connector",
       "name": "Pool Front to AB-3 Connector Road",

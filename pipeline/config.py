@@ -76,6 +76,18 @@ AB1_FRONT_WATER_SUPPRESS_IDS: frozenset[str] = frozenset({
 })
 
 
+# OSM paths whose first N vertices are dropped (map way id -> N)
+PATH_HEAD_TRIM: dict[str, int] = {
+    "way/531088202": 1,  # Footpath drawn straight through the AB-2 Nataraja fountain
+}
+
+
+def path_coords(feature: dict) -> list:
+    """GeoJSON line coordinates of a path feature with the campus-specific trims applied."""
+    coords = (feature.get("geometry") or {}).get("coordinates") or []
+    return coords[PATH_HEAD_TRIM.get(str(feature.get("id", "")), 0):]
+
+
 def overpass_bbox_str() -> str:
     """Return BBOX formatted as 'south,west,north,east' for Overpass QL."""
     south, west, north, east = BBOX

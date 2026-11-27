@@ -23,6 +23,7 @@ if str(PIPELINE_DIR) not in sys.path:
     sys.path.insert(0, str(PIPELINE_DIR))
 
 import config  # noqa: E402
+import footbridges  # noqa: E402
 import terrain_utils  # noqa: E402
 import verify_budget  # noqa: E402
 from hero_models import (  # noqa: E402
@@ -33,6 +34,7 @@ from hero_models import (  # noqa: E402
     HERO_AMRITESHWARI_ID,
     HERO_ASB_ID,
     HERO_GATE_BANK_ID,
+    HERO_IT_CANTEEN_ID,
     HERO_LIBRARY_ID,
     HERO_MAIN_CANTEEN_ID,
     HERO_PLAYGROUND_ID,
@@ -46,6 +48,8 @@ from hero_models import (  # noqa: E402
     ab3_hero,
     asb_hero,
     campus_landmarks,
+    it_canteen_hero,
+    library_hero,
     workshops_hero,
 )
 
@@ -1380,7 +1384,7 @@ def build_ground_features_object(
             max_edge_m=9.0, max_subdiv_iters=4, clearance_margin=0.07,
         )
 
-    # Scalloped dark charcoal asphalt plaza in front of AB-1 + sandstone plazas at AB-2, AB-3, and Central Library
+    # Scalloped dark charcoal asphalt plaza in front of AB-1, the AB-2 statue plaza, AB-3 and library paving
     _tessellate_polygon_to_bm(
         bm,
         [ab1_hero.get_ab1_plaza_ring()],
@@ -1391,9 +1395,12 @@ def build_ground_features_object(
         max_subdiv_iters=4,
         clearance_margin=0.15,
     )
-    _add_rect(-240.0, 86.0, 14.0, 5.5, 0.08, 0.14, 6)    # AB-2 south forecourt
     _add_rect(*ab3_hero.ab3_forecourt_rect(), 0.14, 6)   # AB-3 east forecourt (porches + garden island)
-    _add_rect(-160.0, 137.0, 11.0, 5.5, 0.08, 0.14, 6)   # Central Library south forecourt
+    for ring, z_off, mat_idx in ab2_hero.ab2_ground_rings() + library_hero.library_ground_rings():
+        _tessellate_polygon_to_bm(
+            bm, [ring], terrain, z_off, mat_idx,
+            max_edge_m=7.5, max_subdiv_iters=4, clearance_margin=0.1,
+        )
 
     if not bm.faces:
         bm.free()
@@ -1414,17 +1421,6 @@ def build_hero_accents_object(
     flat_pads = flat_pad_heights or {}
 
     c_white = srgb_hex_to_linear_rgba(PALETTE["hero_white"])
-    c_planter_stone = srgb_hex_to_linear_rgba(PALETTE["planter_stone"])
-    c_planter_grass = srgb_hex_to_linear_rgba(PALETTE["lawn_courtyard"])
-
-    def _add_planter_bed(cx: float, cy: float, hx: float, hy: float, rot_rad: float = 0.0) -> None:
-        pz = terrain.sample(cx, cy)
-        _add_box_vc(bm, col_layer, cx, cy, pz - 0.5, pz + 0.45, hx, hy, c_planter_stone, c_planter_stone, rot_rad)
-        _add_box_vc(
-            bm, col_layer, cx, cy, pz + 0.45, pz + 0.62,
-            max(0.5, hx - 0.35), max(0.4, hy - 0.30),
-            c_planter_grass, c_planter_grass, rot_rad,
-        )
 
     def _add_ground_strip(
         cx: float,
@@ -1506,10 +1502,9 @@ def build_hero_accents_object(
 
     # 5. Grand Amrita Entrance Gate Archway & Checkpoint are built modularly by `pipeline/heroes/main_gate.py`.
 
-    # 6. Forecourt planter beds flanking AB-2 and Central Library entrances (AB-3 uses its garden island) (on sandstone plazas, clear of road curbs)
-    _add_planter_bed(-251.0, 86.0, 2.5, 1.1, 0.08)
-    _add_planter_bed(-229.0, 86.0, 2.5, 1.1, 0.08)
-    _add_planter_bed(-150.0, 136.0, 2.4, 1.1, 0.08)
+    # 6. AB-2 Nataraja fountain and the Central Library name board
+    ab2_hero.append_nataraja_fountain(bm, col_layer, terrain)
+    library_hero.append_library_sign(bm, col_layer, terrain)
 
     bm.normal_update()
     return create_mesh_object("STATIC_HeroAccents", bm, [mat_vertex_lit])
@@ -1552,7 +1547,7 @@ def build_roads_object(
             continue
         subtype = str(feat["properties"].get("subtype", "path"))
         half_w, curb_w, _ = ROAD_SPECS.get(subtype, (1.1, 0.25, 0.085))
-        raw_pts = [latlon_to_blender_xy(pt[1], pt[0]) for pt in geom.get("coordinates", [])]
+        raw_pts = [latlon_to_blender_xy(pt[1], pt[0]) for pt in config.path_coords(feat)]
         if len(raw_pts) < 2:
             continue
         for chain in clip_polyline_bbox(raw_pts, min_x, min_y, max_x, max_y):
@@ -1561,7 +1556,7 @@ def build_roads_object(
                 road_colliders.append((filtered, half_w, curb_w))
 
     for custom_road in overrides.get("custom_roads") or []:
-        if not isinstance(custom_road, dict):
+        if not isinstance(custom_road, dict) or custom_road.get("render") is False:
             continue
         raw_pts_ll = custom_road.get("points") or []
         if len(raw_pts_ll) < 2:
@@ -1600,7 +1595,7 @@ def build_roads_object(
             )
 
     # 2. Alternating ~2.5m Indian black/yellow curb dashes + grounded outer curb skirts
-    dash_len = 2.5
+    dash_len = 3.4
     curb_in_off = 0.0
     curb_out_off = 0.42
     curb_z_off = 0.265
@@ -1846,7 +1841,13 @@ def build_railway_object(
                     continue
                 ang = math.atan2(tangents[i][1], tangents[i][0])
                 zb = z_bals[i]
-                _add_box_vc(bm, col_layer, cx, cy, zb - 0.02, zb + 0.08, 0.15, 1.20, c_sleeper, c_sleeper, rot_rad=ang)
+                ca, sa = math.cos(ang), math.sin(ang)
+                top = [
+                    bm.verts.new((cx + lx * ca - ly * sa, cy + lx * sa + ly * ca, zb + 0.08))
+                    for lx, ly in ((-0.15, -1.2), (0.15, -1.2), (0.15, 1.2), (-0.15, 1.2))
+                ]
+                _add_tri_vc(bm, col_layer, (top[0], top[1], top[2]), 0, c_sleeper)
+                _add_tri_vc(bm, col_layer, (top[0], top[2], top[3]), 0, c_sleeper)
 
             # Twin Indian Broad Gauge (1.676m -> +-0.84m) continuous steel rails
             for r_off in (-0.84, 0.84):
@@ -2191,6 +2192,12 @@ def _prepare_building_records(
             rec["rings"], _ = ab3_hero.normalize_ab3_footprint_rings(rec["rings"][0])
         elif fid == HERO_AB1_ID and len(rec["rings"]) == 1:
             rec["rings"], _ = ab1_hero.normalize_ab1_footprint_rings(rec["rings"][0])
+        elif fid == HERO_AB2_ID:
+            rec["rings"] = ab2_hero.normalize_ab2_footprint_rings()
+        elif fid == HERO_LIBRARY_ID:
+            rec["rings"] = library_hero.normalize_library_footprint_rings()
+        elif fid == HERO_IT_CANTEEN_ID:
+            rec["rings"] = it_canteen_hero.normalize_it_canteen_footprint_rings(rec["rings"][0])
 
         # Attach Overture Places metadata and search aliases
         snapped_places = building_places.get(fid) or []
@@ -2344,6 +2351,16 @@ def _append_amrita_building(
             z_bottom=z_bottom,
             z_plinth=z_plinth,
             z_top=z_top,
+        )
+
+    # AB-2 and the Central Library are modelled wing by wing instead of extruding their outlines
+    if fid == HERO_AB2_ID:
+        return ab2_hero.build_ab2_complex(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
+    if fid == HERO_LIBRARY_ID:
+        return library_hero.build_central_library(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
+    if fid == HERO_IT_CANTEEN_ID:
+        return it_canteen_hero.build_it_canteen(
+            bm, col_layer, win_lit_bm, win_dark_bm, rings[0], terrain, offset_xyz,
         )
 
     # Determine safe inward ring for sloped terracotta roof eaves (try wide inset, fallback for narrow bridges)
@@ -2543,12 +2560,6 @@ def _append_amrita_building(
             terrain=terrain, offset_xyz=offset_xyz, z_plinth=z_plinth, z_eave=z_eave, z_top=z_top,
         )
 
-    elif fid == HERO_AB2_ID:
-        ab2_hero.append_ab2_hero_details(
-            bm=bm, col_layer=col_layer, win_lit_bm=win_lit_bm,
-            terrain=terrain, offset_xyz=offset_xyz, z_plinth=z_plinth, z_eave=z_eave, z_top=z_top,
-        )
-
     elif fid == HERO_AB3_ID:
         ab3_hero.append_ab3_hero_details(
             bm=bm, col_layer=col_layer, win_lit_bm=win_lit_bm, win_dark_bm=win_dark_bm,
@@ -2559,12 +2570,6 @@ def _append_amrita_building(
         asb_hero.append_asb_hero_details(
             bm=bm, col_layer=col_layer, win_lit_bm=win_lit_bm,
             terrain=terrain, offset_xyz=offset_xyz, z_plinth=z_plinth, z_eave=z_eave, z_top=z_top,
-        )
-
-    elif fid == HERO_LIBRARY_ID:
-        campus_landmarks.append_central_library_hero(
-            bm=bm, col_layer=col_layer, win_lit_bm=win_lit_bm,
-            terrain=terrain, offset_xyz=offset_xyz, z_plinth=z_plinth, z_top=z_top,
         )
 
     elif fid == HERO_AMRITESHWARI_ID:
@@ -2826,7 +2831,7 @@ def build_buildings(
             # AB-3: only the big central court (rings[1]) is a garden; its small light wells are paved
             lawn_holes = rings[1:] if fid == HERO_AB1_ID else rings[1:2]
             courtyard_lawns.extend(list(reversed(h)) for h in lawn_holes)
-        elif fid not in (HERO_WORKSHOPS_WEST_ID, HERO_WORKSHOPS_EAST_ID, HERO_AB3_ID) and not is_elevated and len(rings) == 1 and area_m2 >= 3000.0 and concavity < 0.14:
+        elif fid not in (HERO_WORKSHOPS_WEST_ID, HERO_WORKSHOPS_EAST_ID, HERO_AB3_ID, HERO_LIBRARY_ID) and not is_elevated and len(rings) == 1 and area_m2 >= 3000.0 and concavity < 0.14:
             hole_ccw = inset_ccw_ring_2d(outer_ring, 15.2, min_ratio=0.10, min_area=320.0)
             if hole_ccw is not None:
                 courtyard_lawns.append(list(hole_ccw))
@@ -3069,6 +3074,8 @@ def generate_trees_data(
     road_colliders: list[tuple[list[tuple[float, float]], float, float]],
     terrain: TerrainSurface,
     rail_lines: list[list[tuple[float, float]]] | None = None,
+    bridge_tree_spots: list[tuple[float, float, int, tuple[float, float]]] | None = None,
+    hand_tree_spots: list[tuple[float, float, int, tuple[float, float]]] | None = None,
 ) -> list[list[Any]]:
     """Generate 2,500+ Ettimadai palm (type=0) & canopy (type=1) instances in trees.json."""
     rng = random.Random(42)
@@ -3160,6 +3167,8 @@ def generate_trees_data(
             (132.5, 157.2, 6.5 * 6.5),
             (ab1_hero.AB1_PARKING_CX, ab1_hero.AB1_PARKING_CY, 22.5 * 22.5),
         ) + (() if allow_ab3_front else tuple(ab3_hero.ab3_front_clear_discs()))
+        hero_clear_discs += ((*ab2_hero.ab2_statue_xy(), 17.0 * 17.0),)
+        hero_clear_discs += tuple((x, y, 6.5 * 6.5) for x, y, _, _ in library_hero.library_front_tree_spots())
         for hx, hy, hr2 in hero_clear_discs:
             if (tx - hx) ** 2 + (ty - hy) ** 2 < hr2:
                 return False
@@ -3200,6 +3209,16 @@ def generate_trees_data(
     # AB-3 East front garden: palms & a shade tree on the raised island, palms flanking the twin porches
     for px, py, ttype, scale_rng in ab3_hero.ab3_front_tree_spots():
         if _is_clear(px, py, min_tree_spacing=3.0, avoid_courtyards=False, allow_ab3_front=True):
+            _place(px, py, ttype, scale_rng)
+
+    # AB-2 front garden & courtyard palms and Central Library entrance trees (hand-placed spots)
+    hand_spots = ab2_hero.ab2_front_tree_spots() + library_hero.library_front_tree_spots()
+    for px, py, ttype, scale_rng in hand_spots + list(hand_tree_spots or []):
+        _place(px, py, ttype, scale_rng)
+
+    # Wooded gully either side of the footbridges
+    for px, py, ttype, scale_rng in bridge_tree_spots or []:
+        if _is_clear(px, py, min_tree_spacing=2.5, avoid_courtyards=False):
             _place(px, py, ttype, scale_rng)
 
     # Loose natural perimeter clusters on outer AB-1 lawn edges & back corners (clear central lawn & sightline!)
@@ -3553,6 +3572,7 @@ def main() -> None:
         "inspectables": inspectables,
         "flat_pad_heights": flat_pad_heights,
         "config": config,
+        "hand_tree_spots": [],
     }
     ran_heroes = heroes.discover_and_run_heroes(hero_ctx)
     if ran_heroes:
@@ -3574,6 +3594,8 @@ def main() -> None:
         road_colliders=road_colliders,
         terrain=terrain,
         rail_lines=rail_excl_lines,
+        bridge_tree_spots=footbridges.gully_tree_spots(overrides),
+        hand_tree_spots=hero_ctx["hand_tree_spots"],
     )
 
     config.CAMPUS_GLB_PATH.parent.mkdir(parents=True, exist_ok=True)
