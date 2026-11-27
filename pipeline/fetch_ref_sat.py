@@ -34,10 +34,16 @@ BUILTIN_ALIASES: dict[str, str] = {
     "maincanteen": "way/546394562",
     "shrine": "way/531394576",
     "playground": "way/528938316",
+    "mainground": "way/528938316",
+    "mainsportsground": "way/528938316",
     "pool": "way/1210976885",
     "workshops": "way/380926299",
     "workshopswest": "way/380926299",
     "workshopseast": "way/380926300",
+}
+
+BUILTIN_BBOXES: dict[str, tuple[str, str, tuple[float, float, float, float]]] = {
+    "maingate": ("Amrita Main Gate & Parking", "main_gate", (10.89815, 76.89905, 10.90035, 76.90145)),
 }
 
 
@@ -78,6 +84,8 @@ def _coords_from_geom(geom: dict[str, Any]) -> list[tuple[float, float]]:
 
 def _resolve_latlon_bbox(target: str) -> tuple[str, str, tuple[float, float, float, float]]:
     q_norm = _norm(target)
+    if q_norm in BUILTIN_BBOXES:
+        return BUILTIN_BBOXES[q_norm]
     canonical_id = BUILTIN_ALIASES.get(q_norm)
 
     meta = json.loads(config.CAMPUS_META_PATH.read_text(encoding="utf-8")) if config.CAMPUS_META_PATH.exists() else {}
@@ -195,13 +203,24 @@ def _fetch_stitched_satellite(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Fetch Esri World Imagery satellite reference for a campus target.")
-    parser.add_argument("--target", required=True, help="Target name or OSM ID (e.g. ab1, ab3, way/380925364)")
+    parser.add_argument("--target", required=True, help="Target name or OSM ID (e.g. ab1, main_gate, way/380925364)")
     parser.add_argument("--margin", type=float, default=40.0, help="Margin in meters around building bounds (default 40)")
     parser.add_argument("--zoom", type=int, default=19, help="Preferred Esri tile zoom level (auto-falls back to 18/17 on placeholders)")
+    parser.add_argument("--lat", type=float, default=None, help="Optional center latitude override")
+    parser.add_argument("--lon", type=float, default=None, help="Optional center longitude override")
+    parser.add_argument("--span", type=float, default=240.0, help="Box span in meters when --lat and --lon are given (default 240)")
     parser.add_argument("--out", type=Path, default=None, help="Optional explicit output path")
     args = parser.parse_args()
 
-    label, fid, (s_lat, w_lon, n_lat, e_lon) = _resolve_latlon_bbox(args.target)
+    if args.lat is not None and args.lon is not None:
+        label = args.target
+        fid = f"{args.lat:.5f},{args.lon:.5f}"
+        half_m = 0.5 * args.span
+        dlat_s = half_m / 111320.0
+        dlon_s = half_m / (111320.0 * max(0.2, math.cos(math.radians(args.lat))))
+        s_lat, w_lon, n_lat, e_lon = (args.lat - dlat_s, args.lon - dlon_s, args.lat + dlat_s, args.lon + dlon_s)
+    else:
+        label, fid, (s_lat, w_lon, n_lat, e_lon) = _resolve_latlon_bbox(args.target)
     mid_lat = 0.5 * (s_lat + n_lat)
     dlat = args.margin / 111320.0
     dlon = args.margin / (111320.0 * max(0.2, math.cos(math.radians(mid_lat))))

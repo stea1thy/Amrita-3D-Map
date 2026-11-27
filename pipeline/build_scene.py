@@ -108,7 +108,8 @@ PALETTE: dict[str, str] = {
     "balcony_recess": "#5E544C",
     "portico_column": "#373B42",
     "ab3_accent_brick": "#A54E37",
-    "roof_ab3_slab": "#DCD5C8",
+    "ab3_orange_trim": "#EA8540",
+    "roof_ab3_slab": "#A9A69F",
     "roof_ab1_concrete": "#B7B5AE",
     "ab1_cornice_trim": "#C27856",
     # Roofs (Mangalore terracotta vs slate)
@@ -1302,7 +1303,8 @@ def build_ground_features_object(
                 max_z, min_edge_z = _grid_sample_ring_elevations(clipped_outer, terrain, steps=9)
                 z_top = max_z + 0.26
                 flat_pad_heights[HERO_PLAYGROUND_ID] = z_top
-                _add_flat_terrace_slab(bm, [clipped_outer], z_top, min_edge_z - 3.0, 3, 7)
+                # Dedicated geometry is emitted by modular hero `pipeline/heroes/main_ground.py`.
+                break
         elif subtype in {"pitch", "soccer", "cricket", "football"}:
             for rings in geojson_polygon_rings_to_blender(feat["geometry"]):
                 clipped_outer = clip_polygon_bbox(rings[0], min_x, min_y, max_x, max_y)
@@ -1390,7 +1392,7 @@ def build_ground_features_object(
         clearance_margin=0.15,
     )
     _add_rect(-240.0, 86.0, 14.0, 5.5, 0.08, 0.14, 6)    # AB-2 south forecourt
-    _add_rect(-270.6, 393.2, 14.0, 3.6, 1.6413, 0.14, 6)   # AB-3 east forecourt
+    _add_rect(*ab3_hero.ab3_forecourt_rect(), 0.14, 6)   # AB-3 east forecourt (porches + garden island)
     _add_rect(-160.0, 137.0, 11.0, 5.5, 0.08, 0.14, 6)   # Central Library south forecourt
 
     if not bm.faces:
@@ -1493,50 +1495,7 @@ def build_hero_accents_object(
                 water_flat_z=flat_pads.get(HERO_POOL_WATER_ID),
             )
 
-    # 2. Main Sports Ground (Amrita Playground) track oval, pitch markings, 6-tier bleachers & goalposts
-    pg_feat = next((f for f in raw_features if f["id"] == HERO_PLAYGROUND_ID), None)
-    if pg_feat:
-        pts = [latlon_to_blender_xy(p[1], p[0]) for p in pg_feat["geometry"]["coordinates"][0][:-1]]
-        if len(pts) >= 4:
-            gcx, gcy = sum(p[0] for p in pts) / 4.0, sum(p[1] for p in pts) / 4.0
-            ang = math.atan2(pts[1][1] - pts[0][1], pts[1][0] - pts[0][0])
-            ca, sa = math.cos(ang), math.sin(ang)
-            pg_flat_z = flat_pads.get(HERO_PLAYGROUND_ID)
-            pg_line_z = pg_flat_z + 0.05 if pg_flat_z is not None else None
-
-            rx, ry, track_w = 78.0, 56.0, 1.8
-            segs = 40
-            in_vs: list[bmesh.types.BMVert] = []
-            out_vs: list[bmesh.types.BMVert] = []
-            for i in range(segs):
-                th = (2.0 * math.pi * i) / segs
-                lx, ly = rx * math.cos(th), ry * math.sin(th)
-                ix, iy = (rx - track_w) * math.cos(th), (ry - track_w) * math.sin(th)
-                ox_w, oy_w = gcx + lx * ca - ly * sa, gcy + lx * sa + ly * ca
-                ix_w, iy_w = gcx + ix * ca - iy * sa, gcy + ix * sa + iy * ca
-                z_out = pg_line_z if pg_line_z is not None else terrain.sample(ox_w, oy_w) + 0.095
-                z_in = pg_line_z if pg_line_z is not None else terrain.sample(ix_w, iy_w) + 0.095
-                out_vs.append(bm.verts.new((ox_w, oy_w, z_out)))
-                in_vs.append(bm.verts.new((ix_w, iy_w, z_in)))
-            for i in range(segs):
-                j = (i + 1) % segs
-                _add_tri_vc(bm, col_layer, (in_vs[i], out_vs[i], out_vs[j]), 0, c_white)
-                _add_tri_vc(bm, col_layer, (in_vs[i], out_vs[j], in_vs[j]), 0, c_white)
-
-            _add_ground_strip(gcx, gcy, 96.0, 1.1, ang, 0.095, c_white, segs=4, fixed_z=pg_line_z)
-            _add_ground_strip(gcx - sa * 32.0, gcy + ca * 32.0, 96.0, 0.9, ang, 0.095, c_white, segs=4, fixed_z=pg_line_z)
-            _add_ground_strip(gcx + sa * 32.0, gcy - ca * 32.0, 96.0, 0.9, ang, 0.095, c_white, segs=4, fixed_z=pg_line_z)
-            _add_ground_strip(gcx, gcy, 64.0, 0.9, ang + math.pi * 0.5, 0.095, c_white, segs=3, fixed_z=pg_line_z)
-
-            ab3_hero.append_playground_bleachers_and_goals(
-                bm=bm,
-                col_layer=col_layer,
-                terrain=terrain,
-                gcx=gcx,
-                gcy=gcy,
-                pitch_ang_rad=ang,
-                pg_flat_z=pg_flat_z,
-            )
+    # 2. Main Sports Ground (Amrita Playground) is now built modularly by `pipeline/heroes/main_ground.py`.
 
     # 3. AB-1 Circular Lotus/Saraswati Fountain Roundabout & Forecourt Planters
     ab1_hero.append_ab1_fountain_plaza(bm, col_layer, terrain)
@@ -1545,14 +1504,11 @@ def build_hero_accents_object(
     # 4. ASB Curved Stone-Masonry Driveway Planter Island
     asb_hero.append_asb_driveway_planter(bm, col_layer, terrain)
 
-    # 5. Grand Amrita Entrance Gate Archway straddling the entrance boulevard
-    campus_landmarks.append_main_gate_archway(bm, col_layer, terrain)
+    # 5. Grand Amrita Entrance Gate Archway & Checkpoint are built modularly by `pipeline/heroes/main_gate.py`.
 
-    # 6. Forecourt planter beds flanking AB-2, AB-3, and Central Library entrances (on sandstone plazas, clear of road curbs)
+    # 6. Forecourt planter beds flanking AB-2 and Central Library entrances (AB-3 uses its garden island) (on sandstone plazas, clear of road curbs)
     _add_planter_bed(-251.0, 86.0, 2.5, 1.1, 0.08)
     _add_planter_bed(-229.0, 86.0, 2.5, 1.1, 0.08)
-    _add_planter_bed(-268.85, 384.83, 2.4, 1.0, 1.6413)
-    _add_planter_bed(-270.22, 404.28, 2.4, 1.0, 1.6413)
     _add_planter_bed(-150.0, 136.0, 2.4, 1.1, 0.08)
 
     bm.normal_update()
@@ -1992,7 +1948,7 @@ def _compute_building_floors_and_height(category: str, area_m2: float, rec: dict
     if fid == HERO_AB2_ID:
         return 4, round(4 * FLOOR_HEIGHT_M, 2)
     if fid == HERO_AB3_ID:
-        return 3, round(3 * FLOOR_HEIGHT_M, 2)
+        return 4, round(4 * FLOOR_HEIGHT_M, 2)
     if fid == HERO_ASB_ID:
         return 4, round(4 * FLOOR_HEIGHT_M, 2)
     if rec.get("overture_levels") is not None:
@@ -2331,7 +2287,7 @@ def _append_amrita_building(
     c_eave_tile = srgb_hex_to_linear_rgba(PALETTE["roof_terracotta"])
     c_ab1_cornice = srgb_hex_to_linear_rgba(PALETTE["ab1_cornice_trim"])
     trim_key = "trim_hostel" if category == "hostel" else "trim_ochre" if category in {"food", "admin"} else "trim_terracotta"
-    c_trim = srgb_hex_to_linear_rgba(PALETTE[trim_key])
+    c_trim = srgb_hex_to_linear_rgba(PALETTE["ab3_orange_trim" if fid == HERO_AB3_ID else trim_key])
     c_recess = srgb_hex_to_linear_rgba(PALETTE["balcony_recess"])
     c_ab3_brick = srgb_hex_to_linear_rgba(PALETTE["ab3_accent_brick"])
 
@@ -2451,7 +2407,12 @@ def _append_amrita_building(
         if r_idx == 0 and roof_in_ring is not None:
             top_in_v = [_v(x, y, z_top) for x, y in roof_in_ring]
             # Sloped terracotta Mangalore-tile eave skirt (or terracotta/coping rim on flat parapet roofs)
-            eave_rgba = c_eave_tile if has_terracotta_eave else (c_ab1_cornice if fid == HERO_AB1_ID else c_coping)
+            eave_rgba = (
+                c_eave_tile if has_terracotta_eave
+                else c_ab1_cornice if fid == HERO_AB1_ID
+                else c_trim if fid == HERO_AB3_ID
+                else c_coping
+            )
             _emit_quad_strip_ring(bm, col_layer, eave_v, top_in_v, eave_rgba)
             roof_flat_verts.extend(top_in_v)
             roof_flat_world.extend(roof_in_ring)
@@ -2862,8 +2823,10 @@ def build_buildings(
         min_clearance_m = float(rec["min_clearance_m"])
 
         if fid in (HERO_AB1_ID, HERO_AB3_ID) and len(rings) > 1:
-            courtyard_lawns.extend(list(reversed(h)) for h in rings[1:])
-        elif fid not in (HERO_WORKSHOPS_WEST_ID, HERO_WORKSHOPS_EAST_ID) and not is_elevated and len(rings) == 1 and area_m2 >= 3000.0 and concavity < 0.14:
+            # AB-3: only the big central court (rings[1]) is a garden; its small light wells are paved
+            lawn_holes = rings[1:] if fid == HERO_AB1_ID else rings[1:2]
+            courtyard_lawns.extend(list(reversed(h)) for h in lawn_holes)
+        elif fid not in (HERO_WORKSHOPS_WEST_ID, HERO_WORKSHOPS_EAST_ID, HERO_AB3_ID) and not is_elevated and len(rings) == 1 and area_m2 >= 3000.0 and concavity < 0.14:
             hole_ccw = inset_ccw_ring_2d(outer_ring, 15.2, min_ratio=0.10, min_area=320.0)
             if hole_ccw is not None:
                 courtyard_lawns.append(list(hole_ccw))
@@ -3144,6 +3107,7 @@ def generate_trees_data(
         avoid_courtyards: bool,
         allow_inside_courtyard_hole: bool = False,
         allow_ab1_entry: bool = False,
+        allow_ab3_front: bool = False,
     ) -> bool:
         if (
             tx < terrain.min_x + 15.0
@@ -3190,17 +3154,12 @@ def generate_trees_data(
                     if dist_point_to_segment_sq(tx, ty, pts[i][0], pts[i][1], pts[i + 1][0], pts[i + 1][1]) < pad_sq:
                         return False
 
-        # Keep hero plazas, Main Gate wings, AB-1 Lotus Fountain, ASB median planter & bleachers clear of trees
+        # Keep hero plazas, AB-1 Lotus Fountain & ASB median planter clear of trees
         hero_clear_discs = (
             (ab1_hero.AB1_FOUNTAIN_CX, ab1_hero.AB1_FOUNTAIN_CY, 11.5 * 11.5),
-            (campus_landmarks.MAIN_GATE_CX, campus_landmarks.MAIN_GATE_CY, 17.5 * 17.5),
             (132.5, 157.2, 6.5 * 6.5),
-            (171.8, 36.0, 14.0 * 14.0),
-            (171.8, 16.0, 14.0 * 14.0),
-            (171.8, -6.0, 14.0 * 14.0),
-            (-270.6, 393.2, 10.5 * 10.5),
             (ab1_hero.AB1_PARKING_CX, ab1_hero.AB1_PARKING_CY, 22.5 * 22.5),
-        )
+        ) + (() if allow_ab3_front else tuple(ab3_hero.ab3_front_clear_discs()))
         for hx, hy, hr2 in hero_clear_discs:
             if (tx - hx) ** 2 + (ty - hy) ** 2 < hr2:
                 return False
@@ -3238,6 +3197,11 @@ def generate_trees_data(
         if _is_clear(px, py, min_tree_spacing=4.2, avoid_courtyards=False, allow_ab1_entry=True):
             _place(px, py, 0, (0.85, 1.08))
 
+    # AB-3 East front garden: palms & a shade tree on the raised island, palms flanking the twin porches
+    for px, py, ttype, scale_rng in ab3_hero.ab3_front_tree_spots():
+        if _is_clear(px, py, min_tree_spacing=3.0, avoid_courtyards=False, allow_ab3_front=True):
+            _place(px, py, ttype, scale_rng)
+
     # Loose natural perimeter clusters on outer AB-1 lawn edges & back corners (clear central lawn & sightline!)
     ab1_grove_candidates: list[tuple[float, float, int]] = []
     for gx0, gy0, gx1, gy1, step in (
@@ -3263,6 +3227,47 @@ def generate_trees_data(
         if _is_clear(jx, jy, min_tree_spacing=9.5, avoid_courtyards=False):
             _place(jx, jy, ttype, (0.52, 0.72) if ttype == 1 else (0.78, 0.98))
             ab1_canopy_count += 1
+
+    # 1B. Main Sports Ground dense tropical canopy belt behind east gallery & along north/west edges
+    from heroes import main_ground as hero_main_ground
+
+    mg_belt_candidates: list[tuple[float, float, int, float]] = []
+    for belt_name, u0, u1, v0, v1, step in hero_main_ground.get_main_ground_tree_belts():
+        vu = v0 + 1.0
+        while vu <= v1 - 1.0:
+            uu = u0 + 1.0
+            while uu <= u1 - 1.0:
+                ju = uu + rng.uniform(-1.6, 1.6)
+                jv = vu + rng.uniform(-1.8, 1.8)
+                wx, wy = hero_main_ground.belt_local_to_world(ju, jv)
+                ttype = 0 if (belt_name != "east_gallery_screen" and rng.random() < 0.12) else 1
+                spacing = 4.8 if belt_name == "east_gallery_screen" else 5.8
+                mg_belt_candidates.append((wx, wy, ttype, spacing))
+                uu += step
+            vu += step
+    rng.shuffle(mg_belt_candidates)
+    for wx, wy, ttype, spacing in mg_belt_candidates:
+        if _is_clear(wx, wy, min_tree_spacing=spacing, avoid_courtyards=False):
+            _place(wx, wy, ttype, (1.05, 1.48) if ttype == 1 else (0.90, 1.22))
+
+    # 1C. Main Gate & Parking Perimeter tropical shade trees (outside sheds/lots/rail crossing)
+    from heroes import main_gate as hero_main_gate
+
+    gate_candidates: list[tuple[float, float, int]] = []
+    for gx0, gy0, gx1, gy1, step in hero_main_gate.get_main_gate_shade_tree_belts():
+        yg = gy0 + 1.5
+        while yg <= gy1 - 1.5:
+            xg = gx0 + 1.5
+            while xg <= gx1 - 1.5:
+                jx = xg + rng.uniform(-1.8, 1.8)
+                jy = yg + rng.uniform(-1.8, 1.8)
+                gate_candidates.append((jx, jy, 0 if rng.random() < 0.25 else 1))
+                xg += step
+            yg += step
+    rng.shuffle(gate_candidates)
+    for wx, wy, ttype in gate_candidates:
+        if _is_clear(wx, wy, min_tree_spacing=7.5, avoid_courtyards=False):
+            _place(wx, wy, ttype, (0.95, 1.35) if ttype == 1 else (0.88, 1.18))
 
     # 2. Coconut palm & shade avenues flanking both sides of campus roads (4-6m offset)
     for pts, half_w, curb_w in road_colliders:
@@ -3414,8 +3419,10 @@ def main() -> None:
         import merge_roads
         merge_roads.build_merged_roads_and_lamps()
     except ImportError:
-        venv_py = config.PIPELINE_DIR / ".venv" / "Scripts" / "python.exe"
-        py_exe = str(venv_py) if venv_py.exists() else sys.executable
+        venv_dir = config.PIPELINE_DIR / ".venv"
+        venv_candidates = (venv_dir / "Scripts" / "python.exe", venv_dir / "bin" / "python")
+        venv_py = next((p for p in venv_candidates if p.exists()), None)
+        py_exe = str(venv_py) if venv_py is not None else sys.executable
         subprocess.run([py_exe, str(config.PIPELINE_DIR / "merge_roads.py")], check=True)
 
     print("Loading raw_osm.json, elevation.json, overrides.json, and optional overture_campus.json...")

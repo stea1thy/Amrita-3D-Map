@@ -11,13 +11,13 @@ export interface TourStop {
 export const TOUR_STOPS: TourStop[] = [
   {
     id: "main-gate",
-    buildingId: "way/531088187",
+    buildingId: "hero/main-gate",
     title: "Main Gate & Campus Entrance",
-    subtitle: "Ettimadai Railway Station Road approach",
+    subtitle: "Ettimadai Railway Crossing & Security Checkpoint",
     narration:
-      "Welcome to Amrita Vishwa Vidyapeetham, Ettimadai. Just inside the southern entry sits Dhanlaxmi Bank and ATM alongside the shaded main drive leading up into the academic core.",
-    targetOverride: [-22, -4, 352],
-    cameraOffset: [115, 98, 135],
+      "Welcome to Amrita Vishwa Vidyapeetham, Ettimadai. Crossing north over the broad-gauge railway tracks brings you through the Main Gate checkpoint and compound wall, past the 2-story Security Office gatehouse alongside Student's Parking and Visitor Car Parking.",
+    targetOverride: [-36, 2, 378],
+    cameraOffset: [95, 78, 110],
   },
   {
     id: "ab1",

@@ -142,7 +142,13 @@ BUILTIN_ALIASES: dict[str, str] = {
     "canteen": "way/546394562",
     "maincanteen": "way/546394562",
     "shrine": "way/531394576",
+    "maingate": "hero/main-gate",
+    "securityoffice": "hero/security-office",
+    "studentsparking": "hero/students-parking",
+    "visitorparking": "hero/visitor-parking",
     "playground": "way/528938316",
+    "mainground": "way/528938316",
+    "mainsportsground": "way/528938316",
     "pool": "way/1210976885",
     "workshops": "way/380926299",
     "workshopswest": "way/380926299",
@@ -196,6 +202,12 @@ def _resolve_target(target: str) -> tuple[str, tuple[float, float, float, float,
             return ("Campus Overview", (min_x, max_x, min_y, max_y, min_z, max_z))
         return ("Campus Overview", (-440.0, 460.0, -420.0, 480.0, -10.0, 40.0))
 
+    if q_norm == "maingate":
+        return (
+            "Amrita Main Gate, Security Office & Parking Zone",
+            (-86.0, 48.0, -426.0, -300.0, -8.0, 12.0),
+        )
+
     canonical_id = BUILTIN_ALIASES.get(q_norm)
     items: list[dict[str, Any]] = list(meta.get("buildings") or []) + list(meta.get("inspectables") or [])
 
@@ -217,7 +229,9 @@ def _resolve_target(target: str) -> tuple[str, tuple[float, float, float, float,
 
     # Try direct Blender object match first (or via matched_item meshName)
     cand_obj: bpy.types.Object | None = None
-    if matched_item and matched_item.get("meshName"):
+    if canonical_id == "way/528938316":
+        cand_obj = bpy.data.objects.get("GROUND_MainSports")
+    if cand_obj is None and matched_item and matched_item.get("meshName"):
         cand_obj = bpy.data.objects.get(str(matched_item["meshName"]))
     if cand_obj is None:
         cand_obj = next(
@@ -227,6 +241,8 @@ def _resolve_target(target: str) -> tuple[str, tuple[float, float, float, float,
 
     if cand_obj is not None:
         label = str(matched_item.get("name")) if matched_item and matched_item.get("name") else cand_obj.name
+        if canonical_id == "way/528938316" and label == cand_obj.name:
+            label = "Amrita Main Sports Ground"
         return (label, _world_bbox_from_object(cand_obj))
 
     if matched_item is not None:
@@ -356,6 +372,16 @@ def main() -> None:
         front_loc = (cx + 120.0, min_y - 360.0, 290.0)
         front_target = (cx, cy + 40.0, 10.0)
         front_lens = 28.0
+    elif _norm(args.target) in {"mainground", "mainsportsground", "playground"} or args.target.lower() == "way/528938316":
+        d = max(72.0, radius * 1.95)
+        front_loc = (cx - d * 0.42, cy - d * 0.92, max_z + d * 0.40)
+        front_target = (cx + 4.0, cy, min_z + span_z * 0.35)
+        front_lens = 34.0
+    elif _norm(args.target) == "maingate":
+        d = max(70.0, radius * 1.65)
+        front_loc = (cx - d * 0.38, cy - d * 0.96, max_z + d * 0.44)
+        front_target = (cx + 6.0, cy + 8.0, min_z + span_z * 0.32)
+        front_lens = 34.0
     else:
         d = max(48.0, radius * 2.15)
         front_loc = (cx + d * 0.16, cy - d * 1.05, max_z + d * 0.44)

@@ -2,7 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
+import ScreenLabel from "./ScreenLabel";
 import type { BuildingMeta } from "@/types/campus";
 
 interface LandmarkLabelsProps {
@@ -22,7 +22,10 @@ interface LandmarkSpec {
 }
 
 const MAJOR_LANDMARKS: LandmarkSpec[] = [
-  { id: "way/531088187", shortLabel: "Main Gate", tier: "primary" },
+  { id: "hero/main-gate", shortLabel: "Main Gate", tier: "primary" },
+  { id: "hero/security-office", shortLabel: "Security Office", tier: "secondary" },
+  { id: "hero/students-parking", shortLabel: "Student's Parking", tier: "secondary" },
+  { id: "hero/visitor-parking", shortLabel: "Car Parking", tier: "secondary" },
   { id: "way/380925364", shortLabel: "AB-1", tier: "primary" },
   { id: "way/380702789", shortLabel: "AB-2", tier: "primary" },
   { id: "way/380829415", shortLabel: "AB-3", tier: "primary" },
@@ -89,7 +92,7 @@ export default function LandmarkLabels({
           return null;
         }
         return (
-          <Html
+          <ScreenLabel
             key={id}
             position={[
               building.center[0],
@@ -113,7 +116,7 @@ export default function LandmarkLabels({
             >
               {shortLabel}
             </button>
-          </Html>
+          </ScreenLabel>
         );
       })}
     </group>
