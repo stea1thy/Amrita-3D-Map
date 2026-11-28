@@ -3532,6 +3532,15 @@ def generate_trees_data(
             if _is_clear(jx2, jy2, min_tree_spacing=8.5, avoid_courtyards=True):
                 _place(jx2, jy2, 1, (0.88, 1.55))
 
+    # 4. Palms and shade trees hugging the tennis court fence (added last so the scattered layout is unchanged)
+    from heroes import tennis_courts as hero_tennis
+
+    # Placed without drawing from `rng` so the rest of the campus tree layout stays unchanged.
+    for ti, (fx, fy, ftype, fscale) in enumerate(hero_tennis.get_tennis_feature_trees()):
+        gx, gy, gz = blender_to_gltf_xyz(fx, fy, terrain.sample(fx, fy))
+        placed.append([round(gx, 1), round(gy, 1), round(gz, 1), fscale, round((ti * 1.37) % 6.28, 2), ftype, ti % 4])
+        spatial_hash.setdefault((int(math.floor(fx / cell_size)), int(math.floor(fy / cell_size))), []).append((fx, fy))
+
     return placed[:MAX_TREE_COUNT]
 
 
