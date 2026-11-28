@@ -66,6 +66,12 @@ HERO_PALETTE: dict[str, str] = {
     "hostel_white": "#EDEAE1",
     "hostel_roof": "#E2DDD0",
     "hostel_trim": "#CFC7B6",
+    # Vasishta Bhavanam (owner's ground photo): salmon-pink pilasters/bands, salmon Mangalore tiles, blue name board
+    "vasishta_pink": "#E9A48F",
+    "vasishta_tile": "#D47D60",
+    "vasishta_sign": "#1F4FA8",
+    "vasishta_earth": "#C98B6E",
+    "vasishta_roof": "#ADA79D",
     # Academic Block 4 (Google satellite; walls from the owner's photos across the sports ground)
     "ab4_wall": "#EFE9DC",
     "ab4_roof": "#DEDAD0",

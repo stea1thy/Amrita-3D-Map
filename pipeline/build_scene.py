@@ -43,6 +43,7 @@ from hero_models import (  # noqa: E402
     HERO_LIBRARY_ID,
     HERO_MAIN_CANTEEN_ID,
     HERO_NEW_HOSTEL_ID,
+    HERO_VASISHTA_ID,
     HERO_PLAYGROUND_ID,
     HERO_POOL_DECK_ID,
     HERO_POOL_WATER_ID,
@@ -62,6 +63,7 @@ from hero_models import (  # noqa: E402
     pandal_hero,
     library_hero,
     new_hostel_hero,
+    vasishta_hero,
     workshops_hero,
     yagnavalkya_area_hero,
     gargi_area_hero,
@@ -2270,6 +2272,8 @@ def _prepare_building_records(
             rec["rings"] = it_canteen_hero.normalize_it_canteen_footprint_rings(rec["rings"][0])
         elif fid == HERO_NEW_HOSTEL_ID:
             rec["rings"] = new_hostel_hero.normalize_hostel_footprint_rings()
+        elif fid == HERO_VASISHTA_ID:
+            rec["rings"] = vasishta_hero.normalize_vasishta_footprint_rings()
         elif fid == HERO_AB4_ID:
             rec["rings"] = ab4_hero.normalize_ab4_footprint_rings()
         elif fid == HERO_PANDAL_ID:
@@ -2469,6 +2473,8 @@ def _append_amrita_building(
         return library_hero.build_central_library(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
     if fid == HERO_NEW_HOSTEL_ID:
         return new_hostel_hero.build_new_hostel(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
+    if fid == HERO_VASISHTA_ID:
+        return vasishta_hero.build_vasishta(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
     if fid == HERO_AB4_ID:
         return ab4_hero.build_ab4(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
     if gargi_area_hero.builds(fid):
