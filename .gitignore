@@ -27,6 +27,9 @@ pipeline/debug_campus.blend
 .DS_Store
 Thumbs.db
 
+# Local AI worktrees / preview config
+.claude/
+
 # Always keep pre-built 3D scene & campus data tracked for frontend teammates
 !web/public/models/campus.glb
 !web/public/data/*.json
