@@ -35,6 +35,7 @@ from hero_models import (  # noqa: E402
     HERO_AB4_ID,
     HERO_AMRITESHWARI_ID,
     HERO_ASB_ID,
+    HERO_CIR_ID,
     HERO_MBA_CANTEEN_ID,
     HERO_PANDAL_ID,
     HERO_GATE_BANK_ID,
@@ -54,6 +55,7 @@ from hero_models import (  # noqa: E402
     ab4_hero,
     amriteshwari_hero,
     asb_hero,
+    cir_hero,
     campus_landmarks,
     it_canteen_hero,
     mba_canteen_hero,
@@ -2270,6 +2272,10 @@ def _prepare_building_records(
             rec["rings"] = ab4_hero.normalize_ab4_footprint_rings()
         elif fid == HERO_PANDAL_ID:
             rec["rings"] = pandal_hero.normalize_pandal_footprint_rings()
+        elif fid == HERO_ASB_ID:
+            rec["rings"] = asb_hero.normalize_asb_footprint_rings()
+        elif fid == HERO_CIR_ID:
+            rec["rings"] = cir_hero.normalize_cir_footprint_rings()
         elif fid == HERO_MBA_CANTEEN_ID:
             rec["rings"] = mba_canteen_hero.normalize_mba_canteen_footprint_rings()
 
@@ -2448,6 +2454,10 @@ def _append_amrita_building(
         return new_hostel_hero.build_new_hostel(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
     if fid == HERO_AB4_ID:
         return ab4_hero.build_ab4(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
+    if fid == HERO_ASB_ID:
+        return asb_hero.build_asb(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
+    if fid == HERO_CIR_ID:
+        return cir_hero.build_cir(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
     if fid == HERO_PANDAL_ID:
         return pandal_hero.build_pandal(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
     if fid == HERO_MBA_CANTEEN_ID:
@@ -2665,12 +2675,6 @@ def _append_amrita_building(
     elif fid == HERO_AB3_ID:
         ab3_hero.append_ab3_hero_details(
             bm=bm, col_layer=col_layer, win_lit_bm=win_lit_bm, win_dark_bm=win_dark_bm,
-            terrain=terrain, offset_xyz=offset_xyz, z_plinth=z_plinth, z_eave=z_eave, z_top=z_top,
-        )
-
-    elif fid == HERO_ASB_ID:
-        asb_hero.append_asb_hero_details(
-            bm=bm, col_layer=col_layer, win_lit_bm=win_lit_bm,
             terrain=terrain, offset_xyz=offset_xyz, z_plinth=z_plinth, z_eave=z_eave, z_top=z_top,
         )
 
@@ -3323,7 +3327,10 @@ def generate_trees_data(
             _place(px, py, ttype, scale_rng)
 
     # AB-2 front garden & courtyard palms and Central Library entrance trees (hand-placed spots)
-    hand_spots = ab2_hero.ab2_front_tree_spots() + library_hero.library_front_tree_spots()
+    hand_spots = (
+        ab2_hero.ab2_front_tree_spots() + library_hero.library_front_tree_spots()
+        + asb_hero.asb_tree_spots() + cir_hero.cir_tree_spots()
+    )
     for px, py, ttype, scale_rng, *shade in hand_spots + list(hand_tree_spots or []):
         _place(px, py, ttype, scale_rng, *shade)
 
