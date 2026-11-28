@@ -8,7 +8,7 @@ Interactive 3D campus map for **Amrita Vishwa Vidyapeetham, Coimbatore (Ettimada
 pipeline/ (Python 3 + Blender 5.3 headless) ──► web/ (Next.js 16 + React Three Fiber)
 ```
 
-- **3D & Geospatial Pipeline (`pipeline/`)**: Python (`requests`, `shapely`, `numpy`, `duckdb`) + headless Blender 5.3 ingests OpenStreetMap, Overture Maps, and elevation DEM data, builds `web/public/models/campus.glb` (Draco-compressed, `<= 150,000` tris, `<= 900 KB`), and exports `web/public/data/*.json` (`campus_meta.json`, `walk_graph.json`, `trees.json`, `streetlamps.json`).
+- **3D & Geospatial Pipeline (`pipeline/`)**: Python (`requests`, `shapely`, `numpy`, `duckdb`) + headless Blender 5.3 ingests OpenStreetMap, Overture Maps, and elevation DEM data, builds `web/public/models/campus.glb` (Draco-compressed, `<= 160,000` tris, `<= 960 KB`), and exports `web/public/data/*.json` (`campus_meta.json`, `walk_graph.json`, `trees.json`, `streetlamps.json`).
 - **Frontend Viewer (`web/`)**: Next.js 16 App Router, TypeScript, React Three Fiber, Three.js, and Tailwind CSS v4.
 - **No Blender needed for frontend/data work**: Pre-built `web/public/models/campus.glb` and `web/public/data/*.json` are committed directly to Git.
 
@@ -86,7 +86,7 @@ pipeline\.venv\Scripts\python.exe pipeline\fetch_osm.py
 pipeline\.venv\Scripts\python.exe pipeline\fetch_overture.py
 pipeline\.venv\Scripts\python.exe pipeline\fetch_elevation.py
 
-# Rebuild GLB, verify budget (<= 150k tris, <= 900 KB), and rebuild walk graph
+# Rebuild GLB, verify budget (<= 160k tris, <= 960 KB), and rebuild walk graph
 & "C:\Program Files\Blender Foundation\Blender 5.3\blender.exe" --background --python-exit-code 1 --python pipeline/build_scene.py
 pipeline\.venv\Scripts\python.exe pipeline\verify_budget.py
 pipeline\.venv\Scripts\python.exe pipeline\build_graph.py

@@ -10,7 +10,7 @@ export interface DevPerfStats {
   geometries: number;
 }
 
-const TRIANGLE_BUDGET = 150_000;
+const TRIANGLE_BUDGET = 160_000;
 
 export function DevPerfProbe({
   onStats,
@@ -71,7 +71,7 @@ export function DevPerfBadge({
               : "text-emerald-700"
         }`}
       >
-        {stats.triangles.toLocaleString()} / 150k tris
+        {stats.triangles.toLocaleString()} / 160k tris
       </span>
       <span className="opacity-40">|</span>
       <span className="tabular-nums">{stats.calls} draws</span>

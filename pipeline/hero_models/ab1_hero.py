@@ -185,28 +185,13 @@ def _append_sign_text(
 
 def ab1_front_tree_spots() -> list[tuple[float, float, int, tuple[float, float]]]:
     """World (x, y, tree_type, scale_range) for AB-1's hand-placed front landscaping (0 = palm, 1 = canopy/shrub),
-    read from the aerial photos: palms framing the fountain, the round lime-green bush and shrubs of the East garden,
-    the tall tree in front of the SE wing and shrubs on the West lawn."""
+    read from the aerial photos: palms framing the fountain, the round lime-green bush of the East garden and the
+    tall tree in front of the SE wing. Low shrubs are modelled in `heroes/ab1_garden.py`."""
     return [
         (235.8, -326.5, 0, (0.95, 1.05)),  # palms just in front of the fountain, either side of the entry road
         (263.0, -326.0, 0, (0.95, 1.05)),
         (278.0, -287.5, 1, (0.62, 0.70)),  # big round bush, East garden
-        (271.5, -294.0, 1, (0.36, 0.42)),
-        (284.0, -296.0, 1, (0.34, 0.40)),
-        (277.5, -303.5, 1, (0.36, 0.42)),
-        (287.5, -307.5, 1, (0.40, 0.46)),
-        (281.0, -314.5, 1, (0.34, 0.40)),
         (277.0, -279.0, 1, (0.55, 0.62)),  # tall tree in front of the SE wing next to the tower
-        (273.5, -299.0, 1, (0.30, 0.34)),  # East garden topiary shrubs (aerial photo: clipped bushes in beds)
-        (291.0, -290.0, 1, (0.34, 0.40)),
-        (286.0, -284.5, 1, (0.30, 0.34)),
-        (293.5, -301.0, 1, (0.32, 0.38)),
-        (272.5, -313.0, 1, (0.30, 0.34)),
-        (226.5, -301.5, 1, (0.30, 0.34)),  # West lawn shrub along the plaza edge
-        (209.0, -289.0, 1, (0.42, 0.48)),
-        (216.5, -289.5, 1, (0.38, 0.44)),  # West lawn shrubs
-        (214.5, -297.5, 1, (0.40, 0.46)),
-        (219.0, -306.0, 1, (0.36, 0.42)),
     ]
 
 
@@ -474,11 +459,11 @@ def append_ab1_fountain_plaza(
     fx, fy = AB1_FOUNTAIN_CX, AB1_FOUNTAIN_CY
 
     c_white = srgb_hex_to_linear_rgba(HERO_PALETTE["stucco_white"])
-    c_water = srgb_hex_to_linear_rgba("#557F78")
-    c_lawn = srgb_hex_to_linear_rgba("#4E8A3C")
-    c_garden = srgb_hex_to_linear_rgba("#3F7F38")
+    c_water = srgb_hex_to_linear_rgba("#8CD2E0")  # pale pool blue (owner's photo from the AB-1 roof)
+    c_lawn = srgb_hex_to_linear_rgba("#86C03E")
+    c_garden = srgb_hex_to_linear_rgba("#74B238")
     c_curb_stone = srgb_hex_to_linear_rgba("#DCD6CA")
-    c_shrub = srgb_hex_to_linear_rgba("#2F6A2D")
+    c_shrub = srgb_hex_to_linear_rgba("#5C9C30")
 
     def _emit_border_strip(
         p0: tuple[float, float],

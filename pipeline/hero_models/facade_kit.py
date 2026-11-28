@@ -5,9 +5,12 @@ The frame defaults to the AB-2 / library one from `campus_frame`; pass `to_xy` f
 
 from __future__ import annotations
 
+import math
 from typing import Any, Callable
 
 import bmesh
+from mathutils import Vector
+from mathutils.geometry import tessellate_polygon
 
 from campus_frame import uv_to_xy
 
@@ -82,6 +85,50 @@ class Kit:
             self.quad([(*a, z0), (*b, z0), (*b, z1), (*a, z1)], wall)
         self.flat(rect, z1, top or wall)
 
+    def polygon(
+        self,
+        outer: list[tuple[float, float]],
+        holes: list[list[tuple[float, float]]],
+        z: float,
+        rgba: RGBA,
+    ) -> None:
+        """Upward-facing flat polygon (u, v) with optional holes."""
+        points = [*outer, *(p for hole in holes for p in hole)]
+        loops = [[Vector((u, v, 0.0)) for u, v in ring] for ring in (outer, *holes)]
+        for i, j, k in tessellate_polygon(loops):
+            a, b, c = points[i], points[j], points[k]
+            if (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]) < 0.0:
+                b, c = c, b  # keep every triangle facing up
+            self.tri([(*a, z), (*b, z), (*c, z)], rgba)
+
+    # -- any wall a->b of a counter-clockwise outline (clockwise for a courtyard) ---
+    def strip(
+        self,
+        a: tuple[float, float],
+        b: tuple[float, float],
+        d0: float,
+        d1: float,
+        z0: float,
+        z1: float,
+        rgba: RGBA,
+        proud: float = 0.0,
+    ) -> None:
+        """Vertical quad between distances d0..d1 from `a`, pushed `proud` metres out of the wall."""
+        p0, p1 = along_segment(a, b, d0, proud), along_segment(a, b, d1, proud)
+        self.quad([(*p0, z0), (*p1, z0), (*p1, z1), (*p0, z1)], rgba)
+
+    def strip_window(
+        self,
+        a: tuple[float, float],
+        b: tuple[float, float],
+        d0: float,
+        d1: float,
+        z0: float,
+        z1: float,
+        proud: float = 0.07,
+    ) -> None:
+        self._glass(along_segment(a, b, d0, proud), along_segment(a, b, d1, proud), z0, z1, d1 - d0)
+
     # -- wall-relative helpers --------------------------------------------
     def panel(
         self,
@@ -108,12 +155,34 @@ class Kit:
 
     def window(self, rect: Rect, side: str, d0: float, d1: float, z0: float, z1: float, proud: float = 0.07) -> None:
         """Night-glow window quad (about 60 % lit), placed proud of the wall."""
+        self._glass(_along(rect, side, d0, proud), _along(rect, side, d1, proud), z0, z1, d1 - d0)
+
+    def glass_span(
+        self,
+        a: tuple[float, float],
+        b: tuple[float, float],
+        z0: float,
+        z1: float,
+        margin: float,
+        proud: float = 0.07,
+    ) -> None:
+        """Ribbon window along any wall a->b of a counter-clockwise outline, inset `margin` from both ends."""
+        length = math.dist(a, b)
+        tu, tv = (b[0] - a[0]) / length, (b[1] - a[1]) / length
+        ou, ov = tv * proud, -tu * proud  # outward is to the right of a->b
+        p0 = (a[0] + tu * margin + ou, a[1] + tv * margin + ov)
+        p1 = (b[0] - tu * margin + ou, b[1] - tv * margin + ov)
+        self._glass(p0, p1, z0, z1, length - 2.0 * margin)
+
+    def _glass(
+        self, uv0: tuple[float, float], uv1: tuple[float, float], z0: float, z1: float, width: float,
+    ) -> None:
         self._win_counter += 1
         target = self.win_lit if (self._win_counter * 7) % 10 < 6 else self.win_dark
-        if target is None or z1 - z0 < 0.15 or d1 - d0 < 0.15:
+        if target is None or z1 - z0 < 0.15 or width < 0.15:
             return
-        p0 = self.to_xy(*_along(rect, side, d0, proud))
-        p1 = self.to_xy(*_along(rect, side, d1, proud))
+        p0 = self.to_xy(*uv0)
+        p1 = self.to_xy(*uv1)
         v = [
             target.verts.new((p0[0], p0[1], z0)),
             target.verts.new((p1[0], p1[1], z0)),
@@ -265,6 +334,15 @@ class Kit:
         while v + depth <= v1 + 1e-6:
             self.quad([(u0, v, z + 0.12), (u1, v, z + 0.12), (u1, v + depth, z + 0.55), (u0, v + depth, z + 0.55)], panel)
             v += pitch
+
+
+def along_segment(
+    a: tuple[float, float], b: tuple[float, float], d: float, proud: float = 0.0,
+) -> tuple[float, float]:
+    """Point `d` metres from `a` towards `b`, offset `proud` to the right (outward on a CCW outline)."""
+    length = max(1e-6, math.dist(a, b))
+    tu, tv = (b[0] - a[0]) / length, (b[1] - a[1]) / length
+    return (a[0] + tu * d + tv * proud, a[1] + tv * d - tu * proud)
 
 
 def side_length(rect: Rect, side: str) -> float:

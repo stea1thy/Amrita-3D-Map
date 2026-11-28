@@ -19,6 +19,7 @@ export const QUICK_JUMP_ITEMS: QuickJumpItem[] = [
   { id: "ab1", label: "AB-1", buildingId: "way/380925364" },
   { id: "ab2", label: "AB-2", buildingId: "way/380702789" },
   { id: "ab3", label: "AB-3", buildingId: "way/380829415" },
+  { id: "ab4", label: "AB-4", buildingId: "custom/academic-block-4" },
   { id: "hostels", label: "Hostels", buildingId: "way/380925366" },
   {
     id: "sports-ground",

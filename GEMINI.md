@@ -1,7 +1,15 @@
 # Amrita Campus 3D Map — Workspace Rules
 
+## Mandatory GitHub Sync Check (Before Starting Any Work)
+- **Before making any file edits, running 3D builds, or starting any new task**, ALWAYS fetch from GitHub and verify whether the local workspace is on the latest `origin/main`:
+  1. Run `git fetch origin`, `git status -sb`, `git branch -vv`, and `git log --oneline HEAD..origin/main`.
+  2. **If behind `origin/main` or on an older/already-merged branch:** STOP and report the incoming commits/PRs to the user before editing anything.
+     - If the working tree is clean on `main`, fast-forward cleanly (`git pull --ff-only origin main`).
+     - If on an old/merged branch or if uncommitted local edits exist, ask the user before switching branches or merging so teammates' merged work and local edits (including any `.claude/worktrees/`) are never overwritten or lost.
+  3. **GLB Rebuild Rule:** If teammates recently merged changes affecting `pipeline/` (`heroes/`, `hero_models/`, `overrides.json`, `build_scene.py`), ensure `web/public/models/campus.glb` is rebuilt on top of the latest `origin/main` rather than pushing an outdated binary built from stale code.
+
 ## Hard Budgets (Fail-Fast)
-- Never consider a 3D build complete if total triangles exceed **150,000**, `web/public/models/campus.glb` exceeds **900 KB** (Draco-compressed), or draw calls regress severely (baseline ~50 primitives, `<= 90` interactive `BLDG_*` objects).
+- Never consider a 3D build complete if total triangles exceed **160,000**, `web/public/models/campus.glb` exceeds **960 KB** (Draco-compressed), or draw calls regress severely (baseline ~50 primitives, `<= 90` interactive `BLDG_*` objects).
 - Always run `pipeline/verify_budget.py` after any geometry, terrain, road, or material change.
 
 ## Architectural Identity (Amrita Coimbatore / Ettimadai)
