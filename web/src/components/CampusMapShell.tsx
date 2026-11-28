@@ -96,6 +96,7 @@ export default function CampusMapShell() {
   const [timePreset, setTimePreset] = useState<TimePreset>("midday");
   const [istMinutes, setIstMinutes] = useState<number>(10 * 60 + 30);
   const [fogEnabled, setFogEnabled] = useState<boolean>(false);
+  const [shadowsEnabled, setShadowsEnabled] = useState<boolean>(false);
 
   const [loadProgress, setLoadProgress] = useState(0);
   const [modelReady, setModelReady] = useState(false);
@@ -437,6 +438,7 @@ export default function CampusMapShell() {
         terrainBounds={meta?.terrainBounds}
         lighting={lighting}
         fogEnabled={fogEnabled}
+        shadowsEnabled={shadowsEnabled}
         selectedId={canvasSelectedId}
         hoveredId={hoveredId}
         debugMode={debugMode}
@@ -617,10 +619,12 @@ export default function CampusMapShell() {
         minutesIst={istMinutes}
         lighting={lighting}
         fogEnabled={fogEnabled}
+        shadowsEnabled={shadowsEnabled}
         hideOnMobile={hasBottomCardMobile}
         onSelectPreset={handleSelectPreset}
         onChangeMinutes={handleChangeMinutes}
         onToggleFog={setFogEnabled}
+        onToggleShadows={setShadowsEnabled}
       />
 
       <QuickJumpBar

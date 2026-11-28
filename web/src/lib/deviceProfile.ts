@@ -9,8 +9,8 @@ export interface RenderProfile {
   simpleTrees: boolean;
 }
 
-const DESKTOP: RenderProfile = { dpr: [1, 1.5], shadowMapSize: 2048, simpleTrees: false };
-const HANDHELD: RenderProfile = { dpr: [1, 1.25], shadowMapSize: 1024, simpleTrees: true };
+const DESKTOP: RenderProfile = { dpr: [1, 1], shadowMapSize: 1024, simpleTrees: true };
+const HANDHELD: RenderProfile = { dpr: [1, 1], shadowMapSize: 512, simpleTrees: true };
 const HANDHELD_QUERY = "(pointer: coarse)";
 
 function subscribe(onChange: () => void): () => void {

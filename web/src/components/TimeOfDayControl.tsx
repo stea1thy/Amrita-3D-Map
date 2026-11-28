@@ -13,10 +13,12 @@ interface TimeOfDayControlProps {
   minutesIst: number;
   lighting: SolarLightingState;
   fogEnabled: boolean;
+  shadowsEnabled?: boolean;
   hideOnMobile: boolean;
   onSelectPreset: (preset: Exclude<TimePreset, "custom">) => void;
   onChangeMinutes: (minutes: number) => void;
   onToggleFog: (enabled: boolean) => void;
+  onToggleShadows?: (enabled: boolean) => void;
 }
 
 export default function TimeOfDayControl({
@@ -24,10 +26,12 @@ export default function TimeOfDayControl({
   minutesIst,
   lighting,
   fogEnabled,
+  shadowsEnabled = false,
   hideOnMobile,
   onSelectPreset,
   onChangeMinutes,
   onToggleFog,
+  onToggleShadows,
 }: TimeOfDayControlProps) {
   const { isNight, altitudeDeg } = lighting;
 
@@ -110,6 +114,24 @@ export default function TimeOfDayControl({
           />
           <span>Fog</span>
         </label>
+
+        {onToggleShadows && (
+          <label
+            className={`flex shrink-0 cursor-pointer items-center gap-1.5 border-l pl-2.5 text-[11px] font-medium select-none ${
+              isNight
+                ? "border-slate-300/15 text-slate-200"
+                : "border-slate-900/12 text-slate-700"
+            }`}
+          >
+            <input
+              type="checkbox"
+              checked={shadowsEnabled}
+              onChange={(e) => onToggleShadows(e.target.checked)}
+              className="h-3.5 w-3.5 cursor-pointer rounded accent-[#1D5C63]"
+            />
+            <span>Shadows</span>
+          </label>
+        )}
       </div>
     </section>
   );

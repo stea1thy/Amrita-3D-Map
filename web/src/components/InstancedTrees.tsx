@@ -28,13 +28,18 @@ function buildPalmGeometries(simple: boolean): {
   trunk: THREE.BufferGeometry;
   crown: THREE.BufferGeometry;
 } {
-  // Slightly curved 3-segment coconut palm trunk (~8.2m tall)
+  // Slightly curved palm trunk (~8.2m tall)
   const trunkParts: THREE.BufferGeometry[] = [];
-  const segSpecs: Array<[number, number, number, number, number, number]> = [
-    [0.25, 0.21, 2.8, 0.06, 1.3, 0.0],
-    [0.21, 0.17, 2.8, 0.22, 4.0, -0.05],
-    [0.17, 0.13, 2.8, 0.42, 6.6, -0.14],
-  ];
+  const segSpecs: Array<[number, number, number, number, number, number]> = simple
+    ? [
+        [0.25, 0.19, 4.0, 0.1, 2.0, 0.0],
+        [0.19, 0.13, 4.2, 0.35, 6.0, -0.1],
+      ]
+    : [
+        [0.25, 0.21, 2.8, 0.06, 1.3, 0.0],
+        [0.21, 0.17, 2.8, 0.22, 4.0, -0.05],
+        [0.17, 0.13, 2.8, 0.42, 6.6, -0.14],
+      ];
   for (let i = 0; i < segSpecs.length; i++) {
     const [rB, rT, h, x, y, tiltZ] = segSpecs[i];
     const g = new THREE.CylinderGeometry(rT, rB, h, simple ? 4 : 6, 1, simple);
@@ -44,9 +49,9 @@ function buildPalmGeometries(simple: boolean): {
     g.dispose();
   }
 
-  // 7 arched palm fronds radiating from top of trunk
+  // Arched palm fronds radiating from top of trunk
   const crownParts: THREE.BufferGeometry[] = [];
-  const frondCount = 7;
+  const frondCount = simple ? 4 : 7;
   for (let i = 0; i < frondCount; i++) {
     const ang = (Math.PI * 2 * i) / frondCount + (i % 2) * 0.14;
     const inner = new THREE.BoxGeometry(0.42, 0.08, 1.55);
@@ -80,19 +85,24 @@ function buildCanopyGeometries(simple: boolean): {
   trunk: THREE.BufferGeometry;
   crown: THREE.BufferGeometry;
 } {
-  const t = new THREE.CylinderGeometry(0.18, 0.30, 3.0, 5, 1, false);
+  const t = new THREE.CylinderGeometry(0.18, 0.30, 3.0, simple ? 4 : 5, 1, false);
   t.translate(0, 1.35, 0);
   const trunk = toFlatNonIndexed(t);
   t.dispose();
 
-  const lobes: Array<[number, number, number, number, number]> = [
-    [2.05, 0.0, 4.35, 0.0, 0.88],
-    [1.52, 1.0, 3.65, 0.56, 0.92],
-    [1.45, -0.92, 3.72, -0.62, 0.90],
-  ];
+  const lobes: Array<[number, number, number, number, number]> = simple
+    ? [
+        [2.05, 0.0, 4.35, 0.0, 0.88],
+        [1.52, 0.8, 3.75, 0.45, 0.9],
+      ]
+    : [
+        [2.05, 0.0, 4.35, 0.0, 0.88],
+        [1.52, 1.0, 3.65, 0.56, 0.92],
+        [1.45, -0.92, 3.72, -0.62, 0.90],
+      ];
   const crownParts: THREE.BufferGeometry[] = [];
   for (const [radius, x, y, z, sy] of lobes) {
-    const g = new THREE.IcosahedronGeometry(radius, simple ? 0 : 1);
+    const g = new THREE.IcosahedronGeometry(radius, 0);
     g.scale(1.0, sy, 1.0);
     g.translate(x, y, z);
     crownParts.push(toFlatNonIndexed(g));
@@ -193,7 +203,7 @@ export default function InstancedTrees({ treesData, simple = false }: InstancedT
           <instancedMesh
             ref={palmCrownRef}
             args={[geometries.palm.crown, undefined, palms.length]}
-            castShadow={!simple}
+            castShadow={false}
             frustumCulled={false}
           >
             <meshStandardMaterial color="#ffffff" roughness={0.82} />
@@ -213,7 +223,7 @@ export default function InstancedTrees({ treesData, simple = false }: InstancedT
           <instancedMesh
             ref={canopyCrownRef}
             args={[geometries.canopy.crown, undefined, canopies.length]}
-            castShadow={!simple}
+            castShadow={false}
             frustumCulled={false}
           >
             <meshStandardMaterial color="#ffffff" roughness={0.86} />
