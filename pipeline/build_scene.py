@@ -78,7 +78,7 @@ EXTEND_MOUNTAIN_M = (60.0, 140.0, 240.0, 380.0, 540.0, 740.0, 980.0, 1250.0)
 GARDEN_PALM_SHADE, GARDEN_TREE_SHADE = 5, 4  # light greens in the web viewer's tree palettes
 TARGET_TREE_COUNT = 2800
 MIN_TREE_COUNT = 2520
-MAX_TREE_COUNT = 2850
+MAX_TREE_COUNT = 2950  # headroom above the scatter target for hand-placed site trees (e.g. tennis courts)
 
 # Amrita South Indian institutional maquette palette (sRGB hex, sampled from reference photos)
 PALETTE: dict[str, str] = {
@@ -2247,6 +2247,10 @@ def _prepare_building_records(
                 rec["departments"] = [str(d) for d in ov["departments"]]
             if ov.get("color"):
                 rec["color"] = str(ov["color"])
+            if ov.get("roof_color"):
+                rec["roof_color"] = str(ov["roof_color"])
+            if ov.get("roof_style"):
+                rec["roof_style"] = str(ov["roof_style"]).lower()
         shift = shift_map.get(fid)
         if isinstance(shift, (list, tuple)) and len(shift) >= 2:
             dx_m, dz_m = float(shift[0]), float(shift[1])
@@ -2367,8 +2371,12 @@ def _append_amrita_building(
     wall_hex: str,
     roof_hex: str,
     is_elevated: bool = False,
+    flat_roof: bool = False,
 ) -> list[tuple[float, float, float]]:
-    """Build Amrita architectural facade (spaced window bays, 60/40 night glass split, verandas, terracotta eaves)."""
+    """Build Amrita architectural facade (spaced window bays, 60/40 night glass split, verandas, terracotta eaves).
+
+    flat_roof forces a flat parapet roof with a concrete coping rim (no sloped terracotta eave) regardless of category.
+    """
     ox, oy, oz = offset_xyz
     outer_ring = rings[0]
 
@@ -2397,7 +2405,7 @@ def _append_amrita_building(
     c_recess = srgb_hex_to_linear_rgba(PALETTE["balcony_recess"])
     c_ab3_brick = srgb_hex_to_linear_rgba(PALETTE["ab3_accent_brick"])
 
-    has_terracotta_eave = category in {"academic", "landmark", "food"} and fid not in (
+    has_terracotta_eave = not flat_roof and category in {"academic", "landmark", "food"} and fid not in (
         HERO_AB1_ID, HERO_AB3_ID, HERO_AMRITESHWARI_ID
     )
     z_base_vis = z_bottom if is_elevated else z_base_ref
@@ -3064,6 +3072,7 @@ def build_buildings(
                 wall_hex=wall_hex,
                 roof_hex=roof_hex,
                 is_elevated=is_elevated,
+                flat_roof=rec.get("roof_style") == "flat",
             )
             if not bm.faces:
                 bm.free()
@@ -3133,6 +3142,7 @@ def build_buildings(
                 wall_hex=wall_hex,
                 roof_hex=roof_hex,
                 is_elevated=is_elevated,
+                flat_roof=rec.get("roof_style") == "flat",
             )
             if world_verts:
                 bounding_radius = max(
@@ -3546,6 +3556,16 @@ def generate_trees_data(
             jy2 = jy + rng.uniform(-6.0, 6.0)
             if _is_clear(jx2, jy2, min_tree_spacing=8.5, avoid_courtyards=True):
                 _place(jx2, jy2, 1, (0.88, 1.55))
+
+    # 4. Palms and shade trees hugging the tennis court fence (added last so the scattered layout is unchanged)
+    from heroes import tennis_courts as hero_tennis
+
+    # Placed without drawing from `rng` so the rest of the campus tree layout stays unchanged.
+    existing_xy = [(t[0], -t[2]) for t in placed if 40.0 < t[0] < 210.0 and 290.0 < t[2] < 420.0]
+    for ti, (fx, fy, ftype, fscale) in enumerate(hero_tennis.get_tennis_feature_trees(existing_xy)):
+        gx, gy, gz = blender_to_gltf_xyz(fx, fy, terrain.sample(fx, fy))
+        placed.append([round(gx, 1), round(gy, 1), round(gz, 1), fscale, round((ti * 1.37) % 6.28, 2), ftype, ti % 4])
+        spatial_hash.setdefault((int(math.floor(fx / cell_size)), int(math.floor(fy / cell_size))), []).append((fx, fy))
 
     return placed[:MAX_TREE_COUNT]
 

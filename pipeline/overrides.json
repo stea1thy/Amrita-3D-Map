@@ -13,7 +13,7 @@
     "osm_id_format": "<way|relation>/<numeric_id>, matching properties.osm_id in data/raw_osm.json",
     "exclude_ids": "List of OSM IDs to skip completely during extrusion (for junk/stray polygons)",
     "bridges": "List of elevated skybridges ({ id, name, from: [lat, lon], to: [lat, lon], width, bottomY, height, color, roofColor } or { id, osm_id, bottomY / min_height, height, color, roofColor }) rendered floating above ground clearance",
-    "rename_or_retag": "Map OSM ID -> { name, subtitle (optional), category, floors (optional), height_m (optional), min_height (optional), bottomY (optional), tags (optional list), departments (optional list) }",
+    "rename_or_retag": "Map OSM ID -> { name, subtitle (optional), category, floors (optional), height_m (optional), min_height (optional), bottomY (optional), tags (optional list), departments (optional list), color (optional wall hex), roof_color (optional roof hex), roof_style (optional: 'flat' forces a flat parapet roof instead of the category's sloped terracotta eave) }",
     "shift_footprints": "Map OSM ID -> [dx_meters, dz_meters] in local 3D world space (+X East, +Z South / -Z North)",
     "footbridges": "Raised pedestrian bridges ({ id, name, points: [[lat, lon], ...] with ground-level ends, width, clearance, roof }) built by heroes/footbridge.py and routed by build_graph.py",
     "custom_buildings": "List of manual buildings missing from OSM, each with footprint as [[lat, lon], ...] polygon ring",
@@ -83,6 +83,7 @@
     }
   },
   "exclude_ids": [
+    "way/380925382",
     "overture/891e4fd1-7da",
     "overture/6f47537e-53f",
     "overture/3086031b-20b",
@@ -99,7 +100,8 @@
     "way/380926242",
     "way/531088166",
     "way/380926245",
-    "way/380926247"
+    "way/380926247",
+    "way/380925362"
   ],
   "bridges": [
     {
@@ -115,6 +117,8 @@
     }
   ],
   "rename_or_retag": {
+    "way/380925379": {"name": "Aerospace Engineering Labs (North Block)", "subtitle": "Department of Aerospace Engineering", "category": "academic", "floors": 3, "tags": ["aerospace", "aerospace engineering", "aerospace labs", "aero labs"], "departments": ["Aerospace Engineering"], "roof_color": "#C77A63"},
+    "way/380925380": {"name": "Aerospace Engineering Labs (Centre Block)", "subtitle": "Department of Aerospace Engineering", "category": "academic", "floors": 3, "tags": ["aerospace", "aerospace engineering", "aerospace labs", "aero labs"], "departments": ["Aerospace Engineering"], "roof_color": "#D9D4C8", "roof_style": "flat"},
     "way/380829758": {"name": "Amrita Pandal", "subtitle": "Open-sided convocation and event hall", "category": "landmark", "floors": 1, "height_m": 8.2, "tags": ["pandal", "convocation hall", "convocation"]},
     "way/380829760": {"name": "MBA Canteen", "subtitle": "ASB Canteen", "category": "food", "floors": 1, "height_m": 5.0, "tags": ["asb canteen", "canteen"]},
     "way/1080744354": {
@@ -246,7 +250,9 @@
     }
   },
   "shift_footprints": {
-    "way/1080744354": [-23.9, -10.25]
+    "way/1080744354": [-23.9, -10.25],
+    "way/380925379": [21.1, -6.7],
+    "way/380925380": [17.6, -5.3]
   },
   "footbridges": [
     {
@@ -259,6 +265,17 @@
     }
   ],
   "custom_buildings": [
+    {
+      "id": "custom/aerospace-labs-south",
+      "name": "Aerospace Engineering Labs (South Block)",
+      "subtitle": "Department of Aerospace Engineering",
+      "category": "academic",
+      "floors": 3,
+      "tags": ["aerospace", "aerospace engineering", "aerospace labs", "aero labs"],
+      "departments": ["Aerospace Engineering"],
+      "roofColor": "#C77A63",
+      "footprint": [[10.902301, 76.904655], [10.902087, 76.904676], [10.902046, 76.904363], [10.902272, 76.904341], [10.902301, 76.904655]]
+    },
     {
       "id": "custom/academic-block-4",
       "name": "Academic Block 4 (AB-4)",
