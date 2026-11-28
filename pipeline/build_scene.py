@@ -2215,6 +2215,7 @@ def _prepare_building_records(
                 "floors": custom.get("floors"),
                 "height_m": custom.get("height_m"),
                 "color": custom.get("color"),
+                "roof_color": custom.get("roofColor"),
                 "is_elevated": is_elev,
                 "min_clearance_m": max(1.0, float(min_h)) if is_elev else 0.0,
             }
@@ -2988,7 +2989,7 @@ def build_buildings(
             else "roof_hostel" if category in {"hostel", "admin"}
             else "roof_slate"
         )
-        roof_hex = str(cat_colors.get(category) or PALETTE[default_roof_key])
+        roof_hex = str(rec.get("roof_color") or cat_colors.get(category) or PALETTE[default_roof_key])
 
         tags_set: list[str] = []
         for t in rec["override_tags"]:
