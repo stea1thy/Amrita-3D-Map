@@ -77,7 +77,7 @@ EXTEND_MOUNTAIN_M = (60.0, 140.0, 240.0, 380.0, 540.0, 740.0, 980.0, 1250.0)
 GARDEN_PALM_SHADE, GARDEN_TREE_SHADE = 5, 4  # light greens in the web viewer's tree palettes
 TARGET_TREE_COUNT = 2800
 MIN_TREE_COUNT = 2520
-MAX_TREE_COUNT = 2850
+MAX_TREE_COUNT = 2950  # headroom above the scatter target for hand-placed site trees (e.g. tennis courts)
 
 # Amrita South Indian institutional maquette palette (sRGB hex, sampled from reference photos)
 PALETTE: dict[str, str] = {
@@ -3534,6 +3534,16 @@ def generate_trees_data(
             jy2 = jy + rng.uniform(-6.0, 6.0)
             if _is_clear(jx2, jy2, min_tree_spacing=8.5, avoid_courtyards=True):
                 _place(jx2, jy2, 1, (0.88, 1.55))
+
+    # 4. Palms and shade trees hugging the tennis court fence (added last so the scattered layout is unchanged)
+    from heroes import tennis_courts as hero_tennis
+
+    # Placed without drawing from `rng` so the rest of the campus tree layout stays unchanged.
+    existing_xy = [(t[0], -t[2]) for t in placed if 40.0 < t[0] < 210.0 and 290.0 < t[2] < 420.0]
+    for ti, (fx, fy, ftype, fscale) in enumerate(hero_tennis.get_tennis_feature_trees(existing_xy)):
+        gx, gy, gz = blender_to_gltf_xyz(fx, fy, terrain.sample(fx, fy))
+        placed.append([round(gx, 1), round(gy, 1), round(gz, 1), fscale, round((ti * 1.37) % 6.28, 2), ftype, ti % 4])
+        spatial_hash.setdefault((int(math.floor(fx / cell_size)), int(math.floor(fy / cell_size))), []).append((fx, fy))
 
     return placed[:MAX_TREE_COUNT]
 
