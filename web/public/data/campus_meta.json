@@ -30,8 +30,8 @@
     "bridges": 2,
     "inspectables": 164,
     "trees": 2800,
-    "palms": 626,
-    "canopy": 2174,
+    "palms": 627,
+    "canopy": 2173,
     "overtureBuildings": 51,
     "overturePlaces": 17,
     "unmatchedPois": 2
@@ -1485,14 +1485,14 @@
       "floors": 3,
       "heightM": 10.8,
       "center": [
-        459.342,
-        7.326,
-        143.135
+        460.302,
+        7.369,
+        144.804
       ],
-      "boundingRadius": 39.83,
+      "boundingRadius": 47.79,
       "latLon": [
-        10.901414,
-        76.904802
+        10.901399,
+        76.904811
       ],
       "rawTags": {
         "building": "yes",
@@ -1507,7 +1507,7 @@
           "rawCategory": "college_university"
         }
       ],
-      "nearestNodeId": 463
+      "nearestNodeId": 455
     },
     {
       "id": "way/380925377",
@@ -4819,14 +4819,14 @@
       "floors": 3,
       "heightM": 10.8,
       "center": [
-        459.342,
-        7.326,
-        143.135
+        460.302,
+        7.369,
+        144.804
       ],
-      "boundingRadius": 39.83,
+      "boundingRadius": 47.79,
       "latLon": [
-        10.901414,
-        76.904802
+        10.901399,
+        76.904811
       ],
       "rawTags": {
         "building": "yes",
@@ -4846,7 +4846,7 @@
         430.0,
         114.3,
         488.1,
-        171.8
+        184.8
       ],
       "footprintXZ": [
         [
@@ -4854,8 +4854,16 @@
           166.5
         ],
         [
-          485.2,
-          171.8
+          474.1,
+          170.7
+        ],
+        [
+          473.3,
+          183.8
+        ],
+        [
+          484.4,
+          184.8
         ],
         [
           488.1,
@@ -5074,14 +5082,14 @@
         "academic"
       ],
       "departments": [],
-      "floors": 3,
-      "heightM": 10.8,
+      "floors": 1,
+      "heightM": 8.0,
       "center": [
         407.357,
-        6.006,
+        4.606,
         148.323
       ],
-      "boundingRadius": 31.51,
+      "boundingRadius": 31.09,
       "latLon": [
         10.901368,
         76.904327
