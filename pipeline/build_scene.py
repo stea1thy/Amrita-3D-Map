@@ -1663,6 +1663,7 @@ def build_roads_object(
     curb_in_off = 0.0
     curb_out_off = 0.42
     curb_z_off = 0.265
+    curb_ground_off = 0.04  # outer edge meets the ground, so no separate vertical kerb face is needed
 
     def _emit_curb_quad(
         p0: tuple[float, float],
@@ -1677,9 +1678,9 @@ def build_roads_object(
         ox1, oy1 = p1[0] + n1[0] * curb_out_off, p1[1] + n1[1] * curb_out_off
 
         z_i0 = terrain.sample(ix0, iy0) + curb_z_off
-        z_o0 = terrain.sample(ox0, oy0) + curb_z_off
+        z_o0 = terrain.sample(ox0, oy0) + curb_ground_off
         z_i1 = terrain.sample(ix1, iy1) + curb_z_off
-        z_o1 = terrain.sample(ox1, oy1) + curb_z_off
+        z_o1 = terrain.sample(ox1, oy1) + curb_ground_off
 
         vi0 = bm.verts.new((ix0, iy0, z_i0))
         vo0 = bm.verts.new((ox0, oy0, z_o0))
@@ -1693,17 +1694,6 @@ def build_roads_object(
         _add_tri_vc(bm, col_layer, t1, 0, rgba)
         _add_tri_vc(bm, col_layer, t2, 0, rgba)
 
-        # Grounded outer vertical curb face extending -0.14m below terrain
-        vb0 = bm.verts.new((ox0, oy0, terrain.sample(ox0, oy0) - 0.14))
-        vb1 = bm.verts.new((ox1, oy1, terrain.sample(ox1, oy1) - 0.14))
-        skirt_rgba = (rgba[0] * 0.72, rgba[1] * 0.72, rgba[2] * 0.72, 1.0)
-        dot_out = (oy1 - oy0) * (ox0 - ix0) - (ox1 - ox0) * (oy0 - iy0)
-        if dot_out >= 0:
-            _add_tri_vc(bm, col_layer, (vb0, vb1, vo1), 0, skirt_rgba)
-            _add_tri_vc(bm, col_layer, (vb0, vo1, vo0), 0, skirt_rgba)
-        else:
-            _add_tri_vc(bm, col_layer, (vb0, vo1, vb1), 0, skirt_rgba)
-            _add_tri_vc(bm, col_layer, (vb0, vo0, vo1), 0, skirt_rgba)
 
     for ring_entry in merged_data.get("curbRings", []):
         pts = [(float(p[0]), float(p[1])) for p in ring_entry.get("pts", [])]
@@ -1794,6 +1784,17 @@ def _resample_polyline_2d(pts: list[tuple[float, float]], step_m: float) -> list
     return out
 
 
+RAIL_SLEEPER_STEP_M = 3.8
+RAIL_CHORD_EVERY = 3  # ballast and rails use every third sleeper point (11.4 m chords)
+
+
+def _chord_span(k: int, m: int, n_fine: int) -> int:
+    """Number of fine (sleeper) steps covered by coarse chord k."""
+    if k == m - 2 and (n_fine - 1) % RAIL_CHORD_EVERY:
+        return (n_fine - 1) % RAIL_CHORD_EVERY
+    return RAIL_CHORD_EVERY
+
+
 def build_railway_object(
     rail_features: list[dict[str, Any]],
     rail_nodes: list[dict[str, Any]],
@@ -1857,7 +1858,8 @@ def build_railway_object(
             if len(chain) < 2:
                 continue
             clipped_rail_lines.append(chain)
-            pts = _resample_polyline_2d(chain, 3.8)
+            fine = _resample_polyline_2d(chain, RAIL_SLEEPER_STEP_M)
+            pts = fine[::RAIL_CHORD_EVERY] + ([fine[-1]] if (len(fine) - 1) % RAIL_CHORD_EVERY else [])
             m = len(pts)
             if m < 2:
                 continue
@@ -1898,13 +1900,15 @@ def build_railway_object(
                 _emit_quad_oriented(bal_ltoe[i], bal_lt[i], bal_lt[i + 1], bal_ltoe[i + 1], (-nx0, -ny0, 0.5), c_ballast_slope)
                 _emit_quad_oriented(bal_rt[i], bal_rtoe[i], bal_rtoe[i + 1], bal_rt[i + 1], (nx0, ny0, 0.5), c_ballast_slope)
 
-            # Concrete sleepers along the track (skipped within 5m of level crossings)
-            for i in range(m):
-                cx, cy = pts[i]
+            # Concrete sleepers every 3.8 m, sitting on the coarser ballast surface (skipped near level crossings)
+            for i, (cx, cy) in enumerate(fine):
                 if any(math.hypot(cx - lcx, cy - lcy) < 5.0 for lcx, lcy in crossings):
                     continue
-                ang = math.atan2(tangents[i][1], tangents[i][0])
-                zb = z_bals[i]
+                k = min(i // RAIL_CHORD_EVERY, m - 2)
+                t = min(1.0, (i - k * RAIL_CHORD_EVERY) / max(1, _chord_span(k, m, len(fine))))
+                zb = z_bals[k] + (z_bals[k + 1] - z_bals[k]) * t
+                prev_p, next_p = fine[max(0, i - 1)], fine[min(len(fine) - 1, i + 1)]
+                ang = math.atan2(next_p[1] - prev_p[1], next_p[0] - prev_p[0])
                 ca, sa = math.cos(ang), math.sin(ang)
                 top = [
                     bm.verts.new((cx + lx * ca - ly * sa, cy + lx * sa + ly * ca, zb + 0.08))
@@ -1917,23 +1921,15 @@ def build_railway_object(
             for r_off in (-0.84, 0.84):
                 r_lt: list[bmesh.types.BMVert] = []
                 r_rt: list[bmesh.types.BMVert] = []
-                r_lb: list[bmesh.types.BMVert] = []
-                r_rb: list[bmesh.types.BMVert] = []
                 for (cx, cy), (tx, ty), zb in zip(pts, tangents, z_bals):
                     nx, ny = ty, -tx
                     rcx, rcy = cx + nx * r_off, cy + ny * r_off
-                    z_bot = zb + 0.08
                     z_top = zb + 0.18
-                    r_lt.append(bm.verts.new((rcx - nx * 0.09, rcy - ny * 0.09, z_top)))
-                    r_rt.append(bm.verts.new((rcx + nx * 0.09, rcy + ny * 0.09, z_top)))
-                    r_lb.append(bm.verts.new((rcx - nx * 0.11, rcy - ny * 0.11, z_bot)))
-                    r_rb.append(bm.verts.new((rcx + nx * 0.11, rcy + ny * 0.11, z_bot)))
+                    r_lt.append(bm.verts.new((rcx - nx * 0.1, rcy - ny * 0.1, z_top)))
+                    r_rt.append(bm.verts.new((rcx + nx * 0.1, rcy + ny * 0.1, z_top)))
 
                 for i in range(m - 1):
-                    nx0, ny0 = tangents[i][1], -tangents[i][0]
                     _emit_quad_oriented(r_lt[i], r_rt[i], r_rt[i + 1], r_lt[i + 1], (0.0, 0.0, 1.0), c_steel)
-                    _emit_quad_oriented(r_lb[i], r_lt[i], r_lt[i + 1], r_lb[i + 1], (-nx0, -ny0, 0.1), c_steel)
-                    _emit_quad_oriented(r_rt[i], r_rb[i], r_rb[i + 1], r_rt[i + 1], (nx0, ny0, 0.1), c_steel)
 
     # Concrete level-crossing plates at road-rail intersections
     for lcx, lcy in crossings:
