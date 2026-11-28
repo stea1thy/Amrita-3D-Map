@@ -2246,6 +2246,10 @@ def _prepare_building_records(
                 rec["departments"] = [str(d) for d in ov["departments"]]
             if ov.get("color"):
                 rec["color"] = str(ov["color"])
+            if ov.get("roof_color"):
+                rec["roof_color"] = str(ov["roof_color"])
+            if ov.get("roof_style"):
+                rec["roof_style"] = str(ov["roof_style"]).lower()
         shift = shift_map.get(fid)
         if isinstance(shift, (list, tuple)) and len(shift) >= 2:
             dx_m, dz_m = float(shift[0]), float(shift[1])
@@ -2361,8 +2365,12 @@ def _append_amrita_building(
     wall_hex: str,
     roof_hex: str,
     is_elevated: bool = False,
+    flat_roof: bool = False,
 ) -> list[tuple[float, float, float]]:
-    """Build Amrita architectural facade (spaced window bays, 60/40 night glass split, verandas, terracotta eaves)."""
+    """Build Amrita architectural facade (spaced window bays, 60/40 night glass split, verandas, terracotta eaves).
+
+    flat_roof forces a flat parapet roof with a concrete coping rim (no sloped terracotta eave) regardless of category.
+    """
     ox, oy, oz = offset_xyz
     outer_ring = rings[0]
 
@@ -2391,7 +2399,7 @@ def _append_amrita_building(
     c_recess = srgb_hex_to_linear_rgba(PALETTE["balcony_recess"])
     c_ab3_brick = srgb_hex_to_linear_rgba(PALETTE["ab3_accent_brick"])
 
-    has_terracotta_eave = category in {"academic", "landmark", "food"} and fid not in (
+    has_terracotta_eave = not flat_roof and category in {"academic", "landmark", "food"} and fid not in (
         HERO_AB1_ID, HERO_AB3_ID, HERO_AMRITESHWARI_ID
     )
     z_base_vis = z_bottom if is_elevated else z_base_ref
@@ -3052,6 +3060,7 @@ def build_buildings(
                 wall_hex=wall_hex,
                 roof_hex=roof_hex,
                 is_elevated=is_elevated,
+                flat_roof=rec.get("roof_style") == "flat",
             )
             if not bm.faces:
                 bm.free()
@@ -3121,6 +3130,7 @@ def build_buildings(
                 wall_hex=wall_hex,
                 roof_hex=roof_hex,
                 is_elevated=is_elevated,
+                flat_roof=rec.get("roof_style") == "flat",
             )
             if world_verts:
                 bounding_radius = max(
