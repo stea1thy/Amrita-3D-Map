@@ -9,6 +9,8 @@ const KNOWN_ALIAS_RULES: Array<[RegExp, string[]]> = [
   [/academic block\s*4/i, ["ab4", "ab-4"]],
   [/school of business/i, ["asb", "mba", "business"]],
   [/corporate and industry relations/i, ["cir", "placement", "placements"]],
+  [/pandal/i, ["pandal", "convocation"]],
+  [/mba canteen/i, ["asb canteen", "mba canteen"]],
   [/central library/i, ["cl", "lib", "library"]],
   [/amriteshwari hall/i, ["hall", "auditorium", "amriteshwari"]],
   [/automative|automotive/i, ["aartc", "automotive", "auto"]],

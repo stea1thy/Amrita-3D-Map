@@ -35,7 +35,7 @@ const MAJOR_LANDMARKS: LandmarkSpec[] = [
   { id: "way/546394562", shortLabel: "Main Canteen", tier: "primary" },
   { id: "way/380925366", shortLabel: "Hostels", tier: "primary" },
   { id: "way/380925370", shortLabel: "Amriteshwari Hall", tier: "secondary" },
-  { id: "way/380829758", shortLabel: "Auditorium", tier: "secondary" },
+  { id: "way/380829758", shortLabel: "Pandal", tier: "secondary" },
   { id: "way/380829757", shortLabel: "CIR", tier: "secondary" },
   { id: "way/1080744354", shortLabel: "IT Canteen", tier: "secondary" },
   { id: "way/380702791", shortLabel: "Gargi Bhavanam", tier: "secondary" },

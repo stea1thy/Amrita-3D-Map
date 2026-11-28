@@ -28,11 +28,11 @@
     "buildings": 50,
     "namedBuildings": 50,
     "bridges": 2,
-    "inspectables": 165,
+    "inspectables": 164,
     "trees": 2812,
-    "palms": 615,
-    "canopy": 2197,
-    "overtureBuildings": 52,
+    "palms": 636,
+    "canopy": 2176,
+    "overtureBuildings": 51,
     "overturePlaces": 17,
     "unmatchedPois": 2
   },
@@ -379,6 +379,40 @@
       "nearestNodeId": 596
     },
     {
+      "id": "way/380829758",
+      "meshName": "BLDG_way_380829758",
+      "name": "Amrita Pandal",
+      "source": "osm",
+      "isNamed": true,
+      "category": "landmark",
+      "tags": [
+        "pandal",
+        "convocation hall",
+        "convocation",
+        "university",
+        "landmark"
+      ],
+      "departments": [],
+      "floors": 1,
+      "heightM": 8.2,
+      "center": [
+        219.987,
+        9.3,
+        -202.743
+      ],
+      "boundingRadius": 53.25,
+      "latLon": [
+        10.904521,
+        76.902613
+      ],
+      "rawTags": {
+        "building": "university",
+        "name": "Auditorium"
+      },
+      "subtitle": "Open-sided convocation and event hall",
+      "nearestNodeId": 646
+    },
+    {
       "id": "way/380829759",
       "meshName": "BLDG_way_380829759",
       "name": "Amrita School of Business",
@@ -394,14 +428,14 @@
       "floors": 4,
       "heightM": 14.4,
       "center": [
-        133.998,
-        12.727,
-        -195.438
+        135.165,
+        12.528,
+        -198.239
       ],
-      "boundingRadius": 40.53,
+      "boundingRadius": 44.45,
       "latLon": [
-        10.904456,
-        76.901826
+        10.904481,
+        76.901837
       ],
       "rawTags": {
         "building": "university",
@@ -475,36 +509,6 @@
         "name": "Aroyga Sadhanam - Boys Gym"
       },
       "nearestNodeId": 132
-    },
-    {
-      "id": "way/380829758",
-      "meshName": "BLDG_way_380829758",
-      "name": "Auditorium",
-      "source": "osm",
-      "isNamed": true,
-      "category": "landmark",
-      "tags": [
-        "university",
-        "landmark"
-      ],
-      "departments": [],
-      "floors": 3,
-      "heightM": 10.8,
-      "center": [
-        219.987,
-        10.6,
-        -202.743
-      ],
-      "boundingRadius": 53.36,
-      "latLon": [
-        10.904521,
-        76.902613
-      ],
-      "rawTags": {
-        "building": "university",
-        "name": "Auditorium"
-      },
-      "nearestNodeId": 646
     },
     {
       "id": "way/380702809",
@@ -630,14 +634,14 @@
       "floors": 3,
       "heightM": 10.8,
       "center": [
-        142.545,
-        17.668,
-        -303.571
+        147.739,
+        16.784,
+        -308.799
       ],
-      "boundingRadius": 45.76,
+      "boundingRadius": 41.56,
       "latLon": [
-        10.905427,
-        76.901904
+        10.905474,
+        76.901952
       ],
       "rawTags": {
         "building": "university",
@@ -1288,18 +1292,20 @@
       "isNamed": true,
       "category": "food",
       "tags": [
+        "asb canteen",
+        "canteen",
         "restaurant",
         "food"
       ],
       "departments": [],
       "floors": 1,
-      "heightM": 3.6,
+      "heightM": 5.0,
       "center": [
         181.909,
-        7.0,
+        7.7,
         -216.865
       ],
-      "boundingRadius": 20.42,
+      "boundingRadius": 20.51,
       "latLon": [
         10.904648,
         76.902264
@@ -1309,6 +1315,7 @@
         "building": "yes",
         "name": "MBA Canteen"
       },
+      "subtitle": "ASB Canteen",
       "nearestNodeId": 646
     },
     {
@@ -4322,14 +4329,14 @@
       "floors": 3,
       "heightM": 10.8,
       "center": [
-        142.545,
-        17.668,
-        -303.571
+        147.739,
+        16.784,
+        -308.799
       ],
-      "boundingRadius": 45.76,
+      "boundingRadius": 41.56,
       "latLon": [
-        10.905427,
-        76.901904
+        10.905474,
+        76.901952
       ],
       "rawTags": {
         "building": "university",
@@ -4337,114 +4344,85 @@
       },
       "kind": "building",
       "boundsXZ": [
-        101.2,
-        -338.4,
-        182.4,
-        -265.4
+        107.3,
+        -335.3,
+        187.0,
+        -282.8
       ],
       "footprintXZ": [
         [
-          101.2,
-          -313.5
+          120.5,
+          -282.8
         ],
         [
-          103.0,
-          -294.7
+          179.6,
+          -288.7
         ],
         [
-          112.9,
-          -296.2
+          178.7,
+          -297.4
         ],
         [
-          114.7,
-          -276.8
+          187.0,
+          -298.3
         ],
         [
-          129.9,
-          -277.7
+          185.0,
+          -318.7
         ],
         [
-          131.4,
-          -265.4
+          176.7,
+          -317.8
         ],
         [
-          160.4,
-          -268.6
+          174.9,
+          -335.3
         ],
         [
-          159.3,
-          -280.9
+          115.8,
+          -329.3
         ],
         [
-          177.1,
-          -283.3
+          117.3,
+          -314.9
         ],
         [
-          174.5,
-          -302.9
+          107.3,
+          -313.9
         ],
         [
-          182.4,
-          -304.4
+          109.0,
+          -297.3
         ],
         [
-          180.4,
-          -320.2
-        ],
-        [
-          171.6,
-          -319.9
-        ],
-        [
-          169.8,
-          -338.4
-        ],
-        [
-          151.3,
-          -336.0
-        ],
-        [
-          151.6,
-          -331.9
-        ],
-        [
-          129.1,
-          -330.2
-        ],
-        [
-          128.5,
-          -334.9
-        ],
-        [
-          110.0,
-          -332.2
-        ],
-        [
-          111.5,
-          -314.3
+          119.0,
+          -298.3
         ]
       ]
     },
     {
       "id": "way/380829758",
       "meshName": "BLDG_way_380829758",
-      "name": "Auditorium",
+      "name": "Amrita Pandal",
       "source": "osm",
       "isNamed": true,
       "category": "landmark",
       "tags": [
+        "pandal",
+        "convocation hall",
+        "convocation",
         "university",
         "landmark"
       ],
       "departments": [],
-      "floors": 3,
-      "heightM": 10.8,
+      "floors": 1,
+      "heightM": 8.2,
       "center": [
         219.987,
-        10.6,
+        9.3,
         -202.743
       ],
-      "boundingRadius": 53.36,
+      "boundingRadius": 53.25,
       "latLon": [
         10.904521,
         76.902613
@@ -4453,6 +4431,7 @@
         "building": "university",
         "name": "Auditorium"
       },
+      "subtitle": "Open-sided convocation and event hall",
       "kind": "building",
       "boundsXZ": [
         198.6,
@@ -4511,14 +4490,14 @@
       "floors": 4,
       "heightM": 14.4,
       "center": [
-        133.998,
-        12.727,
-        -195.438
+        135.165,
+        12.528,
+        -198.239
       ],
-      "boundingRadius": 40.53,
+      "boundingRadius": 44.45,
       "latLon": [
-        10.904456,
-        76.901826
+        10.904481,
+        76.901837
       ],
       "rawTags": {
         "building": "university",
@@ -4533,43 +4512,27 @@
       ],
       "kind": "building",
       "boundsXZ": [
-        108.8,
-        -225.5,
-        158.1,
-        -162.8
+        110.7,
+        -227.2,
+        159.6,
+        -169.3
       ],
       "footprintXZ": [
         [
-          114.1,
-          -166.6
+          115.8,
+          -169.3
         ],
         [
-          146.1,
-          -171.0
+          159.6,
+          -173.4
         ],
         [
-          146.9,
-          -162.8
+          154.5,
+          -227.2
         ],
         [
-          156.3,
-          -163.4
-        ],
-        [
-          155.2,
-          -171.9
-        ],
-        [
-          158.1,
-          -171.3
-        ],
-        [
-          153.1,
-          -225.5
-        ],
-        [
-          108.8,
-          -220.8
+          110.7,
+          -223.0
         ]
       ]
     },
@@ -4581,18 +4544,20 @@
       "isNamed": true,
       "category": "food",
       "tags": [
+        "asb canteen",
+        "canteen",
         "restaurant",
         "food"
       ],
       "departments": [],
       "floors": 1,
-      "heightM": 3.6,
+      "heightM": 5.0,
       "center": [
         181.909,
-        7.0,
+        7.7,
         -216.865
       ],
-      "boundingRadius": 20.42,
+      "boundingRadius": 20.51,
       "latLon": [
         10.904648,
         76.902264
@@ -4602,6 +4567,7 @@
         "building": "yes",
         "name": "MBA Canteen"
       },
+      "subtitle": "ASB Canteen",
       "kind": "building",
       "boundsXZ": [
         171.8,
@@ -8190,60 +8156,6 @@
         "building": "yes",
         "source": "Google Open Buildings",
         "overture_id": "ce0284ca-a955-4d6c-b175-e9c0aa701b1b"
-      }
-    },
-    {
-      "id": "overture/891e4fd1-7da",
-      "meshName": "STATIC_Buildings",
-      "kind": "building",
-      "name": "Unnamed Structure (overture/891e4fd1-7da)",
-      "source": "overture",
-      "isNamed": false,
-      "category": "default",
-      "tags": [
-        "default"
-      ],
-      "departments": [],
-      "floors": 2,
-      "heightM": 7.2,
-      "center": [
-        94.023,
-        17.598,
-        -301.186
-      ],
-      "boundingRadius": 20.93,
-      "latLon": [
-        10.905406,
-        76.90146
-      ],
-      "boundsXZ": [
-        89.2,
-        -320.7,
-        98.9,
-        -281.7
-      ],
-      "footprintXZ": [
-        [
-          98.9,
-          -282.3
-        ],
-        [
-          95.6,
-          -320.7
-        ],
-        [
-          89.2,
-          -320.1
-        ],
-        [
-          92.5,
-          -281.7
-        ]
-      ],
-      "rawTags": {
-        "building": "yes",
-        "source": "Google Open Buildings",
-        "overture_id": "891e4fd1-7da6-4611-a05d-c051d05c053f"
       }
     },
     {
