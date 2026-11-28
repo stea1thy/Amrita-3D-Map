@@ -25,13 +25,13 @@
     "maxZ": 1110.18
   },
   "counts": {
-    "buildings": 50,
-    "namedBuildings": 50,
+    "buildings": 53,
+    "namedBuildings": 53,
     "bridges": 2,
     "inspectables": 164,
-    "trees": 2945,
-    "palms": 663,
-    "canopy": 2282,
+    "trees": 2947,
+    "palms": 661,
+    "canopy": 2286,
     "overtureBuildings": 51,
     "overturePlaces": 17,
     "unmatchedPois": 2
@@ -223,6 +223,111 @@
         "tourism": "hostel"
       },
       "nearestNodeId": 140
+    },
+    {
+      "id": "way/380925380",
+      "meshName": "BLDG_way_380925380",
+      "name": "Aerospace Engineering Labs (Centre Block)",
+      "source": "osm",
+      "isNamed": true,
+      "category": "academic",
+      "tags": [
+        "aerospace",
+        "aerospace engineering",
+        "aerospace labs",
+        "aero labs",
+        "university",
+        "academic"
+      ],
+      "departments": [
+        "Aerospace Engineering"
+      ],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        428.286,
+        5.85,
+        8.776
+      ],
+      "boundingRadius": 28.96,
+      "latLon": [
+        10.902621,
+        76.904518
+      ],
+      "rawTags": {
+        "building": "university"
+      },
+      "subtitle": "Department of Aerospace Engineering",
+      "nearestNodeId": 253
+    },
+    {
+      "id": "way/380925379",
+      "meshName": "BLDG_way_380925379",
+      "name": "Aerospace Engineering Labs (North Block)",
+      "source": "osm",
+      "isNamed": true,
+      "category": "academic",
+      "tags": [
+        "aerospace",
+        "aerospace engineering",
+        "aerospace labs",
+        "aero labs",
+        "university",
+        "academic"
+      ],
+      "departments": [
+        "Aerospace Engineering"
+      ],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        424.321,
+        5.979,
+        -27.518
+      ],
+      "boundingRadius": 24.64,
+      "latLon": [
+        10.902947,
+        76.904482
+      ],
+      "rawTags": {
+        "building": "university"
+      },
+      "subtitle": "Department of Aerospace Engineering",
+      "nearestNodeId": 237
+    },
+    {
+      "id": "custom/aerospace-labs-south",
+      "meshName": "BLDG_custom_aerospace_labs_south",
+      "name": "Aerospace Engineering Labs (South Block)",
+      "source": "custom",
+      "isNamed": true,
+      "category": "academic",
+      "tags": [
+        "aerospace",
+        "aerospace engineering",
+        "aerospace labs",
+        "aero labs",
+        "academic"
+      ],
+      "departments": [
+        "Aerospace Engineering"
+      ],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        427.111,
+        4.976,
+        58.295
+      ],
+      "boundingRadius": 23.77,
+      "latLon": [
+        10.902176,
+        76.904507
+      ],
+      "rawTags": {},
+      "subtitle": "Department of Aerospace Engineering",
+      "nearestNodeId": 426
     },
     {
       "id": "way/380829421",
@@ -5274,178 +5379,139 @@
     },
     {
       "id": "way/380925379",
-      "meshName": "STATIC_Buildings",
-      "kind": "building",
-      "name": "Unnamed Structure (way/380925379)",
+      "meshName": "BLDG_way_380925379",
+      "name": "Aerospace Engineering Labs (North Block)",
       "source": "osm",
-      "isNamed": false,
+      "isNamed": true,
       "category": "academic",
       "tags": [
+        "aerospace",
+        "aerospace engineering",
+        "aerospace labs",
+        "aero labs",
         "university",
         "academic"
       ],
-      "departments": [],
+      "departments": [
+        "Aerospace Engineering"
+      ],
       "floors": 3,
       "heightM": 10.8,
       "center": [
-        403.221,
-        4.339,
-        -20.818
+        424.321,
+        5.979,
+        -27.518
       ],
-      "boundingRadius": 24.23,
+      "boundingRadius": 24.64,
       "latLon": [
-        10.902887,
-        76.904289
-      ],
-      "boundsXZ": [
-        384.9,
-        -35.8,
-        421.8,
-        -5.9
-      ],
-      "footprintXZ": [
-        [
-          387.2,
-          -5.9
-        ],
-        [
-          421.8,
-          -8.8
-        ],
-        [
-          418.9,
-          -35.8
-        ],
-        [
-          384.9,
-          -32.9
-        ]
+        10.902947,
+        76.904482
       ],
       "rawTags": {
         "building": "university"
-      }
+      },
+      "subtitle": "Department of Aerospace Engineering",
+      "kind": "building",
+      "boundsXZ": [
+        406.0,
+        -42.5,
+        442.9,
+        -12.6
+      ],
+      "footprintXZ": [
+        [
+          408.3,
+          -12.6
+        ],
+        [
+          442.9,
+          -15.5
+        ],
+        [
+          440.0,
+          -42.5
+        ],
+        [
+          406.0,
+          -39.6
+        ]
+      ]
     },
     {
       "id": "way/380925380",
-      "meshName": "STATIC_Buildings",
-      "kind": "building",
-      "name": "Unnamed Structure (way/380925380)",
+      "meshName": "BLDG_way_380925380",
+      "name": "Aerospace Engineering Labs (Centre Block)",
       "source": "osm",
-      "isNamed": false,
+      "isNamed": true,
       "category": "academic",
       "tags": [
+        "aerospace",
+        "aerospace engineering",
+        "aerospace labs",
+        "aero labs",
         "university",
         "academic"
       ],
-      "departments": [],
+      "departments": [
+        "Aerospace Engineering"
+      ],
       "floors": 3,
       "heightM": 10.8,
       "center": [
-        410.686,
-        4.594,
-        14.076
+        428.286,
+        5.85,
+        8.776
       ],
-      "boundingRadius": 28.59,
+      "boundingRadius": 28.96,
       "latLon": [
-        10.902574,
-        76.904357
-      ],
-      "boundsXZ": [
-        387.8,
-        -0.6,
-        435.9,
-        33.4
-      ],
-      "footprintXZ": [
-        [
-          389.0,
-          24.6
-        ],
-        [
-          394.3,
-          22.8
-        ],
-        [
-          395.4,
-          33.4
-        ],
-        [
-          408.9,
-          32.2
-        ],
-        [
-          407.8,
-          24.0
-        ],
-        [
-          435.9,
-          21.7
-        ],
-        [
-          433.0,
-          -0.6
-        ],
-        [
-          387.8,
-          3.5
-        ]
+        10.902621,
+        76.904518
       ],
       "rawTags": {
         "building": "university"
-      }
-    },
-    {
-      "id": "way/380925382",
-      "meshName": "STATIC_Buildings",
+      },
+      "subtitle": "Department of Aerospace Engineering",
       "kind": "building",
-      "name": "Unnamed Structure (way/380925382)",
-      "source": "osm",
-      "isNamed": false,
-      "category": "academic",
-      "tags": [
-        "university",
-        "academic"
-      ],
-      "departments": [],
-      "floors": 3,
-      "heightM": 10.8,
-      "center": [
-        414.373,
-        4.543,
-        55.242
-      ],
-      "boundingRadius": 27.74,
-      "latLon": [
-        10.902204,
-        76.904391
-      ],
       "boundsXZ": [
-        391.3,
-        41.0,
-        437.7,
-        70.3
+        405.4,
+        -5.9,
+        453.5,
+        28.1
       ],
       "footprintXZ": [
         [
-          393.7,
-          70.3
+          406.6,
+          19.3
         ],
         [
-          437.7,
-          64.5
+          411.9,
+          17.5
         ],
         [
-          435.9,
-          41.0
+          413.0,
+          28.1
         ],
         [
-          391.3,
-          45.1
+          426.5,
+          26.9
+        ],
+        [
+          425.4,
+          18.7
+        ],
+        [
+          453.5,
+          16.4
+        ],
+        [
+          450.6,
+          -5.9
+        ],
+        [
+          405.4,
+          -1.8
         ]
-      ],
-      "rawTags": {
-        "building": "university"
-      }
+      ]
     },
     {
       "id": "way/380926299",
@@ -10567,6 +10633,63 @@
         "source": "Google Open Buildings",
         "overture_id": "9778816d-ac17-4786-bc88-2634aef6e4ed"
       }
+    },
+    {
+      "id": "custom/aerospace-labs-south",
+      "meshName": "BLDG_custom_aerospace_labs_south",
+      "name": "Aerospace Engineering Labs (South Block)",
+      "source": "custom",
+      "isNamed": true,
+      "category": "academic",
+      "tags": [
+        "aerospace",
+        "aerospace engineering",
+        "aerospace labs",
+        "aero labs",
+        "academic"
+      ],
+      "departments": [
+        "Aerospace Engineering"
+      ],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        427.111,
+        4.976,
+        58.295
+      ],
+      "boundingRadius": 23.77,
+      "latLon": [
+        10.902176,
+        76.904507
+      ],
+      "rawTags": {},
+      "subtitle": "Department of Aerospace Engineering",
+      "kind": "building",
+      "boundsXZ": [
+        408.9,
+        44.4,
+        445.5,
+        72.8
+      ],
+      "footprintXZ": [
+        [
+          408.9,
+          47.6
+        ],
+        [
+          411.3,
+          72.8
+        ],
+        [
+          445.5,
+          68.2
+        ],
+        [
+          443.3,
+          44.4
+        ]
+      ]
     },
     {
       "id": "custom/academic-block-4",
