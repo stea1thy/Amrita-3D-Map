@@ -48,6 +48,7 @@ from hero_models import (  # noqa: E402
     ab1_hero,
     ab2_hero,
     ab3_hero,
+    amriteshwari_hero,
     asb_hero,
     campus_landmarks,
     it_canteen_hero,
@@ -120,6 +121,8 @@ PALETTE: dict[str, str] = {
     "roof_ab1_concrete": "#D3CBBD",
     "ab1_cornice_trim": "#BFA185",
     "ab1_band_trim": "#D2BEA6",
+    "amh_band_orange": "#E08A5E",
+    "roof_amh_slab": "#B9B4AA",
     # Roofs (Mangalore terracotta vs slate)
     "roof_terracotta": "#B54E34",
     "roof_terracotta_top": "#C56244",
@@ -2001,6 +2004,8 @@ def _compute_building_floors_and_height(category: str, area_m2: float, rec: dict
         return 4, round(4 * FLOOR_HEIGHT_M, 2)
     if fid == HERO_ASB_ID:
         return 4, round(4 * FLOOR_HEIGHT_M, 2)
+    if fid == HERO_AMRITESHWARI_ID:
+        return 4, round(4 * FLOOR_HEIGHT_M, 2)  # G+3 (aerial photo): mess on G, auditorium above
     if rec.get("overture_levels") is not None:
         f = min(8, max(1, int(round(float(rec["overture_levels"])))))
         h = (
@@ -2243,6 +2248,8 @@ def _prepare_building_records(
             rec["rings"], _ = ab1_hero.normalize_ab1_footprint_rings(rec["rings"][0])
         elif fid == HERO_AB2_ID:
             rec["rings"] = ab2_hero.normalize_ab2_footprint_rings()
+        elif fid == HERO_AMRITESHWARI_ID:
+            rec["rings"] = amriteshwari_hero.normalize_amriteshwari_rings()
         elif fid == HERO_LIBRARY_ID:
             rec["rings"] = library_hero.normalize_library_footprint_rings()
         elif fid == HERO_IT_CANTEEN_ID:
@@ -2335,11 +2342,15 @@ def _append_amrita_building(
     outer_ring = rings[0]
 
     c_wall = srgb_hex_to_linear_rgba(wall_hex)
-    c_plinth = srgb_hex_to_linear_rgba(wall_hex, scale=0.83)
+    c_plinth = (
+        srgb_hex_to_linear_rgba(PALETTE["amh_band_orange"]) if fid == HERO_AMRITESHWARI_ID  # orange plinth (photo)
+        else srgb_hex_to_linear_rgba(wall_hex, scale=0.83)
+    )
     c_coping = srgb_hex_to_linear_rgba(PALETTE["parapet_coping"])
     c_roof = srgb_hex_to_linear_rgba(
         PALETTE["roof_ab1_concrete"] if fid == HERO_AB1_ID
         else PALETTE["roof_ab3_slab"] if fid == HERO_AB3_ID
+        else PALETTE["roof_amh_slab"] if fid == HERO_AMRITESHWARI_ID
         else roof_hex
     )
     c_eave_tile = srgb_hex_to_linear_rgba(PALETTE["roof_terracotta"])
@@ -2349,11 +2360,15 @@ def _append_amrita_building(
         trim_key = "ab3_orange_trim"
     elif fid == HERO_AB1_ID:
         trim_key = "ab1_band_trim"
+    elif fid == HERO_AMRITESHWARI_ID:
+        trim_key = "amh_band_orange"
     c_trim = srgb_hex_to_linear_rgba(PALETTE[trim_key])
     c_recess = srgb_hex_to_linear_rgba(PALETTE["balcony_recess"])
     c_ab3_brick = srgb_hex_to_linear_rgba(PALETTE["ab3_accent_brick"])
 
-    has_terracotta_eave = category in {"academic", "landmark", "food"} and fid not in (HERO_AB1_ID, HERO_AB3_ID)
+    has_terracotta_eave = category in {"academic", "landmark", "food"} and fid not in (
+        HERO_AB1_ID, HERO_AB3_ID, HERO_AMRITESHWARI_ID
+    )
     z_base_vis = z_bottom if is_elevated else z_base_ref
     height_vis = max(2.0, z_top - z_base_vis)
     roof_rise = min(1.05, height_vis * 0.11) if has_terracotta_eave else min(0.38, height_vis * 0.08)
@@ -2508,8 +2523,8 @@ def _append_amrita_building(
                 pitch, bay_w, bay_ratio = 4.4, 2.35, 0.50
             elif is_elevated:
                 pitch, bay_w, bay_ratio = 3.8, 2.1, 0.48
-            elif fid == HERO_AB1_ID:
-                # AB-1 front photo: narrow ~1.35 m punched windows at ~3.3 m centres, no hoods
+            elif fid in (HERO_AB1_ID, HERO_AMRITESHWARI_ID):
+                # AB-1 front photo / Amriteshwari aerial: narrow ~1.35 m punched windows at ~3.3 m centres, no hoods
                 pitch, bay_w, bay_ratio = 3.3, 1.35, 0.42
             else:
                 pitch, bay_w, bay_ratio = 4.4, 2.2, 0.48
@@ -2522,6 +2537,8 @@ def _append_amrita_building(
                 edge_len = math.hypot(bx - ax, by - ay)
                 if edge_len < 4.0:
                     continue
+                if fid == HERO_AMRITESHWARI_ID and max(ax, bx) < amriteshwari_hero.AMH_X0 + 0.5:
+                    continue  # West front: custom open hall / glass ribbon in amriteshwari_hero
                 tx, ty = (bx - ax) / edge_len, (by - ay) / edge_len
                 nx, ny = ty, -tx  # Outward normal
                 usable = edge_len - 1.4
@@ -2605,7 +2622,10 @@ def _append_amrita_building(
             _add_tri_vc(bm, col_layer, order, 0, c_plinth)
 
     # Rooftop stairwells / HVAC penthouses on large grounded blocks
-    if not is_elevated and area_m2 >= 600.0 and height_vis >= 9.0 and len(rings) == 1 and roof_in_ring is not None:
+    if (
+        not is_elevated and area_m2 >= 600.0 and height_vis >= 9.0 and len(rings) == 1 and roof_in_ring is not None
+        and fid != HERO_AMRITESHWARI_ID
+    ):
         rcx, rcy = ring_centroid_2d(roof_in_ring)
         if all(
             point_in_ring(rcx + dx, rcy + dy, roof_in_ring)
@@ -2633,7 +2653,7 @@ def _append_amrita_building(
         )
 
     elif fid == HERO_AMRITESHWARI_ID:
-        campus_landmarks.append_amriteshwari_hall_hero(
+        amriteshwari_hero.append_amriteshwari_hero_details(
             bm=bm, col_layer=col_layer, win_lit_bm=win_lit_bm,
             terrain=terrain, offset_xyz=offset_xyz, z_plinth=z_plinth, z_eave=z_eave, z_top=z_top,
         )

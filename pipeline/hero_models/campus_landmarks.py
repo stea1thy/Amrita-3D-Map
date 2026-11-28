@@ -1,4 +1,4 @@
-"""Additional Amrita Coimbatore architectural hero landmarks: Main Gate, Amriteshwari Hall, Shrine & Pool."""
+"""Additional Amrita Coimbatore architectural hero landmarks: Main Gate, Shrine & Pool."""
 
 from __future__ import annotations
 
@@ -23,57 +23,6 @@ from .geom_helpers import (
 MAIN_GATE_CX = -55.45
 MAIN_GATE_CY = -398.5
 MAIN_GATE_ROT = 0.01  # perpendicular to N-S entrance boulevard way/128964701
-
-
-def append_amriteshwari_hall_hero(
-    bm: bmesh.types.BMesh,
-    col_layer: Any,
-    win_lit_bm: bmesh.types.BMesh | None,
-    terrain: Any,
-    offset_xyz: tuple[float, float, float],
-    z_plinth: float,
-    z_eave: float,
-    z_top: float,
-) -> None:
-    """Crown Amriteshwari Hall (way/380925370) with wide-span auditorium gable shell, acoustic lantern & foyer portico."""
-    # Exact OSM footprint centroid & orientation: 46.5m x 21.2m @ 0.088 rad
-    cx, cy, rot = 351.9, -246.0, 0.088
-    c_white = srgb_hex_to_linear_rgba(HERO_PALETTE["stucco_white"])
-    c_cream = srgb_hex_to_linear_rgba(HERO_PALETTE["stucco_cream"])
-    c_tile = srgb_hex_to_linear_rgba(HERO_PALETTE["terracotta_tile"])
-    c_maroon = srgb_hex_to_linear_rgba(HERO_PALETTE["amrita_maroon"])
-
-    # 1. Wide-span vaulted/gabled auditorium shell roof with bold white eave cornice
-    add_box_vc(
-        bm, col_layer, cx, cy, z_eave - 0.15, z_top + 0.18,
-        23.4, 10.8, c_white, c_cream, rot_rad=rot, emit_bottom=True, offset_xyz=offset_xyz,
-    )
-    add_gabled_roof_vc(
-        bm, col_layer, cx, cy, z_top + 0.15, z_top + 4.1,
-        23.8, 11.2, c_tile, c_white, rot_rad=rot, ridge_along_x=True,
-        soffit_rgba=c_cream, offset_xyz=offset_xyz,
-    )
-    # Central acoustic clerestory monitor strip running down the auditorium ridge
-    add_box_vc(
-        bm, col_layer, cx, cy, z_top + 2.6, z_top + 4.75,
-        13.5, 3.0, c_cream, c_tile, rot_rad=rot, offset_xyz=offset_xyz,
-    )
-    add_glass_panel(win_lit_bm, cx, cy, z_top + 3.05, z_top + 4.35, 12.2, -3.08, rot_rad=rot, facing_south=True)
-    add_glass_panel(win_lit_bm, cx, cy, z_top + 3.05, z_top + 4.35, 12.2, +3.08, rot_rad=rot, facing_south=False)
-
-    # 2. West entrance foyer colonnade facing AB-1 courtyard
-    fwx, fwy = local_to_world_2d(cx, cy, -24.4, 0.0, rot)
-    fz0 = terrain.sample(fwx, fwy) - 1.5
-    add_box_vc(
-        bm, col_layer, fwx, fwy, z_plinth + 4.5, z_plinth + 5.2,
-        2.2, 7.6, c_white, c_maroon, rot_rad=rot, emit_bottom=True, offset_xyz=offset_xyz,
-    )
-    for col_ly in (-6.0, -2.0, 2.0, 6.0):
-        cwx, cwy = local_to_world_2d(cx, cy, -25.8, col_ly, rot)
-        add_cylinder_vc(
-            bm, col_layer, cwx, cwy, fz0, z_plinth + 4.55,
-            0.38, 0.34, 8, c_white, c_white, offset_xyz=offset_xyz,
-        )
 
 
 def append_shrine_hero(
