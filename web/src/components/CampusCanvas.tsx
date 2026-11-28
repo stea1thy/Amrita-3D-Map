@@ -51,6 +51,7 @@ interface CampusCanvasProps {
   terrainBounds?: TerrainBounds;
   lighting: SolarLightingState;
   fogEnabled: boolean;
+  shadowsEnabled?: boolean;
   selectedId: string | null;
   hoveredId: string | null;
   debugMode: boolean;
@@ -133,6 +134,7 @@ export default function CampusCanvas({
   terrainBounds,
   lighting,
   fogEnabled,
+  shadowsEnabled = false,
   selectedId,
   hoveredId,
   debugMode,
@@ -179,7 +181,7 @@ export default function CampusCanvas({
   return (
     <div className="relative h-full w-full touch-none select-none">
       <Canvas
-        shadows="soft"
+        shadows={shadowsEnabled ? "basic" : false}
         dpr={profile.dpr}
         camera={{
           position: DEFAULT_CAMERA_POSITION,
@@ -217,8 +219,8 @@ export default function CampusCanvas({
           position={lighting.sunPosition}
           intensity={lighting.sunIntensity}
           color={lighting.sunColor}
-          castShadow
-          key={profile.shadowMapSize}
+          castShadow={shadowsEnabled}
+          key={`${profile.shadowMapSize}-${shadowsEnabled}`}
           shadow-mapSize={[profile.shadowMapSize, profile.shadowMapSize]}
           shadow-bias={-0.0003}
           shadow-normalBias={0.04}

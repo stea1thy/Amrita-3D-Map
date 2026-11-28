@@ -347,15 +347,20 @@ export default function CameraRig({
       ref={controlsRef}
       makeDefault
       enableDamping
-      dampingFactor={0.08}
-      rotateSpeed={0.75}
+      dampingFactor={0.12}
+      rotateSpeed={0.5}
       zoomSpeed={0.9}
-      panSpeed={0.85}
-      touches={{
-        ONE: THREE.TOUCH.ROTATE,
-        TWO: THREE.TOUCH.DOLLY_PAN,
+      panSpeed={1.0}
+      mouseButtons={{
+        LEFT: THREE.MOUSE.PAN,
+        MIDDLE: THREE.MOUSE.DOLLY,
+        RIGHT: THREE.MOUSE.ROTATE,
       }}
-      screenSpacePanning={false}
+      touches={{
+        ONE: THREE.TOUCH.PAN,
+        TWO: THREE.TOUCH.DOLLY_ROTATE,
+      }}
+      screenSpacePanning
       minPolarAngle={debugMode ? 0.02 : 0.2}
       maxPolarAngle={Math.PI / 2 - 0.14}
       minDistance={45}
