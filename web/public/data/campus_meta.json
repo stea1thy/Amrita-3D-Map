@@ -1564,23 +1564,23 @@
         "railway crossing"
       ],
       "departments": [],
-      "floors": 1,
-      "heightM": 5.2,
+      "floors": 2,
+      "heightM": 9.7,
       "center": [
-        -55.5,
-        -9.72,
-        385.75
+        -21.32,
+        -7.81,
+        379.3
       ],
-      "boundingRadius": 16.13,
+      "boundingRadius": 12.49,
       "latLon": [
-        10.899235,
-        76.900092
+        10.899293,
+        76.900405
       ],
       "rawTags": {
         "hero": "hero/main-gate"
       },
-      "subtitle": "Amrita Vishwa Vidyapeetham Campus Entrance & Checkpoint",
-      "nearestNodeId": 67
+      "subtitle": "Kerala-style Timber Gatehouse & Campus Entrance",
+      "nearestNodeId": 70
     },
     {
       "id": "hero/security-office",
@@ -1592,29 +1592,30 @@
       "tags": [
         "security",
         "security office",
+        "face scan",
         "gatehouse",
         "visitor pass",
         "checkpoint",
         "main gate"
       ],
       "departments": [],
-      "floors": 2,
-      "heightM": 9.5,
+      "floors": 1,
+      "heightM": 3.3,
       "center": [
-        -19.0,
-        -7.26,
-        382.25
+        -36.51,
+        -10.99,
+        377.82
       ],
-      "boundingRadius": 12.31,
+      "boundingRadius": 10.67,
       "latLon": [
-        10.899266,
-        76.900426
+        10.899306,
+        76.900266
       ],
       "rawTags": {
         "hero": "hero/security-office"
       },
-      "subtitle": "Campus Security Gatehouse & Visitor Pass Desk",
-      "nearestNodeId": 71
+      "subtitle": "Face-Scan Security Check & Visitor Shelter",
+      "nearestNodeId": 69
     },
     {
       "id": "hero/students-parking",
@@ -11773,45 +11774,45 @@
         "railway crossing"
       ],
       "departments": [],
-      "floors": 1,
-      "heightM": 5.2,
+      "floors": 2,
+      "heightM": 9.7,
       "center": [
-        -55.5,
-        -9.72,
-        385.75
+        -21.32,
+        -7.81,
+        379.3
       ],
-      "boundingRadius": 16.13,
+      "boundingRadius": 12.49,
       "latLon": [
-        10.899235,
-        76.900092
+        10.899293,
+        76.900405
       ],
       "rawTags": {
         "hero": "hero/main-gate"
       },
-      "subtitle": "Amrita Vishwa Vidyapeetham Campus Entrance & Checkpoint",
+      "subtitle": "Kerala-style Timber Gatehouse & Campus Entrance",
       "kind": "building",
       "boundsXZ": [
-        -66.0,
-        373.5,
-        -45.0,
-        398.0
+        -29.0,
+        369.45,
+        -13.65,
+        389.15
       ],
       "footprintXZ": [
         [
-          -66.0,
-          398.0
+          -29.0,
+          389.15
         ],
         [
-          -45.0,
-          398.0
+          -13.65,
+          389.15
         ],
         [
-          -45.0,
-          373.5
+          -13.65,
+          369.45
         ],
         [
-          -66.0,
-          373.5
+          -29.0,
+          369.45
         ]
       ]
     },
@@ -11825,51 +11826,52 @@
       "tags": [
         "security",
         "security office",
+        "face scan",
         "gatehouse",
         "visitor pass",
         "checkpoint",
         "main gate"
       ],
       "departments": [],
-      "floors": 2,
-      "heightM": 9.5,
+      "floors": 1,
+      "heightM": 3.3,
       "center": [
-        -19.0,
-        -7.26,
-        382.25
+        -36.51,
+        -10.99,
+        377.82
       ],
-      "boundingRadius": 12.31,
+      "boundingRadius": 10.67,
       "latLon": [
-        10.899266,
-        76.900426
+        10.899306,
+        76.900266
       ],
       "rawTags": {
         "hero": "hero/security-office"
       },
-      "subtitle": "Campus Security Gatehouse & Visitor Pass Desk",
+      "subtitle": "Face-Scan Security Check & Visitor Shelter",
       "kind": "building",
       "boundsXZ": [
-        -25.0,
-        371.5,
-        -13.0,
-        393.0
+        -46.17,
+        372.97,
+        -26.86,
+        382.68
       ],
       "footprintXZ": [
         [
-          -25.0,
-          393.0
+          -46.01,
+          382.68
         ],
         [
-          -13.0,
-          393.0
+          -26.86,
+          381.42
         ],
         [
-          -13.0,
-          371.5
+          -27.81,
+          372.97
         ],
         [
-          -25.0,
-          371.5
+          -46.17,
+          374.17
         ]
       ]
     },

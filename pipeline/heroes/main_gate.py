@@ -1,13 +1,15 @@
 """Modular Hero generator for Amrita Coimbatore Main Gate, Security Office & Parking Zone.
 
 Replaces the undersized arch overlapping the railway corridor and generic cubes with:
-1. `GROUND_MainGateSite`: clean railway level-crossing road shoulders + campus boundary compound wall
-   parallel to the northern railway track.
-2. `BLDG_hero_main_gate` (`hero/main-gate`): verified terracotta-brick outer entrance piers with lantern
-   caps, AMRITA wing signage, divided entry/exit lanes, red-and-white boom barriers, terracotta-roofed
-   guard booth, and open-sided white canopy at the road bend.
-3. `BLDG_hero_security_office` (`hero/security-office`): verified 2-story cream & terracotta-roofed
-   gatehouse straddling `way/128964701` (`5.2m` clear drive-through height) with flanking approach piers.
+1. `GROUND_MainGateSite`: railway level-crossing shoulders, campus compound wall, the crossing-side
+   brick piers / AMRITA signage wings, and the white-piered
+   iron-grille fence along the south verge of the approach road.
+2. `BLDG_hero_main_gate` (`hero/main-gate`): the Kerala-style timber gatehouse over `way/128964701`
+   (`refs/main_gate_irl_user.jpg`) -- 2-storey tower with tiled skirt roof and road balcony, one long
+   terracotta hipped roof spanning the road onto timber posts with a west `mukhappu` gable, and a small
+   tiled security cabin on the south kerb.
+3. `BLDG_hero_security_office` (`hero/security-office`): the white mural-panelled visitor / security
+   check shelter on the north kerb west of the gatehouse, with kerb railing and drop-off cone line.
 4. `BLDG_hero_students_parking` (`hero/students-parking`): two open-sided covered two-wheeler sheds
    with slim steel pillars and light corrugated gable canopies (NO enclosed window boxes).
 5. `BLDG_hero_visitor_parking` (`hero/visitor-parking`): paved Visitor / Car Parking lot with white
@@ -29,6 +31,7 @@ from hero_models.geom_helpers import (
     add_gabled_roof_vc,
     add_hipped_roof_vc,
     add_quad_vc,
+    add_tri_vc,
     local_to_world_2d,
     srgb_hex_to_linear_rgba,
 )
@@ -164,22 +167,169 @@ def _add_boom_barrier(
         )
 
 
+# OSM `way/128964701` south of the level crossing, towards the Coimbatore-Palakkad highway
+SOUTH_ROAD_PTS = [(-55.7, -417.2), (-54.9, -454.2), (-54.3, -562.7), (-51.3, -568.2)]
+SOUTH_ROAD_START_Y = -417.7   # just south of the concrete crossing plate
+SOUTH_ROAD_MAX_LEN = 160.0
+
+
+def _quad_facing(
+    bm: bmesh.types.BMesh,
+    col_layer: Any,
+    pts: list[tuple[float, float, float]],
+    out_dir: tuple[float, float, float],
+    rgba: tuple[float, float, float, float],
+) -> None:
+    """Emit a quad from 4 ordered world points, flipped if needed so its normal points along out_dir."""
+    (ax, ay, az), (bx, by, bz), (cx, cy, cz) = pts[0], pts[1], pts[2]
+    ux, uy, uz = bx - ax, by - ay, bz - az
+    vx, vy, vz = cx - ax, cy - ay, cz - az
+    nx, ny, nz = uy * vz - uz * vy, uz * vx - ux * vz, ux * vy - uy * vx
+    if nx * out_dir[0] + ny * out_dir[1] + nz * out_dir[2] < 0:
+        pts = list(reversed(pts))
+    v = [bm.verts.new(p) for p in pts]
+    add_quad_vc(bm, col_layer, v[0], v[1], v[2], v[3], rgba)
+
+
+def _add_beam(
+    bm: bmesh.types.BMesh,
+    col_layer: Any,
+    p0: tuple[float, float, float],
+    p1: tuple[float, float, float],
+    half_w: float,
+    rgba: tuple[float, float, float, float],
+) -> None:
+    """Square-section beam between two world points (4 sides + far end cap)."""
+    dx, dy, dz = p1[0] - p0[0], p1[1] - p0[1], p1[2] - p0[2]
+    length = math.sqrt(dx * dx + dy * dy + dz * dz)
+    dx, dy, dz = dx / length, dy / length, dz / length
+    sx, sy, sz = dy, -dx, 0.0                     # horizontal side vector
+    sl = math.hypot(sx, sy) or 1.0
+    sx, sy = sx / sl, sy / sl
+    ux, uy, uz = sy * dz - sz * dy, sz * dx - sx * dz, sx * dy - sy * dx
+    corners = [(1, 1), (-1, 1), (-1, -1), (1, -1)]
+
+    def c(p: tuple[float, float, float], a: int, b: int) -> tuple[float, float, float]:
+        return (p[0] + (sx * a + ux * b) * half_w, p[1] + (sy * a + uy * b) * half_w, p[2] + (sz * a + uz * b) * half_w)
+
+    for i in range(4):
+        a0, b0 = corners[i]
+        a1, b1 = corners[(i + 1) % 4]
+        out = (sx * (a0 + a1) + ux * (b0 + b1), sy * (a0 + a1) + uy * (b0 + b1), sz * (a0 + a1) + uz * (b0 + b1))
+        _quad_facing(bm, col_layer, [c(p0, a0, b0), c(p0, a1, b1), c(p1, a1, b1), c(p1, a0, b0)], out, rgba)
+    _quad_facing(bm, col_layer, [c(p1, a, b) for a, b in corners], (dx, dy, dz), rgba)
+
+
+def _add_level_crossing_gate(
+    bm: bmesh.types.BMesh, col_layer: Any, terrain: Any, px: float, py: float, span_dir: float,
+) -> None:
+    """Indian Railways lifting-barrier gate: striped pedestal with counterweight and a red/white boom.
+
+    The boom is shown raised (open, ~78 deg) over the carriageway it closes, with a rest post opposite.
+    """
+    c_yellow = srgb_hex_to_linear_rgba("#E5C544")
+    c_black = srgb_hex_to_linear_rgba("#2C3035")
+    c_red = srgb_hex_to_linear_rgba("#D63333")
+    c_white = srgb_hex_to_linear_rgba("#F6F4EE")
+    c_lamp = srgb_hex_to_linear_rgba("#E04A3A")
+
+    pz = terrain.sample(px, py)
+    add_box_vc(bm, col_layer, px, py, pz - 0.5, pz + 0.25, 0.42, 0.42, c_black, c_black)
+    add_box_vc(bm, col_layer, px, py, pz + 0.25, pz + 0.75, 0.26, 0.26, c_yellow, c_yellow)
+    add_box_vc(bm, col_layer, px, py, pz + 0.75, pz + 1.25, 0.26, 0.26, c_black, c_black)
+    add_box_vc(bm, col_layer, px, py, pz + 1.25, pz + 1.45, 0.26, 0.26, c_yellow, c_black)
+
+    pivot = (px, py, pz + 1.35)
+    ang = math.radians(78.0)
+    arm_len, segs = 6.6, 6
+    dir3 = (span_dir * math.cos(ang), 0.0, math.sin(ang))
+    for i in range(segs):
+        a = 0.3 + i * arm_len / segs
+        b = 0.3 + (i + 1) * arm_len / segs
+        p0 = (pivot[0] + dir3[0] * a, pivot[1], pivot[2] + dir3[2] * a)
+        p1 = (pivot[0] + dir3[0] * b, pivot[1], pivot[2] + dir3[2] * b)
+        _add_beam(bm, col_layer, p0, p1, 0.07, c_red if i % 2 == 0 else c_white)
+    # Counterweight stub behind the pivot
+    _add_beam(bm, col_layer, pivot, (pivot[0] - dir3[0] * 0.9, pivot[1], pivot[2] - dir3[2] * 0.9), 0.16, c_black)
+    # Rest post on the far kerb and a red warning lamp head on the pedestal side
+    rx = px + span_dir * 7.3
+    rz = terrain.sample(rx, py)
+    add_box_vc(bm, col_layer, rx, py, rz - 0.4, rz + 0.95, 0.09, 0.09, c_black, c_yellow)
+    add_box_vc(bm, col_layer, px - span_dir * 0.6, py, pz - 0.3, pz + 2.6, 0.06, 0.06, c_black, c_black)
+    add_box_vc(bm, col_layer, px - span_dir * 0.6, py, pz + 2.35, pz + 2.65, 0.16, 0.12, c_lamp, c_black)
+
+
+def _append_south_approach_road(bm: bmesh.types.BMesh, col_layer: Any, terrain: Any) -> None:
+    """Asphalt carriageway + black/yellow kerb dashes continuing `way/128964701` south of the rails."""
+    c_asphalt = srgb_hex_to_linear_rgba("#9EA4AB")
+    c_kerbs = (srgb_hex_to_linear_rgba("#2C3035"), srgb_hex_to_linear_rgba("#E5C544"))
+    half_w, kerb_w = 2.4, 0.42
+    z_road, z_kerb = 0.275, 0.305  # sits just above the campus road's rounded end cap & kerb (0.23 / 0.265)
+
+    end_y = max(SOUTH_ROAD_START_Y - SOUTH_ROAD_MAX_LEN, terrain.core_min_y + 2.0)
+    # Resample the centreline every ~4 m from the start point down to end_y
+    poly = [(SOUTH_ROAD_PTS[0][0], SOUTH_ROAD_START_Y)] + list(SOUTH_ROAD_PTS[1:])
+    samples: list[tuple[float, float]] = [poly[0]]
+    for (ax, ay), (bx, by) in zip(poly[:-1], poly[1:]):
+        n = max(1, int(math.ceil(math.hypot(bx - ax, by - ay) / 4.0)))
+        done = False
+        for k in range(1, n + 1):
+            x, y = ax + (bx - ax) * k / n, ay + (by - ay) * k / n
+            if y <= end_y:
+                t = (ay - end_y) / (ay - by)
+                samples.append((ax + (bx - ax) * t, end_y))
+                done = True
+                break
+            samples.append((x, y))
+        if done:
+            break
+
+    def normal(i: int) -> tuple[float, float]:
+        a = samples[max(0, i - 1)]
+        b = samples[min(len(samples) - 1, i + 1)]
+        dx, dy = b[0] - a[0], b[1] - a[1]
+        d = math.hypot(dx, dy) or 1.0
+        return (dy / d, -dx / d)  # right-hand side when heading south (-y) is west (-x)
+
+    def pt(i: int, off: float, dz: float) -> tuple[float, float, float]:
+        x, y = samples[i]
+        nx, ny = normal(i)
+        wx, wy = x + nx * off, y + ny * off
+        return (wx, wy, terrain.sample(wx, wy) + dz)
+
+    for i in range(len(samples) - 1):
+        _quad_facing(bm, col_layer, [pt(i, -half_w, z_road), pt(i, half_w, z_road), pt(i + 1, half_w, z_road),
+                                      pt(i + 1, -half_w, z_road)], (0.0, 0.0, 1.0), c_asphalt)
+        col = c_kerbs[i % 2]
+        for side in (-1.0, 1.0):
+            a_in, a_out = side * half_w, side * (half_w + kerb_w)
+            _quad_facing(bm, col_layer, [pt(i, a_in, z_kerb), pt(i, a_out, z_kerb), pt(i + 1, a_out, z_kerb),
+                                          pt(i + 1, a_in, z_kerb)], (0.0, 0.0, 1.0), col)
+            nx, ny = normal(i)
+            skirt = (col[0] * 0.72, col[1] * 0.72, col[2] * 0.72, 1.0)
+            q0, q1 = pt(i, a_out, z_kerb), pt(i + 1, a_out, z_kerb)
+            _quad_facing(bm, col_layer, [(q0[0], q0[1], q0[2] - 0.45), (q1[0], q1[1], q1[2] - 0.45), q1, q0],
+                         (nx * side, ny * side, 0.0), skirt)
+
+
+
 def _build_site_crossing_and_wall(terrain: Any, mat: bpy.types.Material) -> None:
     """Build railway level-crossing road apron/shoulders and campus brick-and-cream perimeter compound wall."""
     bm = bmesh.new()
     col_layer = bm.loops.layers.color.new("Color")
 
-    c_asphalt = srgb_hex_to_linear_rgba("#484D54")
     c_stripe = srgb_hex_to_linear_rgba("#E8D24A")
     c_dark = srgb_hex_to_linear_rgba("#25292E")
     c_brick = srgb_hex_to_linear_rgba("#A65E44")
     c_cream = srgb_hex_to_linear_rgba("#EFE8DC")
     c_coping = srgb_hex_to_linear_rgba("#9E5B42")
 
-    # 1. Clean railway level-crossing shoulders & warning posts (north & south of rails at -408.3 / -417.2)
+    # 1. Railway level crossing (rails at y -408.3 / -417.2): warning posts, lifting-barrier gates on both
+    #    approaches, and the approach road extended south of the tracks (campus roads stop at the rails)
+    _append_south_approach_road(bm, col_layer, terrain)
+    _add_level_crossing_gate(bm, col_layer, terrain, -51.85, -403.0, -1.0)  # north approach, arm spans west
+    _add_level_crossing_gate(bm, col_layer, terrain, -59.35, -422.4, 1.0)   # south approach, arm spans east
     for lx, ly in ((-55.55, -420.5), (-55.55, -404.2)):
-        lz = terrain.sample(lx, ly)
-        add_box_vc(bm, col_layer, lx, ly, lz - 0.6, lz + 0.20, 4.6, 2.2, c_asphalt, c_asphalt)
         for side in (-1.0, 1.0):
             bx, by = lx + side * 4.4, ly
             bz = terrain.sample(bx, by)
@@ -222,26 +372,22 @@ def _build_site_crossing_and_wall(terrain: Any, mat: bpy.types.Material) -> None
                 0.34, 0.34, c_brick, c_coping, rot_rad=WALL_ROT_RAD,
             )
 
+    _append_crossing_gate(bm, col_layer, terrain)
+    _append_south_kerb_fence(bm, col_layer, terrain)
+
     _link_bmesh_object("GROUND_MainGateSite", bm, mat)
 
 
-def _build_main_gate_object(terrain: Any, mat: bpy.types.Material) -> list[tuple[float, float, float]]:
-    """Build outer Main Gate brick piers, AMRITA signage wings, boom barriers, guard booth & bend canopy."""
-    bm = bmesh.new()
-    col_layer = bm.loops.layers.color.new("Color")
-
-    cx_b, cy_b = GATE_CX, GATE_CY
-    cz_b = terrain.sample(cx_b, cy_b) + 2.4
-    offset_xyz = (cx_b, cy_b, cz_b)
+def _append_crossing_gate(bm: bmesh.types.BMesh, col_layer: Any, terrain: Any) -> None:
+    """Railway-crossing entry: brick piers with lantern caps and AMRITA signage wing walls (no booth/barrier/canopy)."""
+    offset_xyz = (0.0, 0.0, 0.0)
 
     c_brick = srgb_hex_to_linear_rgba("#A65E44")
     c_cream = srgb_hex_to_linear_rgba(HERO_PALETTE["stucco_cream"])
     c_white = srgb_hex_to_linear_rgba(HERO_PALETTE["stucco_white"])
     c_maroon = srgb_hex_to_linear_rgba(HERO_PALETTE["amrita_maroon"])
-    c_tile = srgb_hex_to_linear_rgba(HERO_PALETTE["terracotta_tile"])
     c_dark = srgb_hex_to_linear_rgba(HERO_PALETTE["portico_dark"])
     c_glass = srgb_hex_to_linear_rgba("#384958")
-    c_canopy = srgb_hex_to_linear_rgba("#E4E7EB")
 
     # 1. Twin tall terracotta-brick square entrance piers with cream cornice & modern lantern caps (main_gate_arch.jpg)
     for side in (-1.0, 1.0):
@@ -262,123 +408,315 @@ def _build_main_gate_object(terrain: Any, mat: bpy.types.Material) -> list[tuple
         add_box_vc(bm, col_layer, sx, sy, wz + 1.15, wz + 2.15, 2.35, 0.05, c_maroon, c_maroon, rot_rad=WALL_ROT_RAD, offset_xyz=offset_xyz)
         add_box_vc(bm, col_layer, sx, sy - 0.03, wz + 1.45, wz + 1.88, 1.95, 0.04, c_white, c_white, rot_rad=WALL_ROT_RAD, offset_xyz=offset_xyz)
 
-    # 2. Divided Entry / Exit lane median island + slim central checkpoint booth + twin boom barriers
-    mx, my = -55.5, -391.4
-    mz = terrain.sample(mx, my)
-    add_box_vc(bm, col_layer, mx, my, mz - 0.6, mz + 0.26, 0.55, 3.8, c_cream, c_white, rot_rad=0.0, offset_xyz=offset_xyz)
-    add_box_vc(bm, col_layer, mx, my, mz + 0.26, mz + 2.55, 0.52, 1.05, c_cream, c_white, rot_rad=0.0, offset_xyz=offset_xyz)
-    add_box_vc(bm, col_layer, mx, my, mz + 1.25, mz + 2.15, 0.55, 0.90, c_glass, c_dark, rot_rad=0.0, offset_xyz=offset_xyz)
-    add_hipped_roof_vc(bm, col_layer, mx, my, mz + 2.52, mz + 3.25, 0.85, 1.35, c_tile, offset_xyz=offset_xyz)
 
-    _add_boom_barrier(bm, col_layer, mx - 0.62, -393.0, math.pi, 4.1, terrain, offset_xyz)
-    _add_boom_barrier(bm, col_layer, mx + 0.62, -393.0, 0.0, 4.1, terrain, offset_xyz)
+def _road_cy(x: float) -> float:
+    """Centreline Y of `way/128964701` on its straight run from the bend (-48.1) to the gatehouse (0.9)."""
+    if x <= -28.2:
+        return -384.2 + (x + 48.1) * (1.3 / 19.9)
+    return -382.9 + (x + 28.2) * (0.6 / 29.1)
 
-    # 3. Terracotta pyramid-roofed Guard Booth tucked just inside west gate pier (`main_gate_arch.jpg`)
-    gx, gy = -62.5, -390.2
-    gz = terrain.sample(gx, gy)
-    add_box_vc(bm, col_layer, gx, gy, gz - 1.2, gz + 0.85, 1.65, 1.55, c_brick, c_brick, offset_xyz=offset_xyz)
-    add_box_vc(bm, col_layer, gx, gy, gz + 0.85, gz + 2.85, 1.60, 1.50, c_cream, c_white, offset_xyz=offset_xyz)
-    add_box_vc(bm, col_layer, gx + 0.05, gy, gz + 1.35, gz + 2.30, 1.63, 1.15, c_glass, c_dark, offset_xyz=offset_xyz)
-    add_hipped_roof_vc(bm, col_layer, gx, gy, gz + 2.82, gz + 4.35, 2.25, 2.15, c_tile, soffit_rgba=c_cream, offset_xyz=offset_xyz)
 
-    # 4. Open-sided white steel entry canopy at road bend (`main_gate_sat.jpg` px=(268,285) at -60.2, -377.5)
-    can_x, can_y = -60.2, -377.5
-    can_z = terrain.sample(can_x, can_y)
-    can_hx, can_hy = 5.0, 3.6
-    for px_s in (-can_hx + 0.4, 0.0, can_hx - 0.4):
-        for py_s in (-can_hy + 0.4, can_hy - 0.4):
-            cpx, cpy = local_to_world_2d(can_x, can_y, px_s, py_s, 0.0)
-            cpz = terrain.sample(cpx, cpy)
-            add_cylinder_vc(bm, col_layer, cpx, cpy, cpz - 0.8, can_z + 4.0, 0.13, 0.13, 6, c_dark, c_dark, offset_xyz=offset_xyz)
-    add_box_vc(
-        bm, col_layer, can_x, can_y, can_z + 3.96, can_z + 4.30,
-        can_hx, can_hy, c_white, c_canopy, emit_bottom=True, offset_xyz=offset_xyz,
+def _wall_quad(
+    bm: bmesh.types.BMesh,
+    col_layer: Any,
+    a: tuple[float, float],
+    b: tuple[float, float],
+    z0: float,
+    z1: float,
+    rgba: tuple[float, float, float, float],
+    offset_xyz: tuple[float, float, float],
+) -> None:
+    """Vertical quad from a to b; its face points to the right of a->b (outward on a CCW ring)."""
+    ox, oy, oz = offset_xyz
+    v = [
+        bm.verts.new((a[0] - ox, a[1] - oy, z0 - oz)),
+        bm.verts.new((b[0] - ox, b[1] - oy, z0 - oz)),
+        bm.verts.new((b[0] - ox, b[1] - oy, z1 - oz)),
+        bm.verts.new((a[0] - ox, a[1] - oy, z1 - oz)),
+    ]
+    add_quad_vc(bm, col_layer, v[0], v[1], v[2], v[3], rgba)
+
+
+def _framed_window(
+    bm: bmesh.types.BMesh,
+    col_layer: Any,
+    a: tuple[float, float],
+    b: tuple[float, float],
+    z0: float,
+    z1: float,
+    out_n: tuple[float, float],
+    frame_rgba: tuple[float, float, float, float],
+    glass_rgba: tuple[float, float, float, float],
+    offset_xyz: tuple[float, float, float],
+) -> None:
+    """Light timber frame quad with an inset dark glass pane, both proud of the wall along out_n."""
+    nx, ny = out_n
+    ux, uy = b[0] - a[0], b[1] - a[1]
+    length = math.hypot(ux, uy)
+    ux, uy = ux / length, uy / length
+    f = 0.10
+    _wall_quad(
+        bm, col_layer, (a[0] + nx * 0.03, a[1] + ny * 0.03), (b[0] + nx * 0.03, b[1] + ny * 0.03),
+        z0, z1, frame_rgba, offset_xyz,
+    )
+    _wall_quad(
+        bm, col_layer,
+        (a[0] + ux * f + nx * 0.05, a[1] + uy * f + ny * 0.05),
+        (b[0] - ux * f + nx * 0.05, b[1] - uy * f + ny * 0.05),
+        z0 + f, z1 - f, glass_rgba, offset_xyz,
     )
 
-    _link_bmesh_object("BLDG_hero_main_gate", bm, mat, location=offset_xyz)
-    return [
-        (-66.0, -398.0, cz_b - 2.4),
-        (-45.0, -398.0, cz_b + 5.5),
-        (-45.0, -373.5, cz_b + 5.5),
-        (-66.0, -373.5, cz_b - 2.4),
-    ]
 
+def _build_gatehouse_object(terrain: Any, mat: bpy.types.Material) -> list[tuple[float, float, float]]:
+    """Kerala-style timber gatehouse over `way/128964701` (`refs/main_gate_irl_user.jpg`).
 
-def _build_security_office_object(terrain: Any, mat: bpy.types.Material) -> list[tuple[float, float, float]]:
-    """Build 2-story cream & terracotta Security Office gatehouse straddling way/128964701 (`main_gate_area.jpg`)."""
+    North of the road: a 2-storey timber tower (`way/546394580`) with a tiled skirt roof, upper-floor
+    windows and a road-facing balcony. One long terracotta hipped roof (satellite: x -23.3..-13.7,
+    y -368.7..-387.1) spans the road onto two timber posts and carries a gabled `mukhappu` on its
+    west slope. South of the road: a small timber security cabin with its own tiled roof (`way/546394581`).
+    """
     bm = bmesh.new()
     col_layer = bm.loops.layers.color.new("Color")
 
-    cx_b, cy_b = SEC_CX, SEC_CY
-    cz_b = terrain.sample(cx_b, cy_b) + 4.8
-    offset_xyz = (cx_b, cy_b, cz_b)
-    rot = 0.045  # aligns cleanly with E-W entrance road way/128964701
+    zr = terrain.sample(-18.5, -382.7)
+    offset_xyz = (-18.5, -378.0, zr)
 
     c_plinth = srgb_hex_to_linear_rgba(HERO_PALETTE["sandstone_plinth"])
-    c_cream = srgb_hex_to_linear_rgba(HERO_PALETTE["stucco_cream"])
-    c_white = srgb_hex_to_linear_rgba(HERO_PALETTE["stucco_white"])
-    c_tile = srgb_hex_to_linear_rgba(HERO_PALETTE["terracotta_tile"])
-    c_maroon = srgb_hex_to_linear_rgba(HERO_PALETTE["amrita_maroon"])
-    c_dark = srgb_hex_to_linear_rgba(HERO_PALETTE["recess_shadow"])
+    c_timber = srgb_hex_to_linear_rgba("#A8693B")
+    c_timber_up = srgb_hex_to_linear_rgba("#B37243")
+    c_timber_dk = srgb_hex_to_linear_rgba("#5C3A24")
+    c_soffit = srgb_hex_to_linear_rgba("#6E472C")
+    c_frame = srgb_hex_to_linear_rgba("#E6D6B8")
+    c_glass = srgb_hex_to_linear_rgba("#2B3138")
+    c_tile = srgb_hex_to_linear_rgba("#BE6440")
+    c_tile_dk = srgb_hex_to_linear_rgba("#A9553A")
+    c_gable_in = srgb_hex_to_linear_rgba("#3A2416")
 
-    # 1. Twin foreground gate piers seen in `main_gate_area.jpg` along the approach road
-    for side in (-1.0, 1.0):
-        px, py = local_to_world_2d(-33.5, -382.7, 0.0, side * 5.2, rot)
-        pz = terrain.sample(px, py)
-        add_box_vc(bm, col_layer, px, py, pz - 1.2, pz + 0.5, 0.52, 0.52, c_plinth, c_cream, rot_rad=rot, offset_xyz=offset_xyz)
-        add_box_vc(bm, col_layer, px, py, pz + 0.5, pz + 3.05, 0.44, 0.44, c_cream, c_white, rot_rad=rot, offset_xyz=offset_xyz)
-        add_hipped_roof_vc(bm, col_layer, px, py, pz + 3.05, pz + 3.55, 0.56, 0.56, c_tile, rot_rad=rot, offset_xyz=offset_xyz)
+    # Tower plan (OSM way/546394580, trimmed clear of the 5.6 m carriageway edge at y -379.9)
+    tx0, tx1 = -22.2, -14.8
+    ty0, ty1 = -379.2, -371.6
+    tcx, tcy = 0.5 * (tx0 + tx1), 0.5 * (ty0 + ty1)
+    thx, thy = 0.5 * (tx1 - tx0), 0.5 * (ty1 - ty0)
 
-    # 2. North Wing (way/546394580 footprint) & South Wing (way/546394581 footprint), clear of road [-385.8 .. -379.0]
-    road_z = terrain.sample(cx_b, cy_b)
-    for wing_y, wing_hy in ((-375.5, 3.3), (-388.9, 3.1)):
-        wx, wy = cx_b, wing_y
-        wz0 = terrain.sample(wx, wy) - 1.5
-        z_top_w = road_z + 7.2
-        add_box_vc(bm, col_layer, wx, wy, wz0, road_z + 0.45, 4.4, wing_hy, c_plinth, c_plinth, rot_rad=rot, offset_xyz=offset_xyz)
-        add_box_vc(bm, col_layer, wx, wy, road_z + 0.45, z_top_w, 4.25, wing_hy - 0.15, c_cream, c_white, rot_rad=rot, offset_xyz=offset_xyz)
-        # Subtle mid-floor horizontal cornice band
-        add_box_vc(bm, col_layer, wx, wy, road_z + 3.55, road_z + 3.85, 4.35, wing_hy - 0.05, c_white, c_white, rot_rad=rot, offset_xyz=offset_xyz)
-        # Spaced dark framed windows on West/East and North/South facades
-        for wz_fl in (road_z + 1.5, road_z + 4.7):
-            for wy_off in (-1.2, 1.2):
-                add_box_vc(bm, col_layer, wx, wy + wy_off, wz_fl, wz_fl + 1.25, 4.30, 0.72, c_dark, c_dark, rot_rad=rot, offset_xyz=offset_xyz)
-        add_hipped_roof_vc(
-            bm, col_layer, wx, wy, z_top_w - 0.02, z_top_w + 2.15,
-            4.85, wing_hy + 0.45, c_tile, rot_rad=rot, soffit_rgba=c_cream, offset_xyz=offset_xyz,
-        )
+    z_g = zr + 0.35      # ground floor level
+    z_skirt = zr + 3.05  # skirt-roof eave
+    z_up = zr + 3.9      # upper floor level
+    z_eave = zr + 7.0    # main roof eave
+    z_ridge = zr + 9.7
 
-    # 3. 2-Story Gatehouse Archway Span bridging cleanly over road way/128964701 (`main_gate_area.jpg`)
-    z_clear = road_z + 5.15
-    z_bridge_top = road_z + 7.75
-    add_box_vc(
-        bm, col_layer, cx_b, cy_b, z_clear, z_bridge_top,
-        4.1, 3.8, c_cream, c_white, rot_rad=rot, emit_bottom=True, offset_xyz=offset_xyz,
-    )
-    add_box_vc(
-        bm, col_layer, cx_b, cy_b, z_clear + 0.25, z_clear + 1.05,
-        4.22, 2.8, c_maroon, c_maroon, rot_rad=rot, emit_bottom=True, offset_xyz=offset_xyz,
-    )
-    add_box_vc(
-        bm, col_layer, cx_b, cy_b, z_clear + 1.45, z_bridge_top - 0.45,
-        4.18, 2.3, c_dark, c_dark, rot_rad=rot, offset_xyz=offset_xyz,
-    )
-    add_hipped_roof_vc(
-        bm, col_layer, cx_b, cy_b, z_bridge_top - 0.02, z_bridge_top + 2.45,
-        4.65, 4.35, c_tile, rot_rad=rot, soffit_rgba=c_cream, offset_xyz=offset_xyz,
-    )
+    # 1. Tower: laterite plinth, timber ground storey, tiled skirt roof, timber upper storey
+    add_box_vc(bm, col_layer, tcx, tcy, zr - 1.0, z_g, thx + 0.12, thy + 0.12, c_plinth, c_plinth, offset_xyz=offset_xyz)
+    add_box_vc(bm, col_layer, tcx, tcy, z_g, z_skirt + 0.2, thx, thy, c_timber, c_timber, offset_xyz=offset_xyz)
+    # Ground-storey windows: two on the west (approach) face, one beside the door on the road face
+    for wy in (-377.4, -373.6):
+        _framed_window(bm, col_layer, (tx0, wy + 0.7), (tx0, wy - 0.7), z_g + 0.9, z_g + 2.2,
+                       (-1.0, 0.0), c_frame, c_glass, offset_xyz)
+    _framed_window(bm, col_layer, (tx0 + 1.0, ty0), (tx0 + 2.4, ty0), z_g + 0.9, z_g + 2.2,
+                   (0.0, -1.0), c_frame, c_glass, offset_xyz)
+    _framed_window(bm, col_layer, (tx1 - 2.6, ty0), (tx1 - 1.4, ty0), z_g, z_g + 2.3,
+                   (0.0, -1.0), c_timber_dk, c_glass, offset_xyz)
+    # Skirt roof: a sloped tile ring, eaves 0.9 m out, rising 0.8 m to the wall line (tucked under the balcony
+    # on the road side), with a flat timber soffit underneath
+    ox, oy, oz = offset_xyz
+    ring_out = [(tx0 - 0.9, ty0 - 0.9), (tx1 + 0.9, ty0 - 0.9), (tx1 + 0.9, ty1 + 0.9), (tx0 - 0.9, ty1 + 0.9)]
+    ring_in = [(tx0, ty0), (tx1, ty0), (tx1, ty1), (tx0, ty1)]
+    o_v = [bm.verts.new((x - ox, y - oy, z_skirt - oz)) for x, y in ring_out]
+    i_v = [bm.verts.new((x - ox, y - oy, z_skirt + 0.8 - oz)) for x, y in ring_in]
+    s_v = [bm.verts.new((x - ox, y - oy, z_skirt - oz)) for x, y in ring_in]
+    for i in range(4):
+        j = (i + 1) % 4
+        add_quad_vc(bm, col_layer, o_v[i], o_v[j], i_v[j], i_v[i], c_tile)
+        add_quad_vc(bm, col_layer, s_v[i], s_v[j], o_v[j], o_v[i], c_soffit)
 
-    # Security checkpoint boom barriers right beneath the Security Office approach
-    _add_boom_barrier(bm, col_layer, -24.0, -379.6, -math.pi * 0.5, 2.8, terrain, offset_xyz)
-    _add_boom_barrier(bm, col_layer, -24.0, -385.4, math.pi * 0.5, 2.8, terrain, offset_xyz)
+    # Upper storey: enclosed rooms on the north, balcony facing the road on the south
+    uy0 = -377.8
+    add_box_vc(bm, col_layer, tcx, 0.5 * (uy0 + ty1), z_up - 0.1, z_eave, thx, 0.5 * (ty1 - uy0),
+               c_timber_up, c_timber_up, offset_xyz=offset_xyz)
+    for wy in (-376.6, -374.7, -372.8):
+        _framed_window(bm, col_layer, (tx0, wy + 0.62), (tx0, wy - 0.62), z_up + 0.75, z_up + 2.35,
+                       (-1.0, 0.0), c_frame, c_glass, offset_xyz)
+        _framed_window(bm, col_layer, (tx1, wy - 0.62), (tx1, wy + 0.62), z_up + 0.75, z_up + 2.35,
+                       (1.0, 0.0), c_frame, c_glass, offset_xyz)
+    for wx in (-20.4, -16.6):
+        _framed_window(bm, col_layer, (wx + 0.7, ty1), (wx - 0.7, ty1), z_up + 0.75, z_up + 2.35,
+                       (0.0, 1.0), c_frame, c_glass, offset_xyz)
+    # Balcony doors onto the road-facing balcony
+    for wx in (-20.2, -16.8):
+        _framed_window(bm, col_layer, (wx - 0.8, uy0), (wx + 0.8, uy0), z_up, z_up + 2.4,
+                       (0.0, -1.0), c_frame, c_glass, offset_xyz)
+    by0 = -379.6
+    add_box_vc(bm, col_layer, tcx, 0.5 * (by0 + uy0), z_up - 0.2, z_up, thx + 0.1, 0.5 * (uy0 - by0),
+               c_timber_dk, c_timber_dk, emit_bottom=True, offset_xyz=offset_xyz)
+    add_box_vc(bm, col_layer, tcx, by0 + 0.05, z_up, z_up + 1.0, thx + 0.05, 0.05,
+               c_timber_dk, c_frame, offset_xyz=offset_xyz)
+    for px in (tx0 + 0.12, tx1 - 0.12):
+        add_box_vc(bm, col_layer, px, by0 + 0.12, z_up, z_eave, 0.12, 0.12,
+                   c_timber_dk, c_timber_dk, offset_xyz=offset_xyz)
+
+    # 2. Road span: two timber posts on stone bases, tie beams back to the tower
+    sy = -386.3
+    for px in (-22.6, -14.4):
+        pz = terrain.sample(px, sy)
+        add_box_vc(bm, col_layer, px, sy, pz - 0.6, pz + 0.55, 0.34, 0.34, c_plinth, c_plinth, offset_xyz=offset_xyz)
+        add_box_vc(bm, col_layer, px, sy, pz + 0.55, z_eave, 0.21, 0.21, c_timber_dk, c_timber_dk, offset_xyz=offset_xyz)
+        add_box_vc(bm, col_layer, px, 0.5 * (sy + ty0), z_eave - 0.42, z_eave, 0.16, 0.5 * (ty0 - sy),
+                   c_timber_dk, c_timber_dk, emit_bottom=True, offset_xyz=offset_xyz)
+    add_box_vc(bm, col_layer, -18.5, sy, z_eave - 0.48, z_eave, 4.3, 0.17,
+               c_timber_dk, c_timber_dk, emit_bottom=True, offset_xyz=offset_xyz)
+
+    # 3. Main terracotta hipped roof across the road (fascia slab doubles as the timber soffit)
+    rcx, rcy, rhx, rhy = -18.5, -378.3, 4.85, 8.85
+    add_box_vc(bm, col_layer, rcx, rcy, z_eave - 0.22, z_eave, rhx, rhy, c_soffit, c_soffit,
+               emit_bottom=True, offset_xyz=offset_xyz)
+    add_hipped_roof_vc(bm, col_layer, rcx, rcy, z_eave, z_ridge, rhx, rhy, c_tile, offset_xyz=offset_xyz)
+
+    # 4. Kerala `mukhappu` gable on the west slope, centred over the tower/road junction
+    slope = (z_ridge - z_eave) / rhx
+    gx0 = rcx - rhx + 1.45          # front face of the gable
+    gz_roof = z_eave + 1.45 * slope  # main-roof surface under that face
+    g_eave, g_peak, g_hy = gz_roof + 0.32, z_ridge - 0.22, 1.55
+    gcx, ghx = 0.5 * (gx0 + rcx), 0.5 * (rcx - gx0)
+    add_gabled_roof_vc(bm, col_layer, gcx, rcy, g_eave, g_peak, ghx, g_hy + 0.18,
+                       c_tile_dk, c_timber, ridge_along_x=True, offset_xyz=offset_xyz)
+    _wall_quad(bm, col_layer, (gx0, rcy + g_hy + 0.18), (gx0, rcy - g_hy - 0.18), gz_roof - 0.05, g_eave,
+               c_timber_dk, offset_xyz)
+    gi = [
+        bm.verts.new((gx0 - 0.04 - ox, rcy + g_hy * 0.62 - oy, g_eave + 0.12 - oz)),
+        bm.verts.new((gx0 - 0.04 - ox, rcy - g_hy * 0.62 - oy, g_eave + 0.12 - oz)),
+        bm.verts.new((gx0 - 0.04 - ox, rcy - oy, g_peak - 0.32 - oz)),
+    ]
+    add_tri_vc(bm, col_layer, (gi[0], gi[1], gi[2]), c_gable_in)
+
+    # 5. Toll gate under the span: staggered entry/exit boom barriers with face-scan posts on each kerb
+    c_scan = srgb_hex_to_linear_rgba("#2F353C")
+    c_screen = srgb_hex_to_linear_rgba("#7FB3D9")
+    for bx, by, arm_dir in ((-20.6, -380.1, -0.5 * math.pi), (-16.4, -385.3, 0.5 * math.pi)):
+        _add_boom_barrier(bm, col_layer, bx, by, arm_dir, 2.3, terrain, offset_xyz)
+        sx = bx + (1.0 if by > -382.7 else -1.0)
+        sz = terrain.sample(sx, by)
+        add_box_vc(bm, col_layer, sx, by, sz - 0.3, sz + 1.45, 0.13, 0.13, c_scan, c_scan, offset_xyz=offset_xyz)
+        add_box_vc(bm, col_layer, sx, by, sz + 1.2, sz + 1.55, 0.17, 0.05, c_screen, c_scan, offset_xyz=offset_xyz)
+
+    # 6. Security cabin on the south verge just in front of the west span post, under the big shade tree
+    #    (`refs/main_gate_irl_user.jpg`), between the kerb (-385.6) and the white-pier fence (-389.1)
+    kcx, kcy, khx, khy = -26.2, -387.4, 2.2, 1.35
+    kz = terrain.sample(kcx, kcy)
+    add_box_vc(bm, col_layer, kcx, kcy, kz - 0.8, kz + 0.3, khx + 0.1, khy + 0.1, c_plinth, c_plinth, offset_xyz=offset_xyz)
+    add_box_vc(bm, col_layer, kcx, kcy, kz + 0.3, kz + 2.8, khx, khy, c_timber, c_timber, offset_xyz=offset_xyz)
+    _framed_window(bm, col_layer, (kcx + 0.6, kcy + khy), (kcx - 1.8, kcy + khy), kz + 1.1, kz + 2.25,
+                   (0.0, 1.0), c_frame, c_glass, offset_xyz)
+    _framed_window(bm, col_layer, (kcx - khx, kcy + 0.8), (kcx - khx, kcy - 0.8), kz + 1.1, kz + 2.25,
+                   (-1.0, 0.0), c_frame, c_glass, offset_xyz)
+    add_hipped_roof_vc(bm, col_layer, kcx, kcy, kz + 2.75, kz + 4.35, khx + 0.6, khy + 0.6,
+                       c_tile, soffit_rgba=c_soffit, offset_xyz=offset_xyz)
+
+    _link_bmesh_object("BLDG_hero_main_gate", bm, mat, location=offset_xyz)
+    return [
+        (kcx - khx - 0.6, rcy - rhy - 2.0, zr),
+        (rcx + rhx, rcy - rhy - 2.0, zr),
+        (rcx + rhx, rcy + rhy, z_ridge),
+        (kcx - khx - 0.6, rcy + rhy, z_ridge),
+    ]
+
+
+def _build_visitor_shelter_object(terrain: Any, mat: bpy.types.Material) -> list[tuple[float, float, float]]:
+    """White mural-panelled visitor & security-check shelter on the north kerb west of the gatehouse.
+
+    `refs/main_gate_irl_user.jpg`: a flat-roofed white pavilion parallel to the road, its road side
+    made of mural panels ("discover") with open bays between, a steel railing along the kerb and a
+    line of traffic cones marking the visitor drop-off lane.
+    """
+    bm = bmesh.new()
+    col_layer = bm.loops.layers.color.new("Color")
+
+    rot = math.atan2(1.3, 19.9)  # parallel to the bend->gatehouse road segment
+    lcx = -36.8
+    lcy = _road_cy(lcx) + 7.0
+    zs = terrain.sample(lcx, lcy) + 0.55  # raised walkway level
+    offset_xyz = (lcx, lcy, zs)
+    hx, hy = 9.0, 2.7
+
+    c_slab = srgb_hex_to_linear_rgba("#B9B6AE")
+    c_white = srgb_hex_to_linear_rgba("#F3F3F0")
+    c_steel = srgb_hex_to_linear_rgba("#C4C9CE")
+    c_dark = srgb_hex_to_linear_rgba("#3A3F46")
+    c_cone = srgb_hex_to_linear_rgba("#EE5A1E")
+    murals = [srgb_hex_to_linear_rgba(h) for h in ("#6F9AD8", "#5FB8A6", "#EE9A62", "#9C7FC8", "#E07A92", "#6F9AD8")]
+
+    def at(lx: float, ly: float) -> tuple[float, float]:
+        return local_to_world_2d(lcx, lcy, lx, ly, rot)
+
+    def box(lx: float, ly: float, z0: float, z1: float, bhx: float, bhy: float, wall, cap=None, bottom=False) -> None:
+        wx, wy = at(lx, ly)
+        add_box_vc(bm, col_layer, wx, wy, z0, z1, bhx, bhy, wall, cap, rot_rad=rot, emit_bottom=bottom, offset_xyz=offset_xyz)
+
+    # Floor slab and flat white roof with a light underside
+    box(0.0, 0.0, zs - 0.7, zs, hx + 0.2, hy + 0.2, c_slab)
+    box(0.0, 0.0, zs + 3.0, zs + 3.32, hx + 0.15, hy + 0.15, c_white, c_white, bottom=True)
+
+    # Road-side mural panels with open bays between them, plus closed mural end walls
+    panel_hw = 1.55
+    for i, lx in enumerate((-6.75, -2.25, 2.25, 6.75)):
+        box(lx, -hy, zs, zs + 3.0, panel_hw, 0.06, c_white)
+        a = at(lx - panel_hw * 0.8, -hy - 0.07)
+        b = at(lx + panel_hw * 0.8, -hy - 0.07)
+        z_lo = zs + (0.7 if i % 2 == 0 else 1.25)
+        _wall_quad(bm, col_layer, a, b, z_lo, z_lo + 0.85, murals[i], offset_xyz)
+    for side, mural in ((-1.0, murals[4]), (1.0, murals[5])):
+        box(side * hx, 0.0, zs, zs + 3.0, 0.06, hy, c_white)
+        a = at(side * (hx + 0.07), -side * hy * 0.75)
+        b = at(side * (hx + 0.07), side * hy * 0.75)
+        _wall_quad(bm, col_layer, a, b, zs + 1.0, zs + 1.9, mural, offset_xyz)
+    # Face-scan pedestals in the open bays between the mural panels
+    for lx in (-4.5, 0.0, 4.5):
+        box(lx, -hy + 0.5, zs, zs + 1.45, 0.14, 0.14, c_dark)
+        box(lx, -hy + 0.5, zs + 1.2, zs + 1.55, 0.2, 0.05, srgb_hex_to_linear_rgba("#7FB3D9"), c_dark)
+    # Slim back columns (open rear) and two long benches
+    for lx in (-4.5, 0.0, 4.5):
+        box(lx, hy - 0.1, zs, zs + 3.0, 0.08, 0.08, c_white)
+    for lx in (-4.5, 4.5):
+        box(lx, 0.9, zs, zs + 0.45, 3.2, 0.25, c_dark)
+
+    # Raised walkway along the kerb (the shelter floor level) with a steel grille railing on its road edge,
+    # an access step at the gate end, and the cone line marking the drop-off lane
+    rail_y = -hy - 1.25
+    box(0.0, -hy - 0.7, zs - 0.95, zs, hx + 0.6, 0.65, c_slab)
+    box(hx + 1.0, -hy - 0.7, zs - 0.95, zs - 0.27, 0.4, 0.65, c_slab)
+    box(0.0, rail_y, zs + 0.95, zs + 1.02, hx + 0.55, 0.03, c_steel, bottom=True)
+    box(0.0, rail_y, zs + 0.1, zs + 0.15, hx + 0.55, 0.025, c_steel, bottom=True)
+    n_bal = 17
+    for k in range(n_bal):
+        lx = -hx - 0.5 + k * (2 * hx + 1.0) / (n_bal - 1)
+        box(lx, rail_y, zs, zs + 1.02, 0.025, 0.025, c_steel)
+    for k in range(6):
+        lx = -7.5 + k * 3.0
+        cx_c, cy_c = at(lx, -hy - 2.6)
+        cz = terrain.sample(cx_c, cy_c)
+        add_cylinder_vc(bm, col_layer, cx_c, cy_c, cz - 0.05, cz + 0.72, 0.2, 0.03, 4, c_cone,
+                        rot_rad=rot + math.pi / 4, offset_xyz=offset_xyz)
 
     _link_bmesh_object("BLDG_hero_security_office", bm, mat, location=offset_xyz)
-    return [
-        (-25.0, -393.0, cz_b - 4.8),
-        (-13.0, -393.0, cz_b + 6.0),
-        (-13.0, -371.5, cz_b + 6.0),
-        (-25.0, -371.5, cz_b - 4.8),
-    ]
+    pts = [at(-hx - 0.6, -hy - 2.9), at(hx + 0.6, -hy - 2.9), at(hx + 0.2, hy + 0.2), at(-hx - 0.2, hy + 0.2)]
+    return [(px, py, zs + (3.3 if i >= 2 else -0.2)) for i, (px, py) in enumerate(pts)]
+
+
+def _append_south_kerb_fence(bm: bmesh.types.BMesh, col_layer: Any, terrain: Any) -> None:
+    """White-piered compound fence with dark iron grille along the south verge, bend -> security cabin."""
+    c_white = srgb_hex_to_linear_rgba("#F1EFEA")
+    c_grille = srgb_hex_to_linear_rgba("#454B53")
+    rot = math.atan2(1.3, 19.9)
+    xs = [-46.0 + i * 3.75 for i in range(7)]  # -46.0 .. -23.5
+    piers = [(x, _road_cy(x) - 6.3) for x in xs]
+    for (xa, ya), (xb, yb) in zip(piers[:-1], piers[1:]):
+        xm, ym = 0.5 * (xa + xb), 0.5 * (ya + yb)
+        zm = terrain.sample(xm, ym)
+        half = 0.5 * math.hypot(xb - xa, yb - ya)
+        add_box_vc(bm, col_layer, xm, ym, zm - 0.5, zm + 0.6, half, 0.13, c_white, c_white, rot_rad=rot)
+        add_box_vc(bm, col_layer, xm, ym, zm + 0.6, zm + 1.85, half, 0.025, c_grille, c_grille, rot_rad=rot)
+    for px, py in piers:
+        pz = terrain.sample(px, py)
+        add_box_vc(bm, col_layer, px, py, pz - 0.5, pz + 2.1, 0.24, 0.24, c_white, c_white, rot_rad=rot)
+        add_box_vc(bm, col_layer, px, py, pz + 2.1, pz + 2.3, 0.31, 0.31, c_white, c_white, rot_rad=rot)
 
 
 def _build_students_parking_object(terrain: Any, mat: bpy.types.Material) -> list[tuple[float, float, float]]:
@@ -658,6 +996,22 @@ def _register_building_meta(
     )
 
 
+def get_main_gate_feature_trees() -> list[tuple[float, float, int, float]]:
+    """Hand-placed (x, y, type, scale) shade trees from `refs/main_gate_irl_user.jpg` (type 1 = broadleaf).
+
+    The big flowering tree whose canopy covers the security cabin on the south verge, a row of shade trees
+    along the verge between the kerb and the white-pier fence, and trees behind the visitor shelter.
+    """
+    return [
+        (-30.0, -387.0, 1, 1.85),  # big canopy over the security cabin
+        (-37.5, -388.0, 1, 1.45),
+        (-44.5, -388.6, 1, 1.35),
+        (-43.0, -369.0, 1, 1.4),
+        (-35.0, -369.0, 1, 1.3),
+        (-27.5, -369.5, 1, 1.45),
+    ]
+
+
 def get_main_gate_shade_tree_belts() -> list[tuple[float, float, float, float, float]]:
     """Return rectangular (x0, y0, x1, y1, step) regions for natural shade trees around parking & gate perimeter."""
     return [
@@ -677,18 +1031,18 @@ def build_hero(context: dict[str, Any]) -> None:
 
     _build_site_crossing_and_wall(terrain, mat_site)
 
-    gate_pts = _build_main_gate_object(terrain, mat_body)
-    sec_pts = _build_security_office_object(terrain, mat_body)
+    gate_pts = _build_gatehouse_object(terrain, mat_body)
+    sec_pts = _build_visitor_shelter_object(terrain, mat_body)
     shed_pts = _build_students_parking_object(terrain, mat_body)
     lot_pts = _build_visitor_parking_object(terrain, mat_body)
 
     _register_building_meta(
         context, "hero/main-gate", "BLDG_hero_main_gate",
-        "Main Gate", "landmark", 1, ["main gate", "gate", "entrance", "checkpoint"], 5.2, gate_pts,
+        "Main Gate", "landmark", 2, ["main gate", "gate", "entrance", "gatehouse"], 9.7, gate_pts,
     )
     _register_building_meta(
         context, "hero/security-office", "BLDG_hero_security_office",
-        "Security Office", "admin", 2, ["security", "security office", "gatehouse"], 9.5, sec_pts,
+        "Security Office", "admin", 1, ["security", "security office", "visitor pass"], 3.3, sec_pts,
     )
     _register_building_meta(
         context, "hero/students-parking", "BLDG_hero_students_parking",
@@ -702,9 +1056,10 @@ def build_hero(context: dict[str, Any]) -> None:
     # Register strict tree-exclusion colliders for sheds, car lot, gate, security & compound wall
     extra_colliders = [
         [(-166.0, -402.5), (124.0, -392.0), (124.0, -386.5), (-166.0, -397.0)],  # Tilted compound wall
-        [(-67.0, -398.5), (-44.0, -398.5), (-44.0, -372.0), (-67.0, -372.0)],    # Main Gate & bend canopy
-        [(-36.5, -389.5), (-30.5, -389.5), (-30.5, -376.0), (-36.5, -376.0)],    # Security approach piers
-        [(-26.5, -394.5), (-11.5, -394.5), (-11.5, -370.0), (-26.5, -370.0)],    # Security Office
+        [(-67.0, -398.5), (-44.0, -398.5), (-44.0, -393.0), (-67.0, -393.0)],    # Crossing piers & wing walls
+        [(-47.0, -380.5), (-26.5, -380.5), (-26.5, -372.0), (-47.0, -372.0)],    # Visitor shelter (Security Office)
+        [(-47.0, -391.5), (-23.0, -391.5), (-23.0, -389.0), (-47.0, -389.0)],    # South kerb fence
+        [(-29.0, -392.0), (-12.5, -392.0), (-12.5, -368.5), (-29.0, -368.5)],    # Gatehouse + cabin (Main Gate)
         [(-50.5, -352.0), (-20.0, -352.0), (-20.0, -302.5), (-50.5, -302.5)],    # Student's Parking sheds
         [(-19.5, -346.5), (42.5, -346.5), (42.5, -307.5), (-19.5, -307.5)],      # Car Parking lot
         [(-15.5, -362.5), (-4.5, -362.5), (-4.5, -340.0), (-15.5, -340.0)],      # Short sloped lot driveway
