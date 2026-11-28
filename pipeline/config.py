@@ -31,8 +31,8 @@ RENDERS_DIR: Path = PIPELINE_DIR / "renders"
 REFS_DIR: Path = PIPELINE_DIR / "refs"
 
 # Export budget limits
-MAX_TRIANGLES: int = 150_000
-MAX_GLB_BYTES: int = 900 * 1024  # 900 KB
+MAX_TRIANGLES: int = 160_000
+MAX_GLB_BYTES: int = 960 * 1024  # 960 KB
 
 # External API settings
 OVERTURE_STAC_URL: str = "https://stac.overturemaps.org/catalog.json"

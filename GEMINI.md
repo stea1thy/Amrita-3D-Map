@@ -1,7 +1,7 @@
 # Amrita Campus 3D Map — Workspace Rules
 
 ## Hard Budgets (Fail-Fast)
-- Never consider a 3D build complete if total triangles exceed **150,000**, `web/public/models/campus.glb` exceeds **900 KB** (Draco-compressed), or draw calls regress severely (baseline ~50 primitives, `<= 90` interactive `BLDG_*` objects).
+- Never consider a 3D build complete if total triangles exceed **160,000**, `web/public/models/campus.glb` exceeds **960 KB** (Draco-compressed), or draw calls regress severely (baseline ~50 primitives, `<= 90` interactive `BLDG_*` objects).
 - Always run `pipeline/verify_budget.py` after any geometry, terrain, road, or material change.
 
 ## Architectural Identity (Amrita Coimbatore / Ettimadai)

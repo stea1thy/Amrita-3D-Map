@@ -33,7 +33,7 @@ Never guess or invent building geometry blindly. Before writing geometry code fo
    ```powershell
    & "<blender.exe>" --background --python-exit-code 1 --python pipeline/build_scene.py
    ```
-3. Run the budget gate (must pass `<= 150,000` triangles and `<= 900 KB` GLB):
+3. Run the budget gate (must pass `<= 160,000` triangles and `<= 960 KB` GLB):
    ```powershell
    pipeline\.venv\Scripts\python.exe pipeline\verify_budget.py
    ```

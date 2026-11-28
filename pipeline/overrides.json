@@ -36,6 +36,8 @@
       }
     ],
     "rename_or_retag": {
+    "way/380829758": {"name": "Amrita Pandal", "floors": 1, "height_m": 8.2, "tags": ["pandal", "auditorium", "convocation hall"]},
+    "way/380829760": {"name": "MBA Canteen", "floors": 1, "height_m": 5.0, "tags": ["asb canteen", "canteen"]},
       "way/123456789": {
         "name": "Academic Block I (AB1)",
         "subtitle": "School of Engineering",
@@ -252,6 +254,17 @@
   ],
   "custom_buildings": [
     {
+      "id": "custom/academic-block-4",
+      "name": "Academic Block 4 (AB-4)",
+      "subtitle": "Amrita School of Artificial Intelligence",
+      "category": "academic",
+      "floors": 5,
+      "height_m": 17.8,
+      "tags": ["AB4", "AB-4", "Academic Block 4", "School of AI", "Artificial Intelligence"],
+      "departments": ["Artificial Intelligence"],
+      "footprint": [[10.90405, 76.903984], [10.904175, 76.905033], [10.904407, 76.905005], [10.904348, 76.904247], [10.905271, 76.904349], [10.905402, 76.904132], [10.905128, 76.903878], [10.90405, 76.903984]]
+    },
+    {
       "id": "custom/hostel-south-of-nataraja",
       "name": "New Hostel (name to be confirmed)",
       "subtitle": "Five-floor courtyard hostel south-east of the Nataraja fountain",
@@ -333,6 +346,20 @@
     }
   ],
   "custom_roads": [
+    {
+      "id": "road/ab4-play-ground-road",
+      "name": "Play Ground Road",
+      "subtype": "unclassified",
+      "render": false,
+      "points": [[10.9038324, 76.9039362], [10.903916, 76.904075], [10.903948, 76.904421], [10.903996, 76.904784], [10.904079, 76.905105]]
+    },
+    {
+      "id": "road/ab4-entrance",
+      "name": "AB-4 Entrance",
+      "subtype": "footway",
+      "render": false,
+      "points": [[10.90382, 76.903887], [10.903848, 76.903884], [10.903964, 76.90387], [10.904051, 76.903854], [10.904155, 76.903853], [10.904251, 76.903854], [10.904304, 76.903854], [10.904327, 76.903886], [10.904351, 76.903997]]
+    },
     {
       "id": "road/ab2-footbridge-access",
       "name": "AB-2 Footbridge Access Walk",

@@ -29,6 +29,7 @@ const MAJOR_LANDMARKS: LandmarkSpec[] = [
   { id: "way/380925364", shortLabel: "AB-1", tier: "primary" },
   { id: "way/380702789", shortLabel: "AB-2", tier: "primary" },
   { id: "way/380829415", shortLabel: "AB-3", tier: "primary" },
+  { id: "custom/academic-block-4", shortLabel: "AB-4", tier: "primary" },
   { id: "way/380702790", shortLabel: "Central Library", tier: "primary" },
   { id: "way/380829759", shortLabel: "ASB", tier: "primary" },
   { id: "way/546394562", shortLabel: "Main Canteen", tier: "primary" },

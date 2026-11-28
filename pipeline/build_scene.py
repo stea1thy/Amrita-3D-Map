@@ -32,8 +32,11 @@ from hero_models import (  # noqa: E402
     HERO_AB2_ID,
     HERO_AB2_SKYBRIDGE_ID,
     HERO_AB3_ID,
+    HERO_AB4_ID,
     HERO_AMRITESHWARI_ID,
     HERO_ASB_ID,
+    HERO_MBA_CANTEEN_ID,
+    HERO_PANDAL_ID,
     HERO_GATE_BANK_ID,
     HERO_IT_CANTEEN_ID,
     HERO_LIBRARY_ID,
@@ -48,9 +51,12 @@ from hero_models import (  # noqa: E402
     ab1_hero,
     ab2_hero,
     ab3_hero,
+    ab4_hero,
     asb_hero,
     campus_landmarks,
     it_canteen_hero,
+    mba_canteen_hero,
+    pandal_hero,
     library_hero,
     new_hostel_hero,
     workshops_hero,
@@ -64,6 +70,7 @@ TERRAIN_EDGE_MARGIN_M = 25.0
 EXTEND_SHORT_M = (60.0, 145.0, 265.0, 420.0)
 EXTEND_MOUNTAIN_M = (60.0, 140.0, 240.0, 380.0, 540.0, 740.0, 980.0, 1250.0)
 
+GARDEN_PALM_SHADE, GARDEN_TREE_SHADE = 5, 4  # light greens in the web viewer's tree palettes
 TARGET_TREE_COUNT = 2800
 MIN_TREE_COUNT = 2520
 MAX_TREE_COUNT = 2850
@@ -89,6 +96,7 @@ PALETTE: dict[str, str] = {
     "lawn_courtyard": "#56A14A",
     "plaza_sandstone": "#DED4C3",
     "plaza_charcoal": "#4A4E54",
+    "plaza_ab1": "#8E7A68",
     "planter_stone": "#C4B8A5",
     # Roads & Indian alternating curbs
     "retaining_wall": "#CFC6B8",
@@ -1313,6 +1321,7 @@ def build_ground_features_object(
         palette_mats["plaza_sandstone"], # 6
         palette_mats["retaining_wall"],  # 7
         palette_mats["plaza_charcoal"],  # 8
+        palette_mats["plaza_ab1"],       # 9
     ]
     flat_pad_heights: dict[str, float] = {}
 
@@ -1438,7 +1447,7 @@ def build_ground_features_object(
         [ab1_hero.get_ab1_plaza_ring()],
         terrain,
         0.235,
-        8,
+        9,
         max_edge_m=7.5,
         max_subdiv_iters=4,
         clearance_margin=0.15,
@@ -2249,6 +2258,12 @@ def _prepare_building_records(
             rec["rings"] = it_canteen_hero.normalize_it_canteen_footprint_rings(rec["rings"][0])
         elif fid == HERO_NEW_HOSTEL_ID:
             rec["rings"] = new_hostel_hero.normalize_hostel_footprint_rings()
+        elif fid == HERO_AB4_ID:
+            rec["rings"] = ab4_hero.normalize_ab4_footprint_rings()
+        elif fid == HERO_PANDAL_ID:
+            rec["rings"] = pandal_hero.normalize_pandal_footprint_rings()
+        elif fid == HERO_MBA_CANTEEN_ID:
+            rec["rings"] = mba_canteen_hero.normalize_mba_canteen_footprint_rings()
 
         # Attach Overture Places metadata and search aliases
         snapped_places = building_places.get(fid) or []
@@ -2415,6 +2430,12 @@ def _append_amrita_building(
         return library_hero.build_central_library(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
     if fid == HERO_NEW_HOSTEL_ID:
         return new_hostel_hero.build_new_hostel(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
+    if fid == HERO_AB4_ID:
+        return ab4_hero.build_ab4(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
+    if fid == HERO_PANDAL_ID:
+        return pandal_hero.build_pandal(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
+    if fid == HERO_MBA_CANTEEN_ID:
+        return mba_canteen_hero.build_mba_canteen(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
     if fid == HERO_IT_CANTEEN_ID:
         return it_canteen_hero.build_it_canteen(
             bm, col_layer, win_lit_bm, win_dark_bm, rings[0], terrain, offset_xyz,
@@ -2891,7 +2912,7 @@ def build_buildings(
             # AB-3: only the big central court (rings[1]) is a garden; its small light wells are paved
             lawn_holes = rings[1:] if fid == HERO_AB1_ID else rings[1:2]
             courtyard_lawns.extend(list(reversed(h)) for h in lawn_holes)
-        elif fid not in (HERO_WORKSHOPS_WEST_ID, HERO_WORKSHOPS_EAST_ID, HERO_AB3_ID, HERO_LIBRARY_ID) and not is_elevated and len(rings) == 1 and area_m2 >= 3000.0 and concavity < 0.14:
+        elif fid not in (HERO_WORKSHOPS_WEST_ID, HERO_WORKSHOPS_EAST_ID, HERO_AB3_ID, HERO_LIBRARY_ID, HERO_PANDAL_ID) and not is_elevated and len(rings) == 1 and area_m2 >= 3000.0 and concavity < 0.14:
             hole_ccw = inset_ccw_ring_2d(outer_ring, 15.2, min_ratio=0.10, min_area=320.0)
             if hole_ccw is not None:
                 courtyard_lawns.append(list(hole_ccw))
@@ -3240,12 +3261,16 @@ def generate_trees_data(
                         return False
         return True
 
-    def _place(tx: float, ty: float, tree_type: int, scale_range: tuple[float, float]) -> None:
+    def _place(
+        tx: float, ty: float, tree_type: int, scale_range: tuple[float, float], garden_shade: int | None = None,
+    ) -> None:
         tz = terrain.sample(tx, ty)
         gx, gy, gz = blender_to_gltf_xyz(tx, ty, tz)
         sc = round(rng.uniform(*scale_range), 2)
         rot_y = round(rng.uniform(0.0, 6.28), 2)
         shade = rng.randrange(0, 4)
+        if garden_shade is not None:
+            shade = garden_shade
         placed.append([round(gx, 1), round(gy, 1), round(gz, 1), sc, rot_y, tree_type, shade])
         cgx = int(math.floor(tx / cell_size))
         cgy = int(math.floor(ty / cell_size))
@@ -3264,12 +3289,12 @@ def generate_trees_data(
     )
     for px, py in entry_palm_spots:
         if _is_clear(px, py, min_tree_spacing=4.2, avoid_courtyards=False, allow_ab1_entry=True):
-            _place(px, py, 0, (0.85, 1.08))
+            _place(px, py, 0, (1.2, 1.4), GARDEN_PALM_SHADE)
 
     # AB-1 front landscaping from the aerial photos: fountain palms, East garden round bush & shrubs, West lawn shrubs
     for px, py, ttype, scale_rng in ab1_hero.ab1_front_tree_spots():
         if _is_clear(px, py, min_tree_spacing=3.0, avoid_courtyards=False, allow_ab1_entry=True):
-            _place(px, py, ttype, scale_rng)
+            _place(px, py, ttype, scale_rng, GARDEN_PALM_SHADE if ttype == 0 else GARDEN_TREE_SHADE)
 
     # AB-3 East front garden: palms & a shade tree on the raised island, palms flanking the twin porches
     for px, py, ttype, scale_rng in ab3_hero.ab3_front_tree_spots():
@@ -3278,8 +3303,8 @@ def generate_trees_data(
 
     # AB-2 front garden & courtyard palms and Central Library entrance trees (hand-placed spots)
     hand_spots = ab2_hero.ab2_front_tree_spots() + library_hero.library_front_tree_spots()
-    for px, py, ttype, scale_rng in hand_spots + list(hand_tree_spots or []):
-        _place(px, py, ttype, scale_rng)
+    for px, py, ttype, scale_rng, *shade in hand_spots + list(hand_tree_spots or []):
+        _place(px, py, ttype, scale_rng, *shade)
 
     # Wooded gully either side of the footbridges
     for px, py, ttype, scale_rng in bridge_tree_spots or []:
@@ -3539,6 +3564,7 @@ def main() -> None:
         "lawn_courtyard": make_palette_material("MAT_LawnCourtyard", PALETTE["lawn_courtyard"], roughness=0.88),
         "plaza_sandstone": make_palette_material("MAT_PlazaSandstone", PALETTE["plaza_sandstone"], roughness=0.86),
         "plaza_charcoal": make_palette_material("MAT_PlazaCharcoal", PALETTE["plaza_charcoal"], roughness=0.86),
+        "plaza_ab1": make_palette_material("MAT_PlazaAB1", PALETTE["plaza_ab1"], roughness=0.9),
         "retaining_wall": make_palette_material("MAT_RetainingWall", PALETTE["retaining_wall"], roughness=0.88),
     }
 

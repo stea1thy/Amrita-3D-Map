@@ -19,8 +19,15 @@ HERO_WORKSHOPS_EAST_ID = "way/380926300"
 HERO_MAIN_CANTEEN_ID = "way/546394562"
 HERO_IT_CANTEEN_ID = "way/1080744354"
 HERO_NEW_HOSTEL_ID = "custom/hostel-south-of-nataraja"
+HERO_AB4_ID = "custom/academic-block-4"
+HERO_PANDAL_ID = "way/380829758"
+HERO_MBA_CANTEEN_ID = "way/380829760"
+HERO_CIR_ID = "way/380829757"
 
 __all__ = [
+    "HERO_PANDAL_ID",
+    "HERO_MBA_CANTEEN_ID",
+    "HERO_CIR_ID",
     "HERO_AB1_ID",
     "HERO_AB2_ID",
     "HERO_AB3_ID",
@@ -38,4 +45,5 @@ __all__ = [
     "HERO_MAIN_CANTEEN_ID",
     "HERO_IT_CANTEEN_ID",
     "HERO_NEW_HOSTEL_ID",
+    "HERO_AB4_ID",
 ]

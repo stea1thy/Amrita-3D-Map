@@ -7,10 +7,13 @@ import type { TreePlacement, TreesData } from "@/types/campus";
 
 interface InstancedTreesProps {
   treesData: TreesData | null;
+  /** Fewer triangles per tree and no tree shadows, for touch devices. Every tree is still drawn. */
+  simple?: boolean;
 }
 
-const PALM_SHADES = ["#3E663A", "#497141", "#355934", "#557A46"];
-const CANOPY_SHADES = ["#2F5534", "#3E623B", "#4B693D", "#2A4A30"];
+// Shades 0-3 are the campus-wide greens; 4 and 5 are the lighter planting of the AB-1 garden
+const PALM_SHADES = ["#3E663A", "#497141", "#355934", "#557A46", "#69A63C", "#82BC46"];
+const CANOPY_SHADES = ["#2F5534", "#3E623B", "#4B693D", "#2A4A30", "#5B9038", "#79AE40"];
 
 function toFlatNonIndexed(geom: THREE.BufferGeometry): THREE.BufferGeometry {
   const nonIdx = geom.index ? geom.toNonIndexed() : geom;
@@ -21,7 +24,7 @@ function toFlatNonIndexed(geom: THREE.BufferGeometry): THREE.BufferGeometry {
   return nonIdx;
 }
 
-function buildPalmGeometries(): {
+function buildPalmGeometries(simple: boolean): {
   trunk: THREE.BufferGeometry;
   crown: THREE.BufferGeometry;
 } {
@@ -34,7 +37,7 @@ function buildPalmGeometries(): {
   ];
   for (let i = 0; i < segSpecs.length; i++) {
     const [rB, rT, h, x, y, tiltZ] = segSpecs[i];
-    const g = new THREE.CylinderGeometry(rT, rB, h, 6, 1, false);
+    const g = new THREE.CylinderGeometry(rT, rB, h, simple ? 4 : 6, 1, simple);
     g.rotateZ(tiltZ);
     g.translate(x, y, 0);
     trunkParts.push(toFlatNonIndexed(g));
@@ -73,7 +76,7 @@ function buildPalmGeometries(): {
   };
 }
 
-function buildCanopyGeometries(): {
+function buildCanopyGeometries(simple: boolean): {
   trunk: THREE.BufferGeometry;
   crown: THREE.BufferGeometry;
 } {
@@ -89,7 +92,7 @@ function buildCanopyGeometries(): {
   ];
   const crownParts: THREE.BufferGeometry[] = [];
   for (const [radius, x, y, z, sy] of lobes) {
-    const g = new THREE.IcosahedronGeometry(radius, 1);
+    const g = new THREE.IcosahedronGeometry(radius, simple ? 0 : 1);
     g.scale(1.0, sy, 1.0);
     g.translate(x, y, z);
     crownParts.push(toFlatNonIndexed(g));
@@ -102,17 +105,17 @@ function buildCanopyGeometries(): {
   };
 }
 
-export default function InstancedTrees({ treesData }: InstancedTreesProps) {
+export default function InstancedTrees({ treesData, simple = false }: InstancedTreesProps) {
   const palmTrunkRef = useRef<THREE.InstancedMesh | null>(null);
   const palmCrownRef = useRef<THREE.InstancedMesh | null>(null);
   const canopyTrunkRef = useRef<THREE.InstancedMesh | null>(null);
   const canopyCrownRef = useRef<THREE.InstancedMesh | null>(null);
 
   const geometries = useMemo(() => {
-    const palm = buildPalmGeometries();
-    const canopy = buildCanopyGeometries();
+    const palm = buildPalmGeometries(simple);
+    const canopy = buildCanopyGeometries(simple);
     return { palm, canopy };
-  }, []);
+  }, [simple]);
 
   useEffect(() => {
     return () => {
@@ -170,7 +173,7 @@ export default function InstancedTrees({ treesData }: InstancedTreesProps) {
 
     applyList(palms, palmTrunkRef.current, palmCrownRef.current, PALM_SHADES);
     applyList(canopies, canopyTrunkRef.current, canopyCrownRef.current, CANOPY_SHADES);
-  }, [palms, canopies]);
+  }, [palms, canopies, geometries]);
 
   if (!treesData || treesData.trees.length === 0) {
     return null;
@@ -190,7 +193,7 @@ export default function InstancedTrees({ treesData }: InstancedTreesProps) {
           <instancedMesh
             ref={palmCrownRef}
             args={[geometries.palm.crown, undefined, palms.length]}
-            castShadow
+            castShadow={!simple}
             frustumCulled={false}
           >
             <meshStandardMaterial color="#ffffff" roughness={0.82} />
@@ -210,7 +213,7 @@ export default function InstancedTrees({ treesData }: InstancedTreesProps) {
           <instancedMesh
             ref={canopyCrownRef}
             args={[geometries.canopy.crown, undefined, canopies.length]}
-            castShadow
+            castShadow={!simple}
             frustumCulled={false}
           >
             <meshStandardMaterial color="#ffffff" roughness={0.86} />

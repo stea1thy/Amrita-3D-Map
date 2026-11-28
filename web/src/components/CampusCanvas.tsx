@@ -16,6 +16,7 @@ import RouteRibbon from "./RouteRibbon";
 import SatelliteOverlay from "./SatelliteOverlay";
 import SkyDome from "./SkyDome";
 import type { TourStop } from "@/data/tourStops";
+import { useRenderProfile } from "@/lib/deviceProfile";
 import type { SolarLightingState } from "@/lib/solar";
 import type {
   BuildingMeta,
@@ -166,6 +167,8 @@ export default function CampusCanvas({
   onReady,
   onDevStats,
 }: CampusCanvasProps) {
+  const profile = useRenderProfile();
+
   const selectedBuilding =
     selectedId ? buildings.find((b) => b.id === selectedId) ?? null : null;
 
@@ -177,7 +180,7 @@ export default function CampusCanvas({
     <div className="relative h-full w-full touch-none select-none">
       <Canvas
         shadows="soft"
-        dpr={[1, 1.5]}
+        dpr={profile.dpr}
         camera={{
           position: DEFAULT_CAMERA_POSITION,
           fov: 42,
@@ -215,7 +218,8 @@ export default function CampusCanvas({
           intensity={lighting.sunIntensity}
           color={lighting.sunColor}
           castShadow
-          shadow-mapSize={[2048, 2048]}
+          key={profile.shadowMapSize}
+          shadow-mapSize={[profile.shadowMapSize, profile.shadowMapSize]}
           shadow-bias={-0.0003}
           shadow-normalBias={0.04}
           shadow-camera-left={-680}
@@ -294,7 +298,7 @@ export default function CampusCanvas({
           />
         )}
 
-        <InstancedTrees treesData={treesData} />
+        <InstancedTrees treesData={treesData} simple={profile.simpleTrees} />
         <InstancedStreetlamps
           lampsData={lampsData}
           nightFactor={lighting.nightFactor}

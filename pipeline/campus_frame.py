@@ -29,6 +29,40 @@ CANTEEN_LEVEL_M = 10.9
 HOSTEL_RING_XY: list[tuple[float, float]] = [(-209.9, -26.9), (-142.6, -21.9), (-147.6, 44.9), (-214.9, 39.9)]
 HOSTEL_LEVEL_M = -0.6
 
+# Academic Block 4: frame on the Google "AB 4" pin, and the level pad it stands on
+AB4_ORIGIN_XY: tuple[float, float] = (371.3, 189.27)
+AB4_ROT_RAD: float = 0.12
+AB4_PAD_RING_XY: list[tuple[float, float]] = [
+    (366.2, 148.4), (485.3, 162.7), (481.7, 192.5), (400.3, 182.7), (390.2, 266.1),
+    (413.3, 274.9), (409.5, 306.7), (369.8, 301.9), (371.8, 285.0), (352.0, 282.6),
+]
+AB4_LEVEL_M = 2.4
+
+# Business School, MBA canteen and Pandal share one traced frame; CIR has its own (Google satellite)
+SOUTH_ORIGIN_XY: tuple[float, float] = (180.0, 200.0)
+SOUTH_ROT_RAD: float = 0.095
+SOUTH_PAD_UV: list[tuple[float, float]] = [(-70.0, -36.0), (18.0, -36.0), (18.0, -56.0), (60.0, -56.0), (60.0, 46.0), (-70.0, 46.0)]
+SOUTH_LEVEL_M = 5.2
+CIR_ORIGIN_XY: tuple[float, float] = (142.0, 302.0)
+CIR_ROT_RAD: float = 0.10
+CIR_PAD_UV: list[tuple[float, float]] = [(-37.0, -31.0), (44.0, -31.0), (44.0, 33.0), (-37.0, 33.0)]
+CIR_LEVEL_M = 10.55
+
+
+def _turned(origin: tuple[float, float], rot: float, u: float, v: float) -> tuple[float, float]:
+    ca, sa = math.cos(rot), math.sin(rot)
+    return (origin[0] + u * ca - v * sa, origin[1] + u * sa + v * ca)
+
+
+def south_to_xy(u: float, v: float) -> tuple[float, float]:
+    """Business School / MBA canteen / Pandal frame to world Blender XY."""
+    return _turned(SOUTH_ORIGIN_XY, SOUTH_ROT_RAD, u, v)
+
+
+def cir_to_xy(u: float, v: float) -> tuple[float, float]:
+    """Corporate and Industry Relations frame to world Blender XY."""
+    return _turned(CIR_ORIGIN_XY, CIR_ROT_RAD, u, v)
+
 
 # The Central Library stands about 4 ft above AB-2 (owner's observation): the ground climbs from the
 # front road up both side roads. Offsets are piecewise linear between these traced (u, v) lines.
@@ -89,4 +123,7 @@ def terraces() -> list[tuple[list[tuple[float, float]], float, float, float]]:
         (ring_to_xy(rect_uv(*TERRACE_RECT_UV)), TERRACE_LEVEL_M, TERRACE_APRON_M, TERRACE_BLEND_M),
         (CANTEEN_RING_XY, CANTEEN_LEVEL_M, 20.0, 32.0),
         (HOSTEL_RING_XY, HOSTEL_LEVEL_M, 8.0, 24.0),
+        (AB4_PAD_RING_XY, AB4_LEVEL_M, 20.0, 28.0),
+        ([south_to_xy(*p) for p in SOUTH_PAD_UV], SOUTH_LEVEL_M, 7.0, 20.0),
+        ([cir_to_xy(*p) for p in CIR_PAD_UV], CIR_LEVEL_M, 4.0, 14.0),
     ]

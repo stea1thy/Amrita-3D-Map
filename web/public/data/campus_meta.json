@@ -25,13 +25,13 @@
     "maxZ": 1110.18
   },
   "counts": {
-    "buildings": 49,
-    "namedBuildings": 49,
+    "buildings": 50,
+    "namedBuildings": 50,
     "bridges": 2,
-    "inspectables": 164,
+    "inspectables": 165,
     "trees": 2800,
-    "palms": 704,
-    "canopy": 2096,
+    "palms": 629,
+    "canopy": 2171,
     "overtureBuildings": 52,
     "overturePlaces": 17,
     "unmatchedPois": 2
@@ -72,7 +72,8 @@
           "category": "academic",
           "rawCategory": "campus_building"
         }
-      ]
+      ],
+      "nearestNodeId": 577
     },
     {
       "id": "way/380702789",
@@ -110,7 +111,8 @@
           "category": "academic",
           "rawCategory": "college_university"
         }
-      ]
+      ],
+      "nearestNodeId": 63
     },
     {
       "id": "way/380829415",
@@ -152,7 +154,42 @@
         "building": "university",
         "name": "Academic Block 3 - International school of Law"
       },
-      "subtitle": "School of Computing & International School of Law"
+      "subtitle": "School of Computing & International School of Law",
+      "nearestNodeId": 156
+    },
+    {
+      "id": "custom/academic-block-4",
+      "meshName": "BLDG_custom_academic_block_4",
+      "name": "Academic Block 4 (AB-4)",
+      "source": "custom",
+      "isNamed": true,
+      "category": "academic",
+      "tags": [
+        "AB4",
+        "AB-4",
+        "Academic Block 4",
+        "School of AI",
+        "Artificial Intelligence",
+        "academic"
+      ],
+      "departments": [
+        "Artificial Intelligence"
+      ],
+      "floors": 5,
+      "heightM": 17.8,
+      "center": [
+        400.185,
+        11.3,
+        -212.282
+      ],
+      "boundingRadius": 97.78,
+      "latLon": [
+        10.904607,
+        76.904261
+      ],
+      "rawTags": {},
+      "subtitle": "Amrita School of Artificial Intelligence",
+      "nearestNodeId": 772
     },
     {
       "id": "way/1256941484",
@@ -184,7 +221,8 @@
         "building": "yes",
         "name": "Adithi Bhavanam",
         "tourism": "hostel"
-      }
+      },
+      "nearestNodeId": 140
     },
     {
       "id": "way/380829421",
@@ -213,7 +251,8 @@
         "building": "yes",
         "name": "Agasthya Bhavanam",
         "tourism": "hostel"
-      }
+      },
+      "nearestNodeId": 119
     },
     {
       "id": "way/380829422",
@@ -245,7 +284,8 @@
         "building": "university",
         "fast_food": "cafeteria",
         "name": "Agastya/Gautama Bhavanam Mess"
-      }
+      },
+      "nearestNodeId": 299
     },
     {
       "id": "way/380829419",
@@ -274,7 +314,8 @@
       "rawTags": {
         "building": "university",
         "name": "Amrita Automative Research & Testing Centre"
-      }
+      },
+      "nearestNodeId": 316
     },
     {
       "id": "way/531088134",
@@ -303,7 +344,8 @@
         "building": "yes",
         "leisure": "fitness_centre",
         "name": "Amrita Boys Gym"
-      }
+      },
+      "nearestNodeId": 17
     },
     {
       "id": "way/380829427",
@@ -333,7 +375,8 @@
         "name": "Amrita Guest House",
         "operator": "Amrita Vishwa Vidyapeetham University",
         "tourism": "guest_house"
-      }
+      },
+      "nearestNodeId": 596
     },
     {
       "id": "way/380829759",
@@ -352,10 +395,10 @@
       "heightM": 14.4,
       "center": [
         133.998,
-        14.273,
+        12.727,
         -195.438
       ],
-      "boundingRadius": 41.32,
+      "boundingRadius": 40.53,
       "latLon": [
         10.904456,
         76.901826
@@ -370,7 +413,8 @@
           "category": "academic",
           "rawCategory": "college_university"
         }
-      ]
+      ],
+      "nearestNodeId": 649
     },
     {
       "id": "way/380925370",
@@ -399,7 +443,8 @@
       "rawTags": {
         "building": "university",
         "name": "Amriteshwari Hall"
-      }
+      },
+      "nearestNodeId": 412
     },
     {
       "id": "way/380829426",
@@ -428,7 +473,8 @@
         "building": "yes",
         "leisure": "fitness_centre",
         "name": "Aroyga Sadhanam - Boys Gym"
-      }
+      },
+      "nearestNodeId": 132
     },
     {
       "id": "way/380829758",
@@ -445,19 +491,20 @@
       "floors": 3,
       "heightM": 10.8,
       "center": [
-        217.736,
-        12.788,
-        -199.841
+        219.987,
+        10.6,
+        -202.743
       ],
-      "boundingRadius": 56.75,
+      "boundingRadius": 53.36,
       "latLon": [
-        10.904495,
-        76.902592
+        10.904521,
+        76.902613
       ],
       "rawTags": {
         "building": "university",
         "name": "Auditorium"
-      }
+      },
+      "nearestNodeId": 646
     },
     {
       "id": "way/380702809",
@@ -486,7 +533,8 @@
       "rawTags": {
         "building": "university",
         "name": "Central Kitchen"
-      }
+      },
+      "nearestNodeId": 726
     },
     {
       "id": "way/380702790",
@@ -517,7 +565,8 @@
         "building": "yes",
         "name": "Central Library",
         "operator": "Amrita Vishwa Vidyapeetham University"
-      }
+      },
+      "nearestNodeId": 60
     },
     {
       "id": "way/380926299",
@@ -563,7 +612,8 @@
           "category": "admin",
           "rawCategory": "medical_supply_store"
         }
-      ]
+      ],
+      "nearestNodeId": 789
     },
     {
       "id": "way/380829757",
@@ -581,10 +631,10 @@
       "heightM": 10.8,
       "center": [
         142.545,
-        17.652,
+        17.668,
         -303.571
       ],
-      "boundingRadius": 45.5,
+      "boundingRadius": 45.76,
       "latLon": [
         10.905427,
         76.901904
@@ -592,7 +642,8 @@
       "rawTags": {
         "building": "university",
         "name": "Corporate and Industry Relations"
-      }
+      },
+      "nearestNodeId": 201
     },
     {
       "id": "way/380829418",
@@ -621,7 +672,8 @@
       "rawTags": {
         "building": "university",
         "name": "Fabrication workshop"
-      }
+      },
+      "nearestNodeId": 328
     },
     {
       "id": "way/380702791",
@@ -651,7 +703,8 @@
         "building": "yes",
         "name": "Gargi Bhavanam",
         "tourism": "hostel"
-      }
+      },
+      "nearestNodeId": 277
     },
     {
       "id": "way/380829420",
@@ -689,7 +742,8 @@
           "category": "academic",
           "rawCategory": "college_university"
         }
-      ]
+      ],
+      "nearestNodeId": 113
     },
     {
       "id": "way/380829429",
@@ -718,7 +772,8 @@
       "rawTags": {
         "building": "university",
         "name": "Hostel"
-      }
+      },
+      "nearestNodeId": 343
     },
     {
       "id": "way/1080744354",
@@ -752,7 +807,8 @@
         "building": "yes",
         "name": "IT Canteen"
       },
-      "subtitle": "AB-2 IT Canteen: single-storey dining hall with garden seating"
+      "subtitle": "AB-2 IT Canteen: single-storey dining hall with garden seating",
+      "nearestNodeId": 780
     },
     {
       "id": "custom/kashyapa-bhavanam-north-wing-1",
@@ -776,13 +832,14 @@
         11.72,
         -92.985
       ],
-      "boundingRadius": 37.23,
+      "boundingRadius": 37.31,
       "latLon": [
         10.903535,
         76.905357
       ],
       "rawTags": {},
-      "subtitle": "First-Year UG Boys Hostel — North Wing"
+      "subtitle": "First-Year UG Boys Hostel — North Wing",
+      "nearestNodeId": 243
     },
     {
       "id": "custom/kashyapa-bhavanam-central-spine",
@@ -810,7 +867,8 @@
         10.902985,
         76.90555
       ],
-      "rawTags": {}
+      "rawTags": {},
+      "nearestNodeId": 245
     },
     {
       "id": "custom/kashyapa-bhavanam-east-wing-1",
@@ -838,7 +896,8 @@
         10.90335,
         76.906594
       ],
-      "rawTags": {}
+      "rawTags": {},
+      "nearestNodeId": 243
     },
     {
       "id": "custom/kashyapa-bhavanam-east-wing-2",
@@ -866,7 +925,8 @@
         10.90313,
         76.906632
       ],
-      "rawTags": {}
+      "rawTags": {},
+      "nearestNodeId": 245
     },
     {
       "id": "custom/kashyapa-bhavanam-east-wing-3",
@@ -894,7 +954,8 @@
         10.90291,
         76.90667
       ],
-      "rawTags": {}
+      "rawTags": {},
+      "nearestNodeId": 246
     },
     {
       "id": "custom/kashyapa-bhavanam-north-wing-2",
@@ -922,7 +983,8 @@
         10.903601,
         76.905733
       ],
-      "rawTags": {}
+      "rawTags": {},
+      "nearestNodeId": 243
     },
     {
       "id": "custom/kashyapa-bhavanam-north-wing-3",
@@ -950,7 +1012,8 @@
         10.903666,
         76.906109
       ],
-      "rawTags": {}
+      "rawTags": {},
+      "nearestNodeId": 243
     },
     {
       "id": "custom/kashyapa-bhavanam-north-wing-4",
@@ -978,7 +1041,8 @@
         10.903731,
         76.906485
       ],
-      "rawTags": {}
+      "rawTags": {},
+      "nearestNodeId": 243
     },
     {
       "id": "custom/kashyapa-bhavanam-south-block",
@@ -1006,7 +1070,8 @@
         10.902544,
         76.906167
       ],
-      "rawTags": {}
+      "rawTags": {},
+      "nearestNodeId": 248
     },
     {
       "id": "custom/kashyapa-bhavanam-south-spine",
@@ -1034,7 +1099,8 @@
         10.902613,
         76.905614
       ],
-      "rawTags": {}
+      "rawTags": {},
+      "nearestNodeId": 248
     },
     {
       "id": "custom/kashyapa-bhavanam-southwest-spine",
@@ -1062,7 +1128,8 @@
         10.902799,
         76.905582
       ],
-      "rawTags": {}
+      "rawTags": {},
+      "nearestNodeId": 246
     },
     {
       "id": "custom/kashyapa-bhavanam-west-spine",
@@ -1090,7 +1157,8 @@
         10.903171,
         76.905517
       ],
-      "rawTags": {}
+      "rawTags": {},
+      "nearestNodeId": 244
     },
     {
       "id": "way/380926300",
@@ -1127,7 +1195,8 @@
       "rawTags": {
         "building": "university"
       },
-      "subtitle": "1-Floor Machine Shop & Production Sheds"
+      "subtitle": "1-Floor Machine Shop & Production Sheds",
+      "nearestNodeId": 407
     },
     {
       "id": "way/546394562",
@@ -1157,7 +1226,8 @@
         "amenity": "restaurant",
         "building": "yes",
         "name": "Main Canteen"
-      }
+      },
+      "nearestNodeId": 411
     },
     {
       "id": "way/380702807",
@@ -1194,7 +1264,8 @@
           "category": "hostel",
           "rawCategory": "hostel"
         }
-      ]
+      ],
+      "nearestNodeId": 726
     },
     {
       "id": "way/380829760",
@@ -1208,23 +1279,24 @@
         "food"
       ],
       "departments": [],
-      "floors": 2,
-      "heightM": 7.2,
+      "floors": 1,
+      "heightM": 3.6,
       "center": [
-        179.426,
-        10.605,
-        -214.646
+        181.909,
+        7.0,
+        -216.865
       ],
-      "boundingRadius": 18.92,
+      "boundingRadius": 20.42,
       "latLon": [
-        10.904628,
-        76.902241
+        10.904648,
+        76.902264
       ],
       "rawTags": {
         "amenity": "restaurant",
         "building": "yes",
         "name": "MBA Canteen"
-      }
+      },
+      "nearestNodeId": 646
     },
     {
       "id": "way/380925368",
@@ -1254,7 +1326,8 @@
         "building:levels": "3",
         "name": "Nachiketas Bhavanam",
         "tourism": "hostel"
-      }
+      },
+      "nearestNodeId": 418
     },
     {
       "id": "custom/hostel-south-of-nataraja",
@@ -1281,7 +1354,8 @@
         76.898967
       ],
       "rawTags": {},
-      "subtitle": "Five-floor courtyard hostel south-east of the Nataraja fountain"
+      "subtitle": "Five-floor courtyard hostel south-east of the Nataraja fountain",
+      "nearestNodeId": 87
     },
     {
       "id": "way/531394576",
@@ -1312,7 +1386,8 @@
         "building": "yes",
         "name": "Shrine",
         "religion": "hindu"
-      }
+      },
+      "nearestNodeId": 557
     },
     {
       "id": "way/380829425",
@@ -1341,7 +1416,8 @@
         "building": "yes",
         "name": "Vasishta Bhavanam",
         "tourism": "hostel"
-      }
+      },
+      "nearestNodeId": 124
     },
     {
       "id": "way/380925375",
@@ -1371,7 +1447,8 @@
         "building:levels": "3",
         "name": "Vyasa Maharishi Bhavanam",
         "tourism": "hostel"
-      }
+      },
+      "nearestNodeId": 628
     },
     {
       "id": "way/380925366",
@@ -1409,7 +1486,8 @@
           "category": "academic",
           "rawCategory": "college_university"
         }
-      ]
+      ],
+      "nearestNodeId": 463
     },
     {
       "id": "way/380925377",
@@ -1446,7 +1524,8 @@
           "category": "academic",
           "rawCategory": "educational_service"
         }
-      ]
+      ],
+      "nearestNodeId": 251
     },
     {
       "id": "hero/main-gate",
@@ -1480,7 +1559,8 @@
       "rawTags": {
         "hero": "hero/main-gate"
       },
-      "subtitle": "Amrita Vishwa Vidyapeetham Campus Entrance & Checkpoint"
+      "subtitle": "Amrita Vishwa Vidyapeetham Campus Entrance & Checkpoint",
+      "nearestNodeId": 67
     },
     {
       "id": "hero/security-office",
@@ -1513,7 +1593,8 @@
       "rawTags": {
         "hero": "hero/security-office"
       },
-      "subtitle": "Campus Security Gatehouse & Visitor Pass Desk"
+      "subtitle": "Campus Security Gatehouse & Visitor Pass Desk",
+      "nearestNodeId": 71
     },
     {
       "id": "hero/students-parking",
@@ -1546,7 +1627,8 @@
       "rawTags": {
         "hero": "hero/students-parking"
       },
-      "subtitle": "Covered Two-Wheeler Parking Sheds"
+      "subtitle": "Covered Two-Wheeler Parking Sheds",
+      "nearestNodeId": 752
     },
     {
       "id": "hero/visitor-parking",
@@ -1579,7 +1661,8 @@
       "rawTags": {
         "hero": "hero/visitor-parking"
       },
-      "subtitle": "Main Gate Paved Car & Visitor Parking Lot"
+      "subtitle": "Main Gate Paved Car & Visitor Parking Lot",
+      "nearestNodeId": 756
     }
   ],
   "inspectables": [
@@ -4226,10 +4309,10 @@
       "heightM": 10.8,
       "center": [
         142.545,
-        17.652,
+        17.668,
         -303.571
       ],
-      "boundingRadius": 45.5,
+      "boundingRadius": 45.76,
       "latLon": [
         10.905427,
         76.901904
@@ -4343,14 +4426,14 @@
       "floors": 3,
       "heightM": 10.8,
       "center": [
-        217.736,
-        12.788,
-        -199.841
+        219.987,
+        10.6,
+        -202.743
       ],
-      "boundingRadius": 56.75,
+      "boundingRadius": 53.36,
       "latLon": [
-        10.904495,
-        76.902592
+        10.904521,
+        76.902613
       ],
       "rawTags": {
         "building": "university",
@@ -4358,27 +4441,43 @@
       },
       "kind": "building",
       "boundsXZ": [
-        194.1,
-        -252.2,
-        241.1,
-        -147.2
+        198.6,
+        -250.2,
+        241.0,
+        -153.6
       ],
       "footprintXZ": [
         [
-          203.5,
-          -147.2
+          207.2,
+          -157.4
         ],
         [
-          241.1,
-          -150.5
+          220.1,
+          -158.6
         ],
         [
-          232.3,
-          -252.2
+          220.6,
+          -153.6
         ],
         [
-          194.1,
-          -249.0
+          234.5,
+          -155.0
+        ],
+        [
+          234.0,
+          -159.9
+        ],
+        [
+          241.0,
+          -160.6
+        ],
+        [
+          232.5,
+          -250.2
+        ],
+        [
+          198.6,
+          -247.0
         ]
       ]
     },
@@ -4399,10 +4498,10 @@
       "heightM": 14.4,
       "center": [
         133.998,
-        14.273,
+        12.727,
         -195.438
       ],
-      "boundingRadius": 41.32,
+      "boundingRadius": 40.53,
       "latLon": [
         10.904456,
         76.901826
@@ -4472,17 +4571,17 @@
         "food"
       ],
       "departments": [],
-      "floors": 2,
-      "heightM": 7.2,
+      "floors": 1,
+      "heightM": 3.6,
       "center": [
-        179.426,
-        10.605,
-        -214.646
+        181.909,
+        7.0,
+        -216.865
       ],
-      "boundingRadius": 18.92,
+      "boundingRadius": 20.42,
       "latLon": [
-        10.904628,
-        76.902241
+        10.904648,
+        76.902264
       ],
       "rawTags": {
         "amenity": "restaurant",
@@ -4491,59 +4590,43 @@
       },
       "kind": "building",
       "boundsXZ": [
-        167.5,
-        -230.2,
-        192.1,
-        -198.5
+        171.8,
+        -231.8,
+        192.6,
+        -203.4
       ],
       "footprintXZ": [
         [
-          170.7,
-          -217.6
+          173.6,
+          -203.4
         ],
         [
-          167.5,
-          -217.0
+          192.6,
+          -205.2
         ],
         [
-          168.6,
-          -202.9
+          190.7,
+          -225.1
         ],
         [
-          176.9,
-          -204.1
+          187.7,
+          -224.8
         ],
         [
-          177.4,
-          -198.5
+          187.0,
+          -231.8
         ],
         [
-          184.5,
-          -199.4
+          174.1,
+          -230.6
         ],
         [
-          183.9,
-          -204.1
+          174.7,
+          -223.6
         ],
         [
-          192.1,
-          -205.0
-        ],
-        [
-          190.6,
-          -219.1
-        ],
-        [
-          187.4,
-          -219.4
-        ],
-        [
-          186.2,
-          -230.2
-        ],
-        [
-          169.5,
-          -227.9
+          171.8,
+          -223.3
         ]
       ]
     },
@@ -8017,10 +8100,10 @@
       "heightM": 7.2,
       "center": [
         70.186,
-        11.064,
+        11.01,
         -190.331
       ],
-      "boundingRadius": 15.28,
+      "boundingRadius": 15.25,
       "latLon": [
         10.90441,
         76.901242
@@ -8125,10 +8208,10 @@
       "heightM": 7.2,
       "center": [
         234.968,
-        3.918,
+        7.109,
         -140.574
       ],
-      "boundingRadius": 13.64,
+      "boundingRadius": 14.66,
       "latLon": [
         10.903963,
         76.90275
@@ -9509,10 +9592,10 @@
       "heightM": 3.6,
       "center": [
         499.558,
-        6.32,
+        6.04,
         -121.357
       ],
-      "boundingRadius": 9.47,
+      "boundingRadius": 9.63,
       "latLon": [
         10.90379,
         76.90517
@@ -9941,7 +10024,7 @@
       "heightM": 3.6,
       "center": [
         161.685,
-        12.842,
+        12.844,
         -362.881
       ],
       "boundingRadius": 8.2,
@@ -10520,6 +10603,356 @@
       }
     },
     {
+      "id": "custom/academic-block-4",
+      "meshName": "BLDG_custom_academic_block_4",
+      "name": "Academic Block 4 (AB-4)",
+      "source": "custom",
+      "isNamed": true,
+      "category": "academic",
+      "tags": [
+        "AB4",
+        "AB-4",
+        "Academic Block 4",
+        "School of AI",
+        "Artificial Intelligence",
+        "academic"
+      ],
+      "departments": [
+        "Artificial Intelligence"
+      ],
+      "floors": 5,
+      "heightM": 17.8,
+      "center": [
+        400.185,
+        11.3,
+        -212.282
+      ],
+      "boundingRadius": 97.78,
+      "latLon": [
+        10.904607,
+        76.904261
+      ],
+      "rawTags": {},
+      "subtitle": "Amrita School of Artificial Intelligence",
+      "kind": "building",
+      "boundsXZ": [
+        359.0,
+        -301.8,
+        484.6,
+        -151.3
+      ],
+      "footprintXZ": [
+        [
+          386.4,
+          -159.9
+        ],
+        [
+          405.3,
+          -162.1
+        ],
+        [
+          405.5,
+          -160.2
+        ],
+        [
+          408.0,
+          -160.5
+        ],
+        [
+          408.7,
+          -155.0
+        ],
+        [
+          418.6,
+          -156.2
+        ],
+        [
+          417.9,
+          -161.7
+        ],
+        [
+          427.9,
+          -162.9
+        ],
+        [
+          428.5,
+          -157.4
+        ],
+        [
+          450.6,
+          -160.0
+        ],
+        [
+          449.9,
+          -165.5
+        ],
+        [
+          459.6,
+          -166.7
+        ],
+        [
+          460.3,
+          -161.2
+        ],
+        [
+          469.2,
+          -162.3
+        ],
+        [
+          468.6,
+          -167.8
+        ],
+        [
+          473.5,
+          -168.4
+        ],
+        [
+          474.2,
+          -162.9
+        ],
+        [
+          484.6,
+          -164.2
+        ],
+        [
+          481.5,
+          -190.0
+        ],
+        [
+          475.1,
+          -189.2
+        ],
+        [
+          476.0,
+          -181.7
+        ],
+        [
+          473.0,
+          -181.4
+        ],
+        [
+          472.1,
+          -188.8
+        ],
+        [
+          462.6,
+          -187.7
+        ],
+        [
+          463.5,
+          -180.2
+        ],
+        [
+          458.1,
+          -179.6
+        ],
+        [
+          457.2,
+          -187.0
+        ],
+        [
+          447.5,
+          -185.9
+        ],
+        [
+          448.1,
+          -180.9
+        ],
+        [
+          430.0,
+          -178.7
+        ],
+        [
+          429.2,
+          -185.2
+        ],
+        [
+          419.1,
+          -184.0
+        ],
+        [
+          419.9,
+          -177.5
+        ],
+        [
+          415.1,
+          -176.9
+        ],
+        [
+          414.3,
+          -183.4
+        ],
+        [
+          403.4,
+          -182.1
+        ],
+        [
+          404.1,
+          -176.1
+        ],
+        [
+          384.8,
+          -173.8
+        ],
+        [
+          383.8,
+          -181.7
+        ],
+        [
+          397.7,
+          -183.4
+        ],
+        [
+          393.1,
+          -229.7
+        ],
+        [
+          392.1,
+          -229.6
+        ],
+        [
+          389.8,
+          -249.1
+        ],
+        [
+          387.8,
+          -248.9
+        ],
+        [
+          386.5,
+          -259.6
+        ],
+        [
+          388.5,
+          -259.8
+        ],
+        [
+          387.6,
+          -267.3
+        ],
+        [
+          390.2,
+          -266.3
+        ],
+        [
+          398.2,
+          -267.2
+        ],
+        [
+          404.8,
+          -271.6
+        ],
+        [
+          408.9,
+          -278.3
+        ],
+        [
+          409.8,
+          -286.2
+        ],
+        [
+          407.1,
+          -293.6
+        ],
+        [
+          401.5,
+          -299.2
+        ],
+        [
+          394.0,
+          -301.8
+        ],
+        [
+          386.1,
+          -300.8
+        ],
+        [
+          379.4,
+          -296.5
+        ],
+        [
+          375.3,
+          -289.8
+        ],
+        [
+          374.4,
+          -281.9
+        ],
+        [
+          376.7,
+          -275.5
+        ],
+        [
+          369.1,
+          -274.6
+        ],
+        [
+          369.4,
+          -271.6
+        ],
+        [
+          359.0,
+          -270.4
+        ],
+        [
+          361.3,
+          -245.5
+        ],
+        [
+          363.9,
+          -245.8
+        ],
+        [
+          366.2,
+          -226.4
+        ],
+        [
+          362.8,
+          -226.0
+        ],
+        [
+          364.2,
+          -214.6
+        ],
+        [
+          367.0,
+          -214.9
+        ],
+        [
+          369.2,
+          -197.1
+        ],
+        [
+          364.9,
+          -196.6
+        ],
+        [
+          366.0,
+          -187.6
+        ],
+        [
+          370.9,
+          -188.2
+        ],
+        [
+          371.8,
+          -180.8
+        ],
+        [
+          366.4,
+          -180.1
+        ],
+        [
+          369.8,
+          -151.3
+        ],
+        [
+          387.2,
+          -153.4
+        ]
+      ]
+    },
+    {
       "id": "custom/hostel-south-of-nataraja",
       "meshName": "BLDG_custom_hostel_south_of_nataraja",
       "name": "New Hostel (name to be confirmed)",
@@ -10593,7 +11026,7 @@
         11.72,
         -92.985
       ],
-      "boundingRadius": 37.23,
+      "boundingRadius": 37.31,
       "latLon": [
         10.903535,
         76.905357
