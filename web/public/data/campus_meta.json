@@ -813,11 +813,12 @@
     {
       "id": "custom/kashyapa-bhavanam-north-wing-1",
       "meshName": "BLDG_custom_kashyapa_bhavanam_north_wing_1",
-      "name": "Kashyapa Bhavanam",
+      "name": "Kashyapa Bhavan",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
+        "Kashyapa Bhavan",
         "Kashyapa Bhavanam",
         "Kashyapa",
         "First-Year Boys Hostel",
@@ -842,14 +843,46 @@
       "nearestNodeId": 243
     },
     {
-      "id": "custom/kashyapa-bhavanam-central-spine",
-      "meshName": "BLDG_custom_kashyapa_bhavanam_central_spine",
-      "name": "Kashyapa Bhavanam — Central Spine",
+      "id": "custom/kashyapa-bhavan-annexe-north",
+      "meshName": "BLDG_custom_kashyapa_bhavan_annexe_north",
+      "name": "Kashyapa Bhavan Annexe",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
-        "Kashyapa Bhavanam",
+        "Kashyapa Bhavan Annexe",
+        "Kashyapa Annexe",
+        "Kashyapa",
+        "Hostel Services",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        537.493,
+        9.92,
+        -52.455
+      ],
+      "boundingRadius": 53.46,
+      "latLon": [
+        10.903171,
+        76.905517
+      ],
+      "rawTags": {},
+      "subtitle": "Kashyapa Bhavan Annexe — North Block",
+      "nearestNodeId": 244
+    },
+    {
+      "id": "custom/kashyapa-bhavan-annexe-central",
+      "meshName": "BLDG_custom_kashyapa_bhavan_annexe_central",
+      "name": "Kashyapa Bhavan Annexe — Central Block",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavan Annexe",
+        "Kashyapa Annexe",
         "Kashyapa",
         "Hostel Services",
         "hostel"
@@ -871,13 +904,74 @@
       "nearestNodeId": 245
     },
     {
-      "id": "custom/kashyapa-bhavanam-east-wing-1",
-      "meshName": "BLDG_custom_kashyapa_bhavanam_east_wing_1",
-      "name": "Kashyapa Bhavanam — East Wing 1",
+      "id": "custom/kashyapa-bhavan-annexe-entry",
+      "meshName": "BLDG_custom_kashyapa_bhavan_annexe_entry",
+      "name": "Kashyapa Bhavan Annexe — Entry Block",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
+        "Kashyapa Bhavan Annexe",
+        "Kashyapa Annexe",
+        "Kashyapa",
+        "Hostel Services",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        548.134,
+        8.492,
+        9.661
+      ],
+      "boundingRadius": 53.52,
+      "latLon": [
+        10.902613,
+        76.905614
+      ],
+      "rawTags": {},
+      "nearestNodeId": 248
+    },
+    {
+      "id": "custom/kashyapa-bhavan-annexe-south",
+      "meshName": "BLDG_custom_kashyapa_bhavan_annexe_south",
+      "name": "Kashyapa Bhavan Annexe — South Block",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavan Annexe",
+        "Kashyapa Annexe",
+        "Kashyapa",
+        "Hostel Services",
+        "hostel"
+      ],
+      "departments": [],
+      "floors": 3,
+      "heightM": 10.8,
+      "center": [
+        544.587,
+        9.179,
+        -11.044
+      ],
+      "boundingRadius": 53.45,
+      "latLon": [
+        10.902799,
+        76.905582
+      ],
+      "rawTags": {},
+      "nearestNodeId": 246
+    },
+    {
+      "id": "custom/kashyapa-bhavanam-east-wing-1",
+      "meshName": "BLDG_custom_kashyapa_bhavanam_east_wing_1",
+      "name": "Kashyapa Bhavan — East Wing 1",
+      "source": "custom",
+      "isNamed": true,
+      "category": "hostel",
+      "tags": [
+        "Kashyapa Bhavan",
         "Kashyapa Bhavanam",
         "Kashyapa",
         "Hostel Services",
@@ -902,11 +996,12 @@
     {
       "id": "custom/kashyapa-bhavanam-east-wing-2",
       "meshName": "BLDG_custom_kashyapa_bhavanam_east_wing_2",
-      "name": "Kashyapa Bhavanam — East Wing 2",
+      "name": "Kashyapa Bhavan — East Wing 2",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
+        "Kashyapa Bhavan",
         "Kashyapa Bhavanam",
         "Kashyapa",
         "Hostel Services",
@@ -931,11 +1026,12 @@
     {
       "id": "custom/kashyapa-bhavanam-east-wing-3",
       "meshName": "BLDG_custom_kashyapa_bhavanam_east_wing_3",
-      "name": "Kashyapa Bhavanam — East Wing 3",
+      "name": "Kashyapa Bhavan — East Wing 3",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
+        "Kashyapa Bhavan",
         "Kashyapa Bhavanam",
         "Kashyapa",
         "Hostel Services",
@@ -960,11 +1056,12 @@
     {
       "id": "custom/kashyapa-bhavanam-north-wing-2",
       "meshName": "BLDG_custom_kashyapa_bhavanam_north_wing_2",
-      "name": "Kashyapa Bhavanam — North Wing 2",
+      "name": "Kashyapa Bhavan — North Wing 2",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
+        "Kashyapa Bhavan",
         "Kashyapa Bhavanam",
         "Kashyapa",
         "First-Year Boys Hostel",
@@ -989,11 +1086,12 @@
     {
       "id": "custom/kashyapa-bhavanam-north-wing-3",
       "meshName": "BLDG_custom_kashyapa_bhavanam_north_wing_3",
-      "name": "Kashyapa Bhavanam — North Wing 3",
+      "name": "Kashyapa Bhavan — North Wing 3",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
+        "Kashyapa Bhavan",
         "Kashyapa Bhavanam",
         "Kashyapa",
         "First-Year Boys Hostel",
@@ -1018,11 +1116,12 @@
     {
       "id": "custom/kashyapa-bhavanam-north-wing-4",
       "meshName": "BLDG_custom_kashyapa_bhavanam_north_wing_4",
-      "name": "Kashyapa Bhavanam — North Wing 4",
+      "name": "Kashyapa Bhavan — North Wing 4",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
+        "Kashyapa Bhavan",
         "Kashyapa Bhavanam",
         "Kashyapa",
         "First-Year Boys Hostel",
@@ -1047,11 +1146,12 @@
     {
       "id": "custom/kashyapa-bhavanam-south-block",
       "meshName": "BLDG_custom_kashyapa_bhavanam_south_block",
-      "name": "Kashyapa Bhavanam — South Block",
+      "name": "Kashyapa Bhavan — South Block",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
+        "Kashyapa Bhavan",
         "Kashyapa Bhavanam",
         "Kashyapa",
         "First-Year Boys Hostel",
@@ -1072,93 +1172,6 @@
       ],
       "rawTags": {},
       "nearestNodeId": 248
-    },
-    {
-      "id": "custom/kashyapa-bhavanam-south-spine",
-      "meshName": "BLDG_custom_kashyapa_bhavanam_south_spine",
-      "name": "Kashyapa Bhavanam — South Spine",
-      "source": "custom",
-      "isNamed": true,
-      "category": "hostel",
-      "tags": [
-        "Kashyapa Bhavanam",
-        "Kashyapa",
-        "Hostel Services",
-        "hostel"
-      ],
-      "departments": [],
-      "floors": 3,
-      "heightM": 10.8,
-      "center": [
-        548.134,
-        8.492,
-        9.661
-      ],
-      "boundingRadius": 53.52,
-      "latLon": [
-        10.902613,
-        76.905614
-      ],
-      "rawTags": {},
-      "nearestNodeId": 248
-    },
-    {
-      "id": "custom/kashyapa-bhavanam-southwest-spine",
-      "meshName": "BLDG_custom_kashyapa_bhavanam_southwest_spine",
-      "name": "Kashyapa Bhavanam — Southwest Spine",
-      "source": "custom",
-      "isNamed": true,
-      "category": "hostel",
-      "tags": [
-        "Kashyapa Bhavanam",
-        "Kashyapa",
-        "Hostel Services",
-        "hostel"
-      ],
-      "departments": [],
-      "floors": 3,
-      "heightM": 10.8,
-      "center": [
-        544.587,
-        9.179,
-        -11.044
-      ],
-      "boundingRadius": 53.45,
-      "latLon": [
-        10.902799,
-        76.905582
-      ],
-      "rawTags": {},
-      "nearestNodeId": 246
-    },
-    {
-      "id": "custom/kashyapa-bhavanam-west-spine",
-      "meshName": "BLDG_custom_kashyapa_bhavanam_west_spine",
-      "name": "Kashyapa Bhavanam — West Spine",
-      "source": "custom",
-      "isNamed": true,
-      "category": "hostel",
-      "tags": [
-        "Kashyapa Bhavanam",
-        "Kashyapa",
-        "Hostel Services",
-        "hostel"
-      ],
-      "departments": [],
-      "floors": 3,
-      "heightM": 10.8,
-      "center": [
-        537.493,
-        9.92,
-        -52.455
-      ],
-      "boundingRadius": 53.46,
-      "latLon": [
-        10.903171,
-        76.905517
-      ],
-      "rawTags": {},
-      "nearestNodeId": 244
     },
     {
       "id": "way/380926300",
@@ -11039,11 +11052,12 @@
     {
       "id": "custom/kashyapa-bhavanam-north-wing-1",
       "meshName": "BLDG_custom_kashyapa_bhavanam_north_wing_1",
-      "name": "Kashyapa Bhavanam",
+      "name": "Kashyapa Bhavan",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
+        "Kashyapa Bhavan",
         "Kashyapa Bhavanam",
         "Kashyapa",
         "First-Year Boys Hostel",
@@ -11094,11 +11108,12 @@
     {
       "id": "custom/kashyapa-bhavanam-north-wing-2",
       "meshName": "BLDG_custom_kashyapa_bhavanam_north_wing_2",
-      "name": "Kashyapa Bhavanam — North Wing 2",
+      "name": "Kashyapa Bhavan — North Wing 2",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
+        "Kashyapa Bhavan",
         "Kashyapa Bhavanam",
         "Kashyapa",
         "First-Year Boys Hostel",
@@ -11147,11 +11162,12 @@
     {
       "id": "custom/kashyapa-bhavanam-north-wing-3",
       "meshName": "BLDG_custom_kashyapa_bhavanam_north_wing_3",
-      "name": "Kashyapa Bhavanam — North Wing 3",
+      "name": "Kashyapa Bhavan — North Wing 3",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
+        "Kashyapa Bhavan",
         "Kashyapa Bhavanam",
         "Kashyapa",
         "First-Year Boys Hostel",
@@ -11200,11 +11216,12 @@
     {
       "id": "custom/kashyapa-bhavanam-north-wing-4",
       "meshName": "BLDG_custom_kashyapa_bhavanam_north_wing_4",
-      "name": "Kashyapa Bhavanam — North Wing 4",
+      "name": "Kashyapa Bhavan — North Wing 4",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
+        "Kashyapa Bhavan",
         "Kashyapa Bhavanam",
         "Kashyapa",
         "First-Year Boys Hostel",
@@ -11251,14 +11268,15 @@
       ]
     },
     {
-      "id": "custom/kashyapa-bhavanam-west-spine",
-      "meshName": "BLDG_custom_kashyapa_bhavanam_west_spine",
-      "name": "Kashyapa Bhavanam — West Spine",
+      "id": "custom/kashyapa-bhavan-annexe-north",
+      "meshName": "BLDG_custom_kashyapa_bhavan_annexe_north",
+      "name": "Kashyapa Bhavan Annexe",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
-        "Kashyapa Bhavanam",
+        "Kashyapa Bhavan Annexe",
+        "Kashyapa Annexe",
         "Kashyapa",
         "Hostel Services",
         "hostel"
@@ -11277,6 +11295,7 @@
         76.905517
       ],
       "rawTags": {},
+      "subtitle": "Kashyapa Bhavan Annexe — North Block",
       "kind": "building",
       "boundsXZ": [
         485.0,
@@ -11304,14 +11323,15 @@
       ]
     },
     {
-      "id": "custom/kashyapa-bhavanam-central-spine",
-      "meshName": "BLDG_custom_kashyapa_bhavanam_central_spine",
-      "name": "Kashyapa Bhavanam — Central Spine",
+      "id": "custom/kashyapa-bhavan-annexe-central",
+      "meshName": "BLDG_custom_kashyapa_bhavan_annexe_central",
+      "name": "Kashyapa Bhavan Annexe — Central Block",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
-        "Kashyapa Bhavanam",
+        "Kashyapa Bhavan Annexe",
+        "Kashyapa Annexe",
         "Kashyapa",
         "Hostel Services",
         "hostel"
@@ -11357,14 +11377,15 @@
       ]
     },
     {
-      "id": "custom/kashyapa-bhavanam-southwest-spine",
-      "meshName": "BLDG_custom_kashyapa_bhavanam_southwest_spine",
-      "name": "Kashyapa Bhavanam — Southwest Spine",
+      "id": "custom/kashyapa-bhavan-annexe-south",
+      "meshName": "BLDG_custom_kashyapa_bhavan_annexe_south",
+      "name": "Kashyapa Bhavan Annexe — South Block",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
-        "Kashyapa Bhavanam",
+        "Kashyapa Bhavan Annexe",
+        "Kashyapa Annexe",
         "Kashyapa",
         "Hostel Services",
         "hostel"
@@ -11410,14 +11431,15 @@
       ]
     },
     {
-      "id": "custom/kashyapa-bhavanam-south-spine",
-      "meshName": "BLDG_custom_kashyapa_bhavanam_south_spine",
-      "name": "Kashyapa Bhavanam — South Spine",
+      "id": "custom/kashyapa-bhavan-annexe-entry",
+      "meshName": "BLDG_custom_kashyapa_bhavan_annexe_entry",
+      "name": "Kashyapa Bhavan Annexe — Entry Block",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
-        "Kashyapa Bhavanam",
+        "Kashyapa Bhavan Annexe",
+        "Kashyapa Annexe",
         "Kashyapa",
         "Hostel Services",
         "hostel"
@@ -11465,11 +11487,12 @@
     {
       "id": "custom/kashyapa-bhavanam-east-wing-1",
       "meshName": "BLDG_custom_kashyapa_bhavanam_east_wing_1",
-      "name": "Kashyapa Bhavanam — East Wing 1",
+      "name": "Kashyapa Bhavan — East Wing 1",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
+        "Kashyapa Bhavan",
         "Kashyapa Bhavanam",
         "Kashyapa",
         "Hostel Services",
@@ -11518,11 +11541,12 @@
     {
       "id": "custom/kashyapa-bhavanam-east-wing-2",
       "meshName": "BLDG_custom_kashyapa_bhavanam_east_wing_2",
-      "name": "Kashyapa Bhavanam — East Wing 2",
+      "name": "Kashyapa Bhavan — East Wing 2",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
+        "Kashyapa Bhavan",
         "Kashyapa Bhavanam",
         "Kashyapa",
         "Hostel Services",
@@ -11571,11 +11595,12 @@
     {
       "id": "custom/kashyapa-bhavanam-east-wing-3",
       "meshName": "BLDG_custom_kashyapa_bhavanam_east_wing_3",
-      "name": "Kashyapa Bhavanam — East Wing 3",
+      "name": "Kashyapa Bhavan — East Wing 3",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
+        "Kashyapa Bhavan",
         "Kashyapa Bhavanam",
         "Kashyapa",
         "Hostel Services",
@@ -11624,11 +11649,12 @@
     {
       "id": "custom/kashyapa-bhavanam-south-block",
       "meshName": "BLDG_custom_kashyapa_bhavanam_south_block",
-      "name": "Kashyapa Bhavanam — South Block",
+      "name": "Kashyapa Bhavan — South Block",
       "source": "custom",
       "isNamed": true,
       "category": "hostel",
       "tags": [
+        "Kashyapa Bhavan",
         "Kashyapa Bhavanam",
         "Kashyapa",
         "First-Year Boys Hostel",
