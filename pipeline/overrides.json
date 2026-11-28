@@ -183,9 +183,9 @@
     },
     "hero/main-gate": {
       "name": "Main Gate",
-      "subtitle": "Amrita Vishwa Vidyapeetham Campus Entrance & Checkpoint",
+      "subtitle": "Kerala-style Timber Gatehouse & Campus Entrance",
       "category": "landmark",
-      "floors": 1,
+      "floors": 2,
       "tags": [
         "main gate",
         "gate",
@@ -198,12 +198,13 @@
     },
     "hero/security-office": {
       "name": "Security Office",
-      "subtitle": "Campus Security Gatehouse & Visitor Pass Desk",
+      "subtitle": "Face-Scan Security Check & Visitor Shelter",
       "category": "admin",
-      "floors": 2,
+      "floors": 1,
       "tags": [
         "security",
         "security office",
+        "face scan",
         "gatehouse",
         "visitor pass",
         "checkpoint",
