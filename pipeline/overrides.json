@@ -36,8 +36,6 @@
       }
     ],
     "rename_or_retag": {
-    "way/380829758": {"name": "Amrita Pandal", "floors": 1, "height_m": 8.2, "tags": ["pandal", "auditorium", "convocation hall"]},
-    "way/380829760": {"name": "MBA Canteen", "floors": 1, "height_m": 5.0, "tags": ["asb canteen", "canteen"]},
       "way/123456789": {
         "name": "Academic Block I (AB1)",
         "subtitle": "School of Engineering",
@@ -85,6 +83,7 @@
     }
   },
   "exclude_ids": [
+    "overture/891e4fd1-7da",
     "overture/6f47537e-53f",
     "overture/3086031b-20b",
     "way/546394580",
@@ -116,6 +115,8 @@
     }
   ],
   "rename_or_retag": {
+    "way/380829758": {"name": "Amrita Pandal", "subtitle": "Open-sided convocation and event hall", "category": "landmark", "floors": 1, "height_m": 8.2, "tags": ["pandal", "convocation hall", "convocation"]},
+    "way/380829760": {"name": "MBA Canteen", "subtitle": "ASB Canteen", "category": "food", "floors": 1, "height_m": 5.0, "tags": ["asb canteen", "canteen"]},
     "way/1080744354": {
       "name": "IT Canteen",
       "subtitle": "AB-2 IT Canteen: single-storey dining hall with garden seating",
