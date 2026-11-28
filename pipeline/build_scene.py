@@ -3402,6 +3402,9 @@ def generate_trees_data(
     # 1C. Main Gate & Parking Perimeter tropical shade trees (outside sheds/lots/rail crossing)
     from heroes import main_gate as hero_main_gate
 
+    for fx, fy, ftype, fscale in hero_main_gate.get_main_gate_feature_trees():
+        _place(fx, fy, ftype, (fscale, fscale))
+
     gate_candidates: list[tuple[float, float, int]] = []
     for gx0, gy0, gx1, gy1, step in hero_main_gate.get_main_gate_shade_tree_belts():
         yg = gy0 + 1.5
