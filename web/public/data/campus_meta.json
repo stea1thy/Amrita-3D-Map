@@ -30,8 +30,8 @@
     "bridges": 2,
     "inspectables": 164,
     "trees": 2800,
-    "palms": 627,
-    "canopy": 2173,
+    "palms": 591,
+    "canopy": 2209,
     "overtureBuildings": 51,
     "overturePlaces": 17,
     "unmatchedPois": 2
@@ -358,14 +358,14 @@
         "hostel"
       ],
       "departments": [],
-      "floors": 3,
-      "heightM": 10.8,
+      "floors": 2,
+      "heightM": 7.4,
       "center": [
         -193.89,
-        -0.326,
+        -2.026,
         138.856
       ],
-      "boundingRadius": 33.04,
+      "boundingRadius": 32.61,
       "latLon": [
         10.901453,
         76.898826
@@ -692,16 +692,16 @@
       ],
       "departments": [],
       "floors": 5,
-      "heightM": 18.0,
+      "heightM": 16.5,
       "center": [
-        -88.334,
-        13.847,
-        -35.33
+        -87.397,
+        13.064,
+        -35.518
       ],
-      "boundingRadius": 69.91,
+      "boundingRadius": 68.87,
       "latLon": [
-        10.903017,
-        76.899792
+        10.903019,
+        76.8998
       ],
       "rawTags": {
         "building": "yes",
@@ -2279,16 +2279,16 @@
       ],
       "departments": [],
       "floors": 5,
-      "heightM": 18.0,
+      "heightM": 16.5,
       "center": [
-        -88.334,
-        13.847,
-        -35.33
+        -87.397,
+        13.064,
+        -35.518
       ],
-      "boundingRadius": 69.91,
+      "boundingRadius": 68.87,
       "latLon": [
-        10.903017,
-        76.899792
+        10.903019,
+        76.8998
       ],
       "rawTags": {
         "building": "yes",
@@ -2297,27 +2297,27 @@
       },
       "kind": "building",
       "boundsXZ": [
-        -138.5,
-        -85.0,
-        -37.4,
-        13.8
+        -136.9,
+        -84.8,
+        -37.9,
+        13.7
       ],
       "footprintXZ": [
         [
-          -133.8,
-          13.8
+          -132.3,
+          13.7
         ],
         [
-          -37.4,
+          -37.9,
           9.1
         ],
         [
-          -43.8,
-          -85.0
+          -42.5,
+          -84.8
         ],
         [
-          -138.5,
-          -79.7
+          -136.9,
+          -80.2
         ]
       ]
     },
@@ -2334,14 +2334,14 @@
         "academic"
       ],
       "departments": [],
-      "floors": 3,
-      "heightM": 10.8,
+      "floors": 1,
+      "heightM": 8.0,
       "center": [
         -50.297,
-        2.889,
+        1.489,
         46.141
       ],
-      "boundingRadius": 24.2,
+      "boundingRadius": 23.81,
       "latLon": [
         10.902286,
         76.90014
@@ -2388,13 +2388,13 @@
       ],
       "departments": [],
       "floors": 2,
-      "heightM": 7.2,
+      "heightM": 6.4,
       "center": [
         -64.337,
-        -1.225,
+        -1.625,
         113.925
       ],
-      "boundingRadius": 13.66,
+      "boundingRadius": 13.1,
       "latLon": [
         10.901677,
         76.900011
@@ -2449,13 +2449,13 @@
       ],
       "departments": [],
       "floors": 2,
-      "heightM": 7.2,
+      "heightM": 6.4,
       "center": [
         -39.202,
-        -0.196,
+        -0.596,
         113.462
       ],
-      "boundingRadius": 14.67,
+      "boundingRadius": 13.86,
       "latLon": [
         10.901681,
         76.900241
@@ -2510,13 +2510,13 @@
       ],
       "departments": [],
       "floors": 2,
-      "heightM": 7.2,
+      "heightM": 6.4,
       "center": [
         2.491,
-        2.05,
+        1.65,
         88.263
       ],
-      "boundingRadius": 12.3,
+      "boundingRadius": 11.41,
       "latLon": [
         10.901907,
         76.900623
@@ -2563,13 +2563,13 @@
       ],
       "departments": [],
       "floors": 2,
-      "heightM": 7.2,
+      "heightM": 6.4,
       "center": [
         3.659,
-        0.606,
+        0.206,
         113.572
       ],
-      "boundingRadius": 13.26,
+      "boundingRadius": 12.6,
       "latLon": [
         10.90168,
         76.900633
@@ -2615,14 +2615,14 @@
         "hostel"
       ],
       "departments": [],
-      "floors": 3,
-      "heightM": 10.8,
+      "floors": 2,
+      "heightM": 6.4,
       "center": [
         -36.094,
-        -0.147,
+        -2.347,
         145.811
       ],
-      "boundingRadius": 17.73,
+      "boundingRadius": 16.55,
       "latLon": [
         10.90139,
         76.90027
@@ -2668,14 +2668,14 @@
         "hostel"
       ],
       "departments": [],
-      "floors": 3,
-      "heightM": 10.8,
+      "floors": 2,
+      "heightM": 6.4,
       "center": [
         -2.92,
-        0.725,
+        -1.475,
         143.975
       ],
-      "boundingRadius": 17.48,
+      "boundingRadius": 16.14,
       "latLon": [
         10.901407,
         76.900573
@@ -2722,13 +2722,13 @@
       ],
       "departments": [],
       "floors": 3,
-      "heightM": 10.8,
+      "heightM": 10.2,
       "center": [
         -40.154,
-        -0.653,
+        -0.953,
         174.827
       ],
-      "boundingRadius": 17.3,
+      "boundingRadius": 17.16,
       "latLon": [
         10.90113,
         76.900233
@@ -2775,13 +2775,13 @@
       ],
       "departments": [],
       "floors": 3,
-      "heightM": 10.8,
+      "heightM": 10.2,
       "center": [
         -14.222,
-        -0.145,
+        -0.445,
         173.728
       ],
-      "boundingRadius": 16.03,
+      "boundingRadius": 15.87,
       "latLon": [
         10.901139,
         76.90047
@@ -2896,14 +2896,14 @@
         "hostel"
       ],
       "departments": [],
-      "floors": 3,
-      "heightM": 10.8,
+      "floors": 2,
+      "heightM": 6.4,
       "center": [
         -73.298,
-        -1.064,
+        -3.264,
         156.294
       ],
-      "boundingRadius": 15.01,
+      "boundingRadius": 13.72,
       "latLon": [
         10.901296,
         76.899929
@@ -2949,14 +2949,14 @@
         "hostel"
       ],
       "departments": [],
-      "floors": 3,
-      "heightM": 10.8,
+      "floors": 2,
+      "heightM": 6.4,
       "center": [
         -72.237,
-        -1.051,
+        -3.251,
         178.498
       ],
-      "boundingRadius": 15.71,
+      "boundingRadius": 14.53,
       "latLon": [
         10.901097,
         76.899939
@@ -4018,14 +4018,14 @@
         "hostel"
       ],
       "departments": [],
-      "floors": 3,
-      "heightM": 10.8,
+      "floors": 2,
+      "heightM": 7.4,
       "center": [
         -193.89,
-        -0.326,
+        -2.026,
         138.856
       ],
-      "boundingRadius": 33.04,
+      "boundingRadius": 32.61,
       "latLon": [
         10.901453,
         76.898826
@@ -7198,14 +7198,14 @@
         "hostel"
       ],
       "departments": [],
-      "floors": 3,
-      "heightM": 10.8,
+      "floors": 2,
+      "heightM": 6.4,
       "center": [
         75.365,
-        3.373,
+        1.173,
         -2.774
       ],
-      "boundingRadius": 16.2,
+      "boundingRadius": 14.97,
       "latLon": [
         10.902725,
         76.901289
@@ -7251,14 +7251,14 @@
         "hostel"
       ],
       "departments": [],
-      "floors": 3,
-      "heightM": 10.8,
+      "floors": 1,
+      "heightM": 3.8,
       "center": [
         71.194,
-        3.396,
+        -0.104,
         19.981
       ],
-      "boundingRadius": 12.98,
+      "boundingRadius": 10.94,
       "latLon": [
         10.902521,
         76.901251
@@ -7729,13 +7729,13 @@
       ],
       "departments": [],
       "floors": 2,
-      "heightM": 7.2,
+      "heightM": 7.0,
       "center": [
         -206.96,
-        0.196,
+        0.096,
         80.738
       ],
-      "boundingRadius": 21.31,
+      "boundingRadius": 21.27,
       "latLon": [
         10.901975,
         76.898707
@@ -8224,14 +8224,14 @@
         "default"
       ],
       "departments": [],
-      "floors": 1,
-      "heightM": 3.6,
+      "floors": 2,
+      "heightM": 6.0,
       "center": [
         -104.636,
-        -2.68,
+        -1.48,
         79.022
       ],
-      "boundingRadius": 12.11,
+      "boundingRadius": 12.42,
       "latLon": [
         10.90199,
         76.899643
@@ -9013,7 +9013,7 @@
         -1.559,
         79.265
       ],
-      "boundingRadius": 13.18,
+      "boundingRadius": 13.23,
       "latLon": [
         10.901988,
         76.901631
@@ -9501,13 +9501,13 @@
       ],
       "departments": [],
       "floors": 1,
-      "heightM": 3.6,
+      "heightM": 3.4,
       "center": [
         -14.989,
-        1.515,
+        1.415,
         7.845
       ],
-      "boundingRadius": 10.59,
+      "boundingRadius": 10.54,
       "latLon": [
         10.90263,
         76.900463
@@ -9771,13 +9771,13 @@
       ],
       "departments": [],
       "floors": 1,
-      "heightM": 3.6,
+      "heightM": 3.4,
       "center": [
         -221.602,
-        -4.273,
+        -4.373,
         133.693
       ],
-      "boundingRadius": 9.2,
+      "boundingRadius": 9.15,
       "latLon": [
         10.901499,
         76.898573
@@ -9933,13 +9933,13 @@
       ],
       "departments": [],
       "floors": 1,
-      "heightM": 3.6,
+      "heightM": 3.4,
       "center": [
         -229.218,
-        -4.182,
+        -4.282,
         134.691
       ],
-      "boundingRadius": 8.75,
+      "boundingRadius": 8.07,
       "latLon": [
         10.90149,
         76.898503

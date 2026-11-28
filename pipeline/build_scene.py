@@ -64,6 +64,7 @@ from hero_models import (  # noqa: E402
     new_hostel_hero,
     workshops_hero,
     yagnavalkya_area_hero,
+    gargi_area_hero,
 )
 
 FOUNDATION_SINK_M = 3.0
@@ -2281,6 +2282,11 @@ def _prepare_building_records(
         calib = yagnavalkya_area_hero.STRUCTURE_CALIBRATION.get(fid)
         if calib is not None and rec["floors"] is None and rec["height_m"] is None:
             rec["floors"], rec["height_m"] = calib
+        if fid == gargi_area_hero.HERO_GARGI_ID:
+            rec["rings"] = gargi_area_hero.normalize_gargi_footprint_rings()
+        gargi_calib = gargi_area_hero.calibration(fid)
+        if gargi_calib is not None and rec["floors"] is None and rec["height_m"] is None:
+            rec["floors"], rec["height_m"] = gargi_calib
 
         # Attach Overture Places metadata and search aliases
         snapped_places = building_places.get(fid) or []
@@ -2457,6 +2463,8 @@ def _append_amrita_building(
         return new_hostel_hero.build_new_hostel(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
     if fid == HERO_AB4_ID:
         return ab4_hero.build_ab4(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
+    if gargi_area_hero.builds(fid):
+        return gargi_area_hero.build(fid, bm, col_layer, win_lit_bm, win_dark_bm, rings, terrain, offset_xyz)
     if fid == HERO_ASB_ID:
         return asb_hero.build_asb(bm, col_layer, win_lit_bm, win_dark_bm, terrain, offset_xyz)
     if fid == HERO_CIR_ID:
@@ -2686,6 +2694,9 @@ def _append_amrita_building(
             bm=bm, col_layer=col_layer, win_lit_bm=win_lit_bm,
             terrain=terrain, offset_xyz=offset_xyz, z_plinth=z_plinth, z_eave=z_eave, z_top=z_top,
         )
+
+    elif fid == gargi_area_hero.HERO_GUEST_HOUSE_ID:
+        gargi_area_hero.append_details(fid, bm, col_layer, terrain, offset_xyz, z_top)
 
     elif fid in yagnavalkya_area_hero.HOSTEL_QUAD_IDS:
         yagnavalkya_area_hero.append_hostel_details(
@@ -2947,7 +2958,7 @@ def build_buildings(
             courtyard_lawns.extend(list(reversed(h)) for h in lawn_holes)
         elif fid in yagnavalkya_area_hero.HOSTEL_QUAD_IDS and len(rings) > 1:
             courtyard_lawns.extend(list(reversed(h)) for h in rings[1:])
-        elif fid not in (HERO_WORKSHOPS_WEST_ID, HERO_WORKSHOPS_EAST_ID, HERO_AB3_ID, HERO_LIBRARY_ID, HERO_PANDAL_ID) and not is_elevated and len(rings) == 1 and area_m2 >= 3000.0 and concavity < 0.14:
+        elif fid not in (HERO_WORKSHOPS_WEST_ID, HERO_WORKSHOPS_EAST_ID, HERO_AB3_ID, HERO_LIBRARY_ID, HERO_PANDAL_ID, gargi_area_hero.HERO_GARGI_ID) and not is_elevated and len(rings) == 1 and area_m2 >= 3000.0 and concavity < 0.14:
             hole_ccw = inset_ccw_ring_2d(outer_ring, 15.2, min_ratio=0.10, min_area=320.0)
             if hole_ccw is not None:
                 courtyard_lawns.append(list(hole_ccw))
@@ -3006,6 +3017,7 @@ def build_buildings(
         roof_hex = str(
             rec.get("roof_color")
             or yagnavalkya_area_hero.get_roof_hex(fid)
+            or gargi_area_hero.get_roof_hex(fid)
             or cat_colors.get(category)
             or PALETTE[default_roof_key]
         )
@@ -3344,7 +3356,7 @@ def generate_trees_data(
     # AB-2 front garden & courtyard palms and Central Library entrance trees (hand-placed spots)
     hand_spots = (
         ab2_hero.ab2_front_tree_spots() + library_hero.library_front_tree_spots()
-        + asb_hero.asb_tree_spots() + cir_hero.cir_tree_spots()
+        + asb_hero.asb_tree_spots() + cir_hero.cir_tree_spots() + gargi_area_hero.gargi_tree_spots()
     )
     for px, py, ttype, scale_rng, *shade in hand_spots + list(hand_tree_spots or []):
         _place(px, py, ttype, scale_rng, *shade)
