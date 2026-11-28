@@ -61,6 +61,7 @@ from hero_models import (  # noqa: E402
     library_hero,
     new_hostel_hero,
     workshops_hero,
+    yagnavalkya_area_hero,
 )
 
 FOUNDATION_SINK_M = 3.0
@@ -2272,6 +2273,12 @@ def _prepare_building_records(
             rec["rings"] = pandal_hero.normalize_pandal_footprint_rings()
         elif fid == HERO_MBA_CANTEEN_ID:
             rec["rings"] = mba_canteen_hero.normalize_mba_canteen_footprint_rings()
+        elif fid in yagnavalkya_area_hero.HOSTEL_QUAD_IDS and len(rec["rings"]) == 1:
+            rec["rings"] = yagnavalkya_area_hero.normalize_hostel_footprint_rings(fid, rec["rings"][0])
+
+        calib = yagnavalkya_area_hero.STRUCTURE_CALIBRATION.get(fid)
+        if calib is not None and rec["floors"] is None and rec["height_m"] is None:
+            rec["floors"], rec["height_m"] = calib
 
         # Attach Overture Places metadata and search aliases
         snapped_places = building_places.get(fid) or []
@@ -2680,6 +2687,11 @@ def _append_amrita_building(
             terrain=terrain, offset_xyz=offset_xyz, z_plinth=z_plinth, z_eave=z_eave, z_top=z_top,
         )
 
+    elif fid in yagnavalkya_area_hero.HOSTEL_QUAD_IDS:
+        yagnavalkya_area_hero.append_hostel_details(
+            fid=fid, bm=bm, col_layer=col_layer, offset_xyz=offset_xyz, z_plinth=z_plinth, z_top=z_top,
+        )
+
     return world_verts
 
 
@@ -2933,6 +2945,8 @@ def build_buildings(
             # AB-3: only the big central court (rings[1]) is a garden; its small light wells are paved
             lawn_holes = rings[1:] if fid == HERO_AB1_ID else rings[1:2]
             courtyard_lawns.extend(list(reversed(h)) for h in lawn_holes)
+        elif fid in yagnavalkya_area_hero.HOSTEL_QUAD_IDS and len(rings) > 1:
+            courtyard_lawns.extend(list(reversed(h)) for h in rings[1:])
         elif fid not in (HERO_WORKSHOPS_WEST_ID, HERO_WORKSHOPS_EAST_ID, HERO_AB3_ID, HERO_LIBRARY_ID, HERO_PANDAL_ID) and not is_elevated and len(rings) == 1 and area_m2 >= 3000.0 and concavity < 0.14:
             hole_ccw = inset_ccw_ring_2d(outer_ring, 15.2, min_ratio=0.10, min_area=320.0)
             if hole_ccw is not None:
@@ -2989,7 +3003,12 @@ def build_buildings(
             else "roof_hostel" if category in {"hostel", "admin"}
             else "roof_slate"
         )
-        roof_hex = str(rec.get("roof_color") or cat_colors.get(category) or PALETTE[default_roof_key])
+        roof_hex = str(
+            rec.get("roof_color")
+            or yagnavalkya_area_hero.get_roof_hex(fid)
+            or cat_colors.get(category)
+            or PALETTE[default_roof_key]
+        )
 
         tags_set: list[str] = []
         for t in rec["override_tags"]:
